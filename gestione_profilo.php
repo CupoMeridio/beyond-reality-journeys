@@ -116,14 +116,14 @@ if (isset($_POST['update'])) {
                 </div>
             </div>
 
-            <label>Nome:</label>
-            <input type="text" name="nome" value="<?php echo $nome ?>" required>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="<?php echo $nome ?>" autocomplete="given-name" required>
 
-            <label>Cognome:</label>
-            <input type="text" name="cognome" value="<?php echo $cognome ?>" required>
+            <label for="cognome">Cognome:</label>
+            <input type="text" id="cognome" name="cognome" value="<?php echo $cognome ?>" autocomplete="family-name" required>
 
-            <label>Username:</label>
-            <input type="text" name="username" value="<?php echo $username ?>" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<?php echo $username ?>" autocomplete="username" required>
 
             <div class="file-input-container">
                 <label for="fotoProfilo" class="custom-file-label">Scegli un file</label>

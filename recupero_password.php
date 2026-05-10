@@ -141,7 +141,7 @@ if ($password != "") {
             <!-- Contenitore principale per il modulo di registrazione -->
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <label for="email">Inserisci la tua e-mail:</label>
-                <input type="text" id="email" name="email" value="<?php $email ?>">
+                <input type="email" id="email" name="email" value="<?php $email ?>" autocomplete="email" required>
                 <input type="submit" value="Invio" style="width: 100%; margin-top:10px;" ;>
             </form>
             <?php if (isset($_SESSION['pw_problem'])) {
@@ -157,13 +157,13 @@ if ($password != "") {
                 
                 <div class="container">
                     <label for="Cambia_password">Scrivi la nuova password:</label>
-                    <input type="text" id="Cambia_password" name="Cambia_password" required>
+                    <input type="password" id="Cambia_password" name="Cambia_password" autocomplete="new-password" required>
                     <div id="hint" style="margin: bottom 10px; font-size: 13px;">La lunghezza della password deve essere di almeno 8 caratteri. <br>La password deve contenere almeno una lettera maiuscola e almeno un carattere speciale.</div>
                     <div id="error"></div>
                 </div>
                 <p class="container">
                     <label for="codice_cambia_password">Scrivi il codice:</label>
-                    <input name="codice_cambia_password" id="codice_cambia_password" type="text" pattern="\d{6}" required>
+                    <input name="codice_cambia_password" id="codice_cambia_password" type="text" pattern="\d{6}" autocomplete="one-time-code" required>
                 </p>
                 <input type="submit" value="Invio" style="width: 100%; margin-top:10px;">
             </form>

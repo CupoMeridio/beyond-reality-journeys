@@ -198,7 +198,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
   <div id="form-container"> <!-- Contenitore per il form -->
   <form id="booking-form" onsubmit="return calcolaprezzo(event)">
     <label for="tickets-count">Numero di Biglietti:</label>
-    <input type="number" id="tickets-count" name="tickets-count" min="1" max="10" value="1" required tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+    <input type="number" id="tickets-count" name="tickets-count" min="1" max="10" value="1" required autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
 
     <h3>Nominativi</h3>
     <div id="ticket-names-container">
@@ -207,21 +207,21 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
     </div>
 
     <label for="location">Scegli la Destinazione:</label>
-    <select id="location" name="location" required tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+    <select id="location" name="location" required autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
     <option value="Gallifrey">Gallifrey</option>
       <option value="Skaro">Skaro</option>
       <option value="Prigione_dei_signori_del_tempo">Prigione dei signori del tempo</option>
     </select>
 
     <label for="departure-date">Data di Partenza:</label>
-    <input type="date" id="departure-date" name="departure-date" required min="" onchange="setMinReturnDate()" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+    <input type="date" id="departure-date" name="departure-date" required min="" onchange="setMinReturnDate()" autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
 
     <label for="return-date">Data di Ritorno:</label>
-    <input type="date" id="return-date" name="return-date" required min="" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+    <input type="date" id="return-date" name="return-date" required min="" autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
 
     <label for="comments">Commenti Speciali:</label>
     <textarea id="comments" name="comments" rows="4"
-      placeholder="Inserisci richieste particolari o commenti" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>"></textarea>
+      placeholder="Inserisci richieste particolari o commenti" autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>"></textarea>
 
     <?php if(isset($email)){ ?>
     <input type="submit" id="submit-form-button"  value="Prenota il tuo viaggio!" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
@@ -266,7 +266,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
     <div id="form-container-review"> <!-- Contenitore per il form -->
     <form id="reviewForm" name="commenti">
       <label for="location_selection">Seleziona la location:</label>
-        <select id="location_selection" name="location" onchange="updateReviewPlaceholder()" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+        <select id="location_selection" name="location" onchange="updateReviewPlaceholder()" autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
       <option value="Gallifrey">Gallifrey</option>
       <option value="Skaro">Skaro</option>
       <option value="Prigione_dei_signori_del_tempo">Prigione dei signori del tempo</option>
@@ -274,7 +274,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
       <br><br>
 
       <label for="rating">Valutazione (1-5 stelle):</label>
-      <select id="rating" name="rating" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+      <select id="rating" name="rating" autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
         <option value="1">1 ⭐</option>
         <option value="2">2 ⭐⭐</option>
         <option value="3">3 ⭐⭐⭐</option>
@@ -285,7 +285,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
 
       <label for="experience">La tua esperienza:</label><br>
       <textarea id="experience" name="experience" rows="4" cols="50" required
-        placeholder="Scrivi la tua esperienza..." tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>"></textarea>
+        placeholder="Scrivi la tua esperienza..." autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>"></textarea>
       <br><br>
       <?php if (isset($email)) { ?>
         <input type="button" value="Invia Recensione" onclick="InserisciCommento()" style="background-color: #4CAF50; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px;" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
