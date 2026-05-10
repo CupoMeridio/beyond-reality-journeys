@@ -49,8 +49,16 @@
     visibility: initial;
 }
 
-#modifica-link:hover{
+#modifica-link:hover {
     cursor: pointer;
+}
+
+/* Media Queries per Mobile */
+@media (max-width: 768px) {
+    #dashboard {
+        width: 60%; /* Più larga su mobile per leggibilità */
+        margin-top: 100px; /* Sposta più in basso se la navbar wrap-a */
+    }
 }
 #modifica{
 background-color: rgba(48, 48, 48, 0.453);

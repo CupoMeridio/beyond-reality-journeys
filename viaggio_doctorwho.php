@@ -54,7 +54,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
     <source src="video/doctorwho/doctorwhovideo.mp4" type="video/mp4">
     Il tuo browser non supporta il tag video.
   </video>
-  <img class="headerImg" id="worldTitle" src="img/doctorwho/Doctor-Who-Logo.png" alt="Doctor who Title screen" style="margin-top: 10px; height: 200px;">
+    <img class="headerImg" id="worldTitle" src="img/doctorwho/Doctor-Who-Logo.png" alt="Doctor who Title screen">
 </header>
 
 
@@ -136,8 +136,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
     È piena di torri minacciose e strutture metalliche.
     </p>
 
-    <img class="float-right clear-left"
-      src="img/doctorwho/dalek_wiki.jpg"> 
+    <img class="float-right clear-left" src="img/doctorwho/dalek_wiki.jpg">
     <h4 class="clear-left"> Storia:</h4>
     <p class="clear-left">
     Skaro ha una storia di conflitti continui, principalmente tra i Kaleds e i Thals, due razze originarie del pianeta.<br> 
@@ -177,16 +176,16 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
       Lascia messaggi e indizzi al te del futuro prima di venir rigenerato e perdere la memoria.<br>
       Solo chi sa conoscersi puo sfuggire.
     </p>
-
+    
     <img class="float-right clear-left" src="img/doctorwho/ilvelo.jpg">
     <h4 class="clear-left">Per chi è adatto?</h4>
     <p class="clear-left">
-      Consigliamo l' esperienza a tutti, ma sono preferiti:
+      Consigliamo l'esperienza a tutti, ma sono preferiti:
     </p>
-    <ul> 
+    <ul class="clear-left"> 
      <li>Tutte le persone e alieni che vogliono mettersi in gioco</li> 
      <li>Persone che vogliono sbarazzarsi di una partner scomodo</li>
-      </ul>
+    </ul>
   </div>
 </div>
 </div>

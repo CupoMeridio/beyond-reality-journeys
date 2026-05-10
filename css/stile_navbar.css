@@ -56,3 +56,42 @@ nav div{
     display: flex;
     align-items: center;                                                        /* Allinea verticalmente al centro */
 }
+
+/* Media Queries per Mobile */
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: nowrap; /* Forza gli elementi su un'unica riga */
+        padding: 8px 2px;
+        justify-content: space-between;
+        gap: 2px;
+    }
+
+    nav a img {
+        height: 25px;
+        margin-left: 5px;
+    }
+
+    .navButton {
+        padding: 4px 6px;
+        font-size: 11px; /* Font più piccolo per risparmiare spazio */
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    #navAuth, #userProfile {
+        width: auto;
+        margin-top: 0;
+        justify-content: flex-end;
+        gap: 2px;
+    }
+
+    #welcomeMessage {
+        display: none; /* Nascondi il messaggio "Ciao, utente" su mobile per risparmiare spazio */
+    }
+
+    nav div img {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+}

@@ -85,7 +85,6 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         </p>
         <h3>Cosa ti aspetta nella Roma di Vento Aureo?</h3>
         <img class="float-left clear-right" src="img/jojos/tritone.png">
-
         <h4 class="clear-right">🫧 L’Incontro del Destino: Joseph Joestar e Caesar Antonio Zeppeli</h4>
         <p class="clear-right">
         Nel cuore di Roma, prima delle avventure di Vento Aureo, tra gli antichi palazzi, Joseph Joestar incontra il suo futuro alleato Caesar Zeppeli.
@@ -97,7 +96,6 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
           preparati a immergerti in una capitale ricca di emozioni!
         </p>
 
-        
         <img class="float-right clear-left" src="img/jojos/colosseo_manga.png">
         <h4 class="clear-left"> Il Colosseo: Arena di Duelli Epici 🏹</h4>
           <p class="clear-left">
@@ -110,17 +108,17 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
           Ascolta le storie delle sue esperienze, i suoi combattimenti epici e, ovviamente, qualche battuta sopra le righe!
           </p>
 
-          <img class="float-left clear-right" src="img/jojos/battaglia_roma.jpg">
-          <h4 class="clear-right">⚔ Il luogo della Epica Battaglia</h4>
-          <p class="clear-right">
-            Visita il luogo dello scontro con Cioccolata e Secco, i due assassini spietati al servizio di Diavolo!<br>
-            Con l’infernale Stand Green Day, Cioccolata trasforma Roma in un inferno in discesa, mentre Secco si muove con agilità sotterranea grazie a Oasis.
-          </p>
-          <h4 style="clear: right;">📖 Racconti di Eroi e Villain</h4>
-          <p style="clear: right;">
-          Roma è una città di leggende, e JoJo’s Bizarre Adventure l’ha resa ancora più epica! Rivivi le storie di Caesar, Joseph, Giorno e Bruno
-          mentre cammini tra i monumenti, e immagina di far parte anche tu di questa incredibile avventura!
-          </p>
+        <img class="float-left clear-right" src="img/jojos/battaglia_roma.jpg">
+        <h4 class="clear-right">⚔ Il luogo della Epica Battaglia</h4>
+        <p class="clear-right">
+          Visita il luogo dello scontro con Cioccolata e Secco, i due assassini spietati al servizio di Diavolo!<br>
+          Con l’infernale Stand Green Day, Cioccolata trasforma Roma in un inferno in discesa, mentre Secco si muove con agilità sotterranea grazie a Oasis.
+        </p>
+        <h4 class="clear-right">📖 Racconti di Eroi e Villain</h4>
+        <p class="clear-right">
+        Roma è una città di leggende, e JoJo’s Bizarre Adventure l’ha resa ancora più epica! Rivivi le storie di Caesar, Joseph, Giorno e Bruno
+        mentre cammini tra i monumenti, e immagina di far parte anche tu di questa incredibile avventura!
+        </p>
 
       </div>
       <div class="clearfix" id="info_location2">
@@ -135,15 +133,16 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         <h3>
           ✨ Cosa ti aspetta a Venezia?
         </h3>
+
         <img class="float-left clear-right" src="img/jojos/tumblr_pbxnpr7WID1wxbjq5o1_1280.jpg">
         <h4 class="clear-right"> Lisa Lisa e l’addestramento segreto 🩸</h4>
         <p class="clear-right">
-        Prima di Vento Aureo, un'altra eroina di JoJo ha calcato le calli veneziane!<br>
+        Prima di Vento Aureo, un'altra eroina di JoJo ha calcato le calli veneziane!
         Lisa Lisa, la maestra di Onde Concentriche, ha vissuto qui in segreto mentre preparava Joseph Joestar e Caesar Zeppeli alla battaglia contro i temibili Uomini del Pilastro.
         </p>
         <h4 class="clear-right"> Un luogo pieno di pericoli nascosti 🌊</h4>
         <p class="clear-right">
-        Venezia non è solo una città romantica: è un labirinto perfetto per imboscate e battaglie all’ultimo respiro!<br>
+        Venezia non è solo una città romantica: è un labirinto perfetto per imboscate e battaglie all’ultimo respiro!
         Proprio qui, nel cuore della città, la Squadra Esecuzioni della Passione ha dato la caccia a Bucciarati e ai suoi uomini.  
         </p>
         
@@ -176,36 +175,49 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         <h3>
           Cosa ti aspetta a Napoli?
         </h3>
-        <img class="float-left clear-right" src="img/jojos/metro.png">
-        <h4 class="clear-right">Koichi e l’aeroporto di Napoli 🛫</h4>
-        <p class="clear-right">
-        Uno degli incontri più intriganti della saga si svolge proprio qui, dove atterrerete: all’aeroporto di Napoli!<br>
-        È proprio qui che Koichi Hirose, uno dei protagonisti delle avventure precedenti, incontra per la prima volta il nuovo protagonista Giorno Giovanna!
-        </p>
-        <h4 class="clear-right">Un incontro fatale in metro🚇</h4>
-        <p class="clear-right">
-          Scopri gli efficienti mezzi di trasporto che collegano tutta la città di Napoli.<br>
-          È proprio la metro il luogo di incontro tra il protagonista Gionro Giovanna e quello che sarà uno dei suoi migliori amici, Bruno Bucciarati.
-        </p>
+        <div class="info-row">
+          <img src="img/jojos/metro.png">
+          <div class="info-text">
+            <h4>Koichi e l’aeroporto di Napoli 🛫</h4>
+            <p>
+            Uno degli incontri più intriganti della saga si svolge proprio qui, dove atterrerete: all’aeroporto di Napoli!<br>
+            È proprio qui che Koichi Hirose, uno dei protagonisti delle avventure precedenti, incontra per la prima volta il nuovo protagonista Giorno Giovanna!
+            </p>
+            <h4>Un incontro fatale in metro🚇</h4>
+            <p>
+              Scopri gli efficienti mezzi di trasporto che collegano tutta la città di Napoli.<br>
+              È proprio la metro il luogo di incontro tra il protagonista Gionro Giovanna e quello che sarà uno dei suoi migliori amici, Bruno Bucciarati.
+            </p>
+          </div>
+        </div>
         
-        <img class="float-right clear-left" src="img/jojos/capri.png">
-        <h4 class="clear-left">⛵ Salpa verso l'isola di Capri</h4>
-        <p class="clear-left">
-          Da Napoli potrai salpare verso l'isola di Capri, tre le acque cristalline e le rocce mozzafiato!<br>
-          È proprio qui che i nostri protagonisti trovano il tesoro di Polpo, uno dei capi di Passione, che finanzia il loro viaggio verso le altre città d'Italia.
-        </p>
-        <h4 class="clear-left">🏹 Ottieni il tuo stand visitando Polpo</h4>
-        <p class="clear-left">
-          Come Giorno Giovanna, fai visita a Polpo e ottieni anche tu il tuo potere stand<br>
-          O magari no. Pensa ai pericoli che dovrai affrontare prima di arrivare ad un capo di una gang...😨
-        </p>
+        <div class="info-row reverse">
+          <img src="img/jojos/capri.png">
+          <div class="info-text">
+            <h4>⛵ Salpa verso l'isola di Capri</h4>
+            <p>
+              Da Napoli potrai salpare verso l'isola di Capri, tre le acque cristalline e le rocce mozzafiato!<br>
+              È proprio qui che i nostri protagonisti trovano il tesoro di Polpo, uno dei capi di Passione, che finanzia il loro viaggio verso le altre città d'Italia.
+            </p>
+            <h4>🏹 Ottieni il tuo stand visitando Polpo</h4>
+            <p>
+              Come Giorno Giovanna, fai visita a Polpo e ottieni anche tu il tuo potere stand<br>
+              O magari no. Pensa ai pericoli che dovrai affrontare prima di arrivare ad un capo di una gang...😨
+            </p>
+          </div>
+        </div>
         
-        <img class="float-left clear-right" src="img/jojos/vedinapoli.png">
-        <h4 class="clear-right">Esplora la città 🌇</h4>
-        <p class="clear-right">
-          Per finire, Napoli è una città che affascina con la sua storia, la sua cultura vibrante e i panorami mozzafiato. <br>
-          Come recita il famoso detto, e come ci ricorda anche il narratore: <br>"Vedi Napoli e poi muori"<br> Ogni angolo della città offre emozioni uniche che ti rimarranno nel cuore per sempre. 
-        </p>
+        <div class="info-row">
+          <img src="img/jojos/vedinapoli.png">
+          <div class="info-text">
+            <h4>Esplora la città 🌇</h4>
+            <p>
+              Vedi Napoli e poi muori! Ma non letteralmente, spero...<br>
+              Esplora la città, mangia una pizza e goditi il panorama mozzafiato del golfo di Napoli!<br>
+              Chissà che tu non possa incontrare qualche portatore di stand tra la folla!
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

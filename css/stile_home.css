@@ -1,11 +1,20 @@
 /* Imposta lo stile generale del corpo della pagina */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* Impedisce lo scroll orizzontale e lo spazio bianco a destra */
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 body {
     display: flex;                                                        /* Uso del layout flexbox per allineare il contenuto */
     flex-direction: column;                                               /* Disposizione verticale degli elementi */
-    margin: 0;                                                            /* Rimuove il margine predefinito del body */
-    padding: 0;                                                           /* Rimuove il padding predefinito del body */
     font-family: Arial, Helvetica, sans-serif; 
-    
 }
 
 
@@ -34,7 +43,7 @@ nav {
 
 /*slideshow*/
 .slideshow-container {
-    top: 50px;
+    margin-top: 70px;                                                      /* Sposta lo slideshow esattamente sotto la navbar (Desktop) */
     position: relative;                                                    /* Posizione relativa per il contenitore dello slideshow */
     width: 100%;                                                           /* Imposta la larghezza al 100% della finestra */
     overflow: hidden;                                                      /* Nasconde qualsiasi parte dell'immagine che esce dai bordi */
@@ -137,9 +146,11 @@ nav {
 
 .destinations_selector {
     display: flex;                                                              /* Usa flexbox per disporre gli elementi in riga */
-    justify-content: space-around;                                              /* Centra gli elementi */
-    gap: 20px;                                                                  /* Aggiunge uno spazio tra gli elementi */
-    margin-top: 20px;                                                           /* Aggiunge spazio sopra la sezione */
+    justify-content: center;                                                    /* Centra gli elementi orizzontalmente */
+    flex-wrap: wrap;                                                            /* Permette agli elementi di andare a capo se necessario */
+    gap: 30px;                                                                  /* Aggiunge uno spazio tra gli elementi */
+    margin: 20px auto;                                                          /* Centra il contenitore e aggiunge spazio sopra */
+    max-width: 1200px;                                                          /* Limita la larghezza massima per una migliore distribuzione */
 }
 
 .destinations h1{
@@ -148,10 +159,10 @@ nav {
 }
 
 .destination {
-    flex: 1;                                                                    /* Permette alle colonne di adattarsi allo spazio disponibile */
+    flex: 0 1 300px;                                                            /* Corretto per non allargarsi oltre il necessario */
     max-width: 300px;                                                           /* Imposta una larghezza massima per evitare immagini troppo grandi */
     position: relative;
-    display: inline-block;
+    display: block;                                                             /* Cambiato da inline-block per evitare spazi bianchi spuri */
 }
 
 .destination img {
@@ -160,6 +171,7 @@ nav {
     object-fit: cover;                                                          /* Adatta l'immagine mantenendo le proporzioni e riempiendo il riquadro */
     border-radius: 10px;                                                        /* Arrotonda leggermente gli angoli delle immagini */
     transition: transform 0.3s;                                                 /* Aggiunge una transizione fluida per l'effetto zoom */
+    display: block;                                                             /* Rimuove lo spazio extra sotto l'immagine */
 }
 
 .destination-name {
@@ -192,20 +204,82 @@ nav {
 
 #presentazione {
     text-align: center;
-    max-width: 70%;
+    max-width: 90%; /* Aumentata flessibilità per schermi medi */
+    width: 1200px; /* Larghezza massima effettiva */
     margin: auto;
     padding: 20px;
 }
 
-#presentazione h2{
+#presentazione h2 {
     color: #333;
     font-size: 2.5em;
 }
 
-#presentazione h3{
+#presentazione h3 {
     color: #444;
     font-size: 2em;
     margin-top: 30px;
+}
+
+/* Media Queries per Mobile */
+@media (max-width: 768px) {
+    .slideshow-container img {
+        height: 30vh;
+    }
+
+    .destinations_selector {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .destination {
+        max-width: 90%;
+        width: 100%;
+    }
+
+    .team {
+        gap: 20px;
+        padding: 0 10px;
+        flex-direction: column; /* Forza una sola colonna su mobile per dare spazio alle email */
+        align-items: center;
+    }
+
+    .team-member {
+        width: 100%;
+        max-width: 280px; /* Limita la larghezza per non farle sembrare giganti */
+        margin-bottom: 20px;
+    }
+
+    .team-member p {
+        font-size: 14px; /* Ripristinato font leggibile */
+        overflow-wrap: break-word; /* Rompe l'email solo se necessario */
+        word-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
+        margin: 5px 0;
+    }
+
+    .team-member img {
+        height: 140px;
+        width: 140px;
+    }
+
+    #presentazione {
+        max-width: 90%;
+    }
+
+    #presentazione h2 {
+        font-size: 1.8em;
+    }
+
+    #presentazione h3 {
+        font-size: 1.5em;
+    }
+
+    .slideshow-container {
+        margin-top: 41px; /* Altezza navbar mobile */
+    }
 }
 
 #presentazione p{
@@ -216,16 +290,24 @@ nav {
 
 .team {
     display: flex;                                                              /* Usa flexbox per disporre gli elementi in riga */
-    justify-content: space-around;                                              /* Centra gli elementi */
-    gap: 20px;                                                                  /* Aggiunge uno spazio tra gli elementi */
+    justify-content: center;                                                    /* Centra gli elementi orizzontalmente */
+    flex-wrap: wrap;                                                            /* Permette agli elementi di andare a capo */
+    gap: 20px;                                                                  /* Ridotto gap per farli stare su una riga più a lungo */
     margin-top: 20px;                                                           /* Aggiunge spazio sopra la sezione */
 }
 
-.team-member img{
-    justify-content: space-around;                                              /* Centra gli elementi */
-    height: 200px;                                                              /* Imposta un'altezza fissa per uniformare le immagini */
+.team-member {
+    text-align: center;
+    flex: 0 1 180px; /* Ridotto leggermente per guadagnare spazio */
+}
+
+.team-member img {
+    height: 150px;                                                              /* Ridotta leggermente per simmetria */
+    width: 150px;
     object-fit: cover;                                                          /* Adatta l'immagine mantenendo le proporzioni e riempiendo il riquadro */
-    border-radius: 50%;                                                      
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
 }
 
 .team-member h4{
@@ -276,19 +358,9 @@ footer {
     .team-member {
         text-align: center; /* Centra il contenuto di ogni membro del team */
     }
-    
-    .headerImg {
 
-    top: 35%;                                                                   /* Sposta l'ancoraggio dell'immagine al centro verticalmente */
-    left: 50%;                                                                  /* Sposta l'ancoraggio delll'immagine al centro orizzontalmente */
-    transform: translate(-50%, -50%);                                           /* Sposta l'ancoraggio dell'immgaine al suo centro*/
-    max-height: 25%;                                                             /* Limita la dimensione massima al 50% della larghezza */
-
-}
 .destination img {
-   
-    margin-left: 3px;   
-    margin-right: 3px;                                          /* Aggiunge una transizione fluida per l'effetto zoom */
+    /* Rimosso margine che causava decentramento */
 }
 
 
@@ -318,8 +390,6 @@ footer {
         font-size: 13px ;
     }
     .destination img {
-  
-        margin-left: 3px;   
-        margin-right: 3px;                                          /* Aggiunge una transizione fluida per l'effetto zoom */
+        /* Rimosso margine che causava decentramento */
     }
 }

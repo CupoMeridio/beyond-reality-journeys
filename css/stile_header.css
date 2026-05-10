@@ -5,11 +5,10 @@ header {
     height: 50vh;                                                               /* Occupa metà dello schermo in altezza */
     overflow: hidden;                                                           /* Nasconde eventuali contenuti che escono dal riquadro */
     min-height: 300px;                                                          /* Imposta un'altezza minima per evitare che si riduca troppo */
-   
+    margin-top: 70px;                                                           /* Sposta l'intero header sotto la navbar (Desktop: 15+15+40) */
 }
 
 .headerVideo {
-    margin-top: 53px;                                                           /* Posiziona il video nell'header appena sotto la navbar */
     width: 100%;                                                                /* Occupa l'intera larghezza */
     height: 100%;                                                               /* Occupa tutta l'altezza disponibile */
     object-fit: cover;                                                          /* Adatta il video per coprire tutto lo spazio disponibile */
@@ -17,8 +16,26 @@ header {
 
 .headerImg {
     position: absolute;                                                         /* Posiziona l'immagine sopra il video */
-    top: 60%;                                                                   /* Sposta l'ancoraggio dell'immagine al centro verticalmente */
-    left: 50%;                                                                  /* Sposta l'ancoraggio delll'immagine al centro orizzontalmente */
-    transform: translate(-50%, -50%);                                           /* Sposta l'ancoraggio dell'immgaine al suo centro*/
-    max-width: 50%;                                                             /* Limita la dimensione massima al 50% della larghezza */
+    top: 50%;                                                                   /* Centra l'immagine perfettamente al centro verticalmente */
+    left: 50%;                                                                  /* Centra l'immagine perfettamente al centro orizzontalmente */
+    transform: translate(-50%, -50%);                                           /* Sposta l'ancoraggio dell'immagine al suo centro geometrico */
+    max-width: 50%;                                                             /* Limita la dimensione massima al 50% della larghezza */
+}
+
+/* Media Queries per Mobile */
+@media (max-width: 768px) {
+    header {
+        height: 30vh;
+        min-height: 200px;
+        margin-top: 41px; /* Altezza navbar mobile (8+8+25) */
+    }
+
+    .headerVideo {
+        margin-top: 0; 
+    }
+
+    .headerImg {
+        max-width: 80%;
+        top: 50%;
+    }
 }

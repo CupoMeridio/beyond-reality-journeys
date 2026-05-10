@@ -18,7 +18,7 @@
 
 #popup.open {
     opacity: 1;
-    z-index: 5;
+    z-index: 3; /* Sopra la navbar (z-index: 2) */
 }
 
 /*pagamento*/
@@ -28,7 +28,7 @@
     padding: 30px 40px;
     border-radius: 10px;
     text-align: center;
-    z-index: 999;
+    z-index: 4; /* Sopra il backdrop del popup */
     box-shadow: 0 0 15px #142c71;
     font-family: Arial, sans-serif;
 }

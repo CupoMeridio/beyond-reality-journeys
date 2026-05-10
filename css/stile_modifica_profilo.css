@@ -80,11 +80,11 @@ body {
     cursor: pointer;
     text-align: center;
     background-color: #7d7d7d;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin: 0 auto 10px; /* Centrato orizzontalmente */
+    display: block; /* Necessario per il margin auto */
+    width: 40%; /* Ridotta larghezza per simmetria */
     border-color: #7d7d7d;
     color: rgb(255, 255, 255);
-    
  }
 
  div input[type="button"]:hover{

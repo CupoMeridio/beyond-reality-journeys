@@ -84,7 +84,6 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         </p>
         <h3>🐢 Cosa ti aspetta alla Kame House?</h3>
         <img class="float-left clear-right" src="img/dragonball/Dragon-Ball-Son-Goku-Bulma-Young-Bulma-Dragon-Ball-Z-group-of-people-2232722.jpg">
-
         <h4 class="clear-right">🌅 Un’Isola da Sogno</h4>
         <p class="clear-right">
           Circondata da acque turchesi e sabbie bianchissime, la Kame House è il luogo ideale per chi cerca tranquillità e un panorama mozzafiato.<br>
@@ -96,28 +95,27 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
           Partecipa alle sue esclusive sessioni di allenamento (e qualche storia strampalata!) per scoprire i segreti delle arti marziali più potenti dell’universo.
         </p>
 
-        
         <img class="float-right clear-left" src="img/dragonball/Krillin-Goku-training-Master-Roshi.jpg">
         <h4 class="clear-left">💪 Allenamenti sulla Spiaggia</h4>
-          <p class="clear-left">
-            Per i più temerari, la Kame House offre programmi di allenamento personalizzati.<br>
-            Prova l’esperienza di allenarti con pesi giganteschi, corse sulla spiaggia e, se sei fortunato, qualche lezione speciale di Kamehameha direttamente dal Maestro!
-          </p>
-          <h4 class="clear-left">🌊 Attività Acquatiche Avventurose</h4>
-          <p class="clear-left">
-            Esplora le acque circostanti con sessioni di snorkeling e immersioni, alla scoperta di fauna marina incredibile e, chissà, magari anche qualche tesoro nascosto!
-          </p>
+        <p class="clear-left">
+          Per i più temerari, la Kame House offre programmi di allenamento personalizzati.<br>
+          Prova l’esperienza di allenarti con pesi giganteschi, corse sulla spiaggia e, se sei fortunato, qualche lezione speciale di Kamehameha direttamente dal Maestro!
+        </p>
+        <h4 class="clear-left">🌊 Attività Acquatiche Avventurose</h4>
+        <p class="clear-left">
+          Esplora le acque circostanti con sessioni di snorkeling e immersioni, alla scoperta di fauna marina incredibile e, chissà, magari anche qualche tesoro nascosto!
+        </p>
 
-          <img class="float-left clear-right" src="img/dragonball/kamehousefood.jpg">
-          <h4 class="clear-right">🥥 Cucina Esotica</h4>
-          <p class="clear-right">
-            Dopo una giornata di avventure, rilassati gustando specialità locali a base di cocco, pesce fresco e deliziosi piatti ispirati alle ricette segrete di Muten Roshi.
-          </p>
-          <h4 style="clear: right;">📜 Storie e Leggende Epiche</h4>
-          <p style="clear: right;">
-            Rilassati al tramonto ascoltando le incredibili avventure del Maestro Muten, dalle storie di Goku e Crilin fino alle tecniche segrete dei guerrieri Z.<br>
-            Ogni serata è un tuffo nella storia dell'arte marziale più potente dell'universo!
-          </p>
+        <img class="float-left clear-right" src="img/dragonball/kamehousefood.jpg">
+        <h4 class="clear-right">🥥 Cucina Esotica</h4>
+        <p class="clear-right">
+          Dopo una giornata di avventure, rilassati gustando specialità locali a base di cocco, pesce fresco e deliziosi piatti ispirati alle ricette segrete di Muten Roshi.
+        </p>
+        <h4 class="clear-right">📜 Storie e Leggende Epiche</h4>
+        <p class="clear-right">
+          Rilassati al tramonto ascoltando le incredibili avventure del Maestro Muten, dalle storie di Goku e Crilin fino alle tecniche segrete dei guerrieri Z.<br>
+          Ogni serata è un tuffo nella storia dell'arte marziale più potente dell'universo!
+        </p>
 
       </div>
       <div class="clearfix" id="info_location2">
@@ -132,6 +130,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         <h3>
           ✨ Cosa ti aspetta su Namecc?
         </h3>
+
         <img class="float-left clear-right" src="img/dragonball/desktop-wallpaper-planet-namek.jpg">
         <h4 class="clear-right">🟢 Paesaggi Alieni e Incantevoli</h4>
         <p class="clear-right">
@@ -154,7 +153,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         <h4 class="clear-left">⚔ Le Rovine della Battaglia Epica</h4>
         <p class="clear-left">
           Se sei un fan dell’azione, visita i luoghi dove si è combattuta una delle battaglie più leggendarie dell’universo!<br>
-          Attraversa le valli devastate dallo scontro tra Goku e Freezer e ascolta i racconti che hanno reso questo pianeta un'icona della storia intergalattica.
+          Atraversa le valli devastate dallo scontro tra Goku e Freezer e ascolta i racconti che hanno reso questo pianeta un'icona della storia intergalattica.
         </p>
         
         <img class="float-left clear-right" src="img/dragonball/Namecciani.png">
@@ -163,6 +162,8 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
           Dopo tanta avventura, rilassati nelle acque rigenerative naturali del pianeta e goditi un percorso di benessere sotto la guida di un anziano namecciano.<br>
           Qui potrai ricaricare corpo e spirito, avvolto dalla quiete e dalla magia di Namecc.
         </p>
+      </div>
+
       </div>
       <div class="clearfix" id="info_location3">
         <h2>
@@ -175,38 +176,50 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         <h3>
           🔥 Cosa ti aspetta sul Pianeta di King Kai?
         </h3>
-        <img class="float-left clear-right" src="img/dragonball/Dead_Z-Fighters_on_King_Kai's_planet.png">
-        <h4 class="clear-right">🪐 Un Pianeta Unico nel Suo Genere</h4>
-        <p class="clear-right">
-          Qui la gravità è 10 volte superiore a quella terrestre! Ogni passo è una sfida, ogni movimento un allenamento. Sei pronto a testare i tuoi limiti?
-        </p>
-        <h4 class="clear-right">🐵 Incontra King Kai e la Sua Simpatica Compagnia</h4>
-        <p class="clear-right">
-          Scopri le antiche comunità dei Namecciani, una razza pacifica e saggia.<br>
-          Interagisci con gli abitanti locali e lasciati affascinare dalla loro cultura basata sull’equilibrio, la meditazione e l’armonia con la natura.
-        </p>
+        <div class="info-row">
+          <img src="img/dragonball/Dead_Z-Fighters_on_King_Kai's_planet.png">
+          <div class="info-text">
+            <h4>🪐 Un Pianeta Unico nel Suo Genere</h4>
+            <p>
+              Qui la gravità è 10 volte superiore a quella terrestre! Ogni passo è una sfida, ogni movimento un allenamento. Sei pronto a testare i tuoi limiti?
+            </p>
+            <h4>🐵 Incontra King Kai e la Sua Simpatica Compagnia</h4>
+            <p>
+              Scopri le antiche comunità dei Namecciani, una razza pacifica e saggia.<br>
+              Interagisci con gli abitanti locali e lasciati affascinare dalla loro cultura basata sull’equilibrio, la meditazione e l’armonia con la natura.
+            </p>
+          </div>
+        </div>
         
-        <img class="float-right clear-left" src="img/dragonball/Goku-Struggles-With-The-Gravity-On-King-Kais-Planet.jpg">
-        <h4 class="clear-left">🐒 Sfida Bubbles e Gregory!</h4>
-        <p class="clear-left">
-          Per diventare un vero allievo di King Kai, dovrai superare due prove iconiche:
-          <ul>
-            <li>Insegui e cattura Bubbles, la scimmietta più veloce del pianeta! Non lasciarti ingannare dal suo aspetto carino, con la gravità aumentata ogni salto sarà un’impresa!</li>
-            <li>Colpisci Gregory, la cavalletta volante con un riflesso fulmineo! Se ci riesci, King Kai potrebbe svelarti alcuni segreti proibiti…</li>
-          </ul>
-        </p>
-        <h4 class="clear-left">🌠 Panorama Celestiale e Relax Spirituale</h4>
-        <p class="clear-left">
-          Dopo tanto allenamento, rilassati sotto un cielo stellato incredibilmente limpido, circondato da un’atmosfera di pura pace cosmica.<br>
-          Medita con King Kai e scopri i segreti dell’equilibrio tra mente e corpo.
-        </p>
+        <div class="info-row reverse">
+          <img src="img/dragonball/Goku-Struggles-With-The-Gravity-On-King-Kais-Planet.jpg">
+          <div class="info-text">
+            <h4>🐒 Sfida Bubbles e Gregory!</h4>
+            <p>
+              Per diventare un vero allievo di King Kai, dovrai superare due prove iconiche:
+              <ul>
+                <li>Insegui e cattura Bubbles, la scimmietta più veloce del pianeta! Non lasciarti ingannare dal suo aspetto carino, con la gravità aumentata ogni salto sarà un’impresa!</li>
+                <li>Colpisci Gregory, la cavalletta volante con un riflesso fulmineo! Se ci riesci, King Kai potrebbe svelarti alcuni segreti proibiti…</li>
+              </ul>
+            </p>
+            <h4>🌠 Panorama Celestiale e Relax Spirituale</h4>
+            <p>
+              Dopo tanto allenamento, rilassati sotto un cielo stellato incredibilmente limpido, circondato da un’atmosfera di pura pace cosmica.<br>
+              Medita con King Kai e scopri i segreti dell’equilibrio tra mente e corpo.
+            </p>
+          </div>
+        </div>
         
-        <img class="float-left clear-right" src="img/dragonball/dragon-ball-goku-riesce-superare-velocitA-luce-scopriamolo-v3-532194-1280x720.webp">
-        <h4 class="clear-right">🌱 Rigenerazione e Benessere</h4>
-        <p class="clear-right">
-          Dopo tanta avventura, rilassati nelle acque rigenerative naturali del pianeta e goditi un percorso di benessere sotto la guida di un anziano namecciano.<br>
-          Qui potrai ricaricare corpo e spirito, avvolto dalla quiete e dalla magia di Namecc.
-        </p>
+        <div class="info-row">
+          <img src="img/dragonball/dragon-ball-goku-riesce-superare-velocitA-luce-scopriamolo-v3-532194-1280x720.webp">
+          <div class="info-text">
+            <h4>🌱 Rigenerazione e Benessere</h4>
+            <p>
+              Dopo tanta avventura, rilassati nelle acque rigenerative naturali del pianeta e goditi un percorso di benessere sotto la guida di un anziano namecciano.<br>
+              Qui potrai ricaricare corpo e spirito, avvolto dalla quiete e dalla magia di Namecc.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
