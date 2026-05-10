@@ -80,6 +80,7 @@ document.getElementById('tickets-count').addEventListener('input', function() {
       input.setAttribute("type", "text");
       input.setAttribute("id", `ticket-name-${i}`);
       input.setAttribute("name", `ticket-name-${i}`);
+      input.setAttribute("autocomplete", "name");
       input.setAttribute("required", "");
       input.setAttribute("placeholder", `Nome Passeggero ${i + 1}`);
       

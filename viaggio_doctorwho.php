@@ -203,7 +203,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
     <h3>Nominativi</h3>
     <div id="ticket-names-container">
       <label for="ticket-name-0">Nome Passeggero 1:</label>
-      <input type="text" id="ticket-name-0" name="ticket-name-0" required placeholder="Nome Passeggero 1" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
+      <input type="text" id="ticket-name-0" name="ticket-name-0" required placeholder="Nome Passeggero 1" autocomplete="name" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
     </div>
 
     <label for="location">Scegli la Destinazione:</label>
@@ -265,8 +265,8 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
     <!-- <form action="submit_review.php" method="post">-->
     <div id="form-container-review"> <!-- Contenitore per il form -->
     <form id="reviewForm" name="commenti">
-      <label for="location">Seleziona la location:
-        <select id="location_selection" name="location" onchange="updateReviewPlaceholder()" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>"></label>
+      <label for="location_selection">Seleziona la location:</label>
+        <select id="location_selection" name="location" onchange="updateReviewPlaceholder()" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
       <option value="Gallifrey">Gallifrey</option>
       <option value="Skaro">Skaro</option>
       <option value="Prigione_dei_signori_del_tempo">Prigione dei signori del tempo</option>
