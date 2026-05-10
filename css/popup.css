@@ -41,6 +41,12 @@
     box-sizing: border-box;
 }
 
+.stripe-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 #pagamento_con_stripe button {
     background-color: #373737;
     text-decoration: none;                                                      /* Rimuove la sottolineatura dai link */
