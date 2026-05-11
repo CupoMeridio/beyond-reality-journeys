@@ -71,7 +71,7 @@ nav img:hover{
 }
 
 .regcontainer{
-    margin-top: 75px;
+    margin-top: 80px;
 }
 
 
@@ -271,8 +271,8 @@ video {
 /* Responsive: una colonna su dispositivi stretti */
 @media (max-width: 800px) {
     #main-container{
-        margin-top: 200px;
-        margin-bottom: 200px;
+        margin-top: 95px;
+        margin-bottom: 20px;
     }
     
     #registrazione{
