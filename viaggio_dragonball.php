@@ -164,7 +164,6 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         </p>
       </div>
 
-      </div>
       <div class="clearfix" id="info_location3">
         <h2>
           🌌 Viaggio sul Pianeta di King Kai: Allenati con il Maestro dell’Oltretomba! 🏃‍♂️⚡
@@ -176,50 +175,43 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
         <h3>
           🔥 Cosa ti aspetta sul Pianeta di King Kai?
         </h3>
-        <div class="info-row">
-          <img src="img/dragonball/Dead_Z-Fighters_on_King_Kai's_planet.png">
-          <div class="info-text">
-            <h4>🪐 Un Pianeta Unico nel Suo Genere</h4>
-            <p>
-              Qui la gravità è 10 volte superiore a quella terrestre! Ogni passo è una sfida, ogni movimento un allenamento. Sei pronto a testare i tuoi limiti?
-            </p>
-            <h4>🐵 Incontra King Kai e la Sua Simpatica Compagnia</h4>
-            <p>
-              Scopri le antiche comunità dei Namecciani, una razza pacifica e saggia.<br>
-              Interagisci con gli abitanti locali e lasciati affascinare dalla loro cultura basata sull’equilibrio, la meditazione e l’armonia con la natura.
-            </p>
-          </div>
-        </div>
+        <img class="float-left clear-right" src="img/dragonball/Dead_Z-Fighters_on_King_Kai's_planet.png">
+        <h4 class="clear-right">🪐 Un Pianeta Unico nel Suo Genere</h4>
+        <p class="clear-right">
+          Qui la gravità è 10 volte superiore a quella terrestre! Ogni passo è una sfida, ogni movimento un allenamento. Sei pronto a testare i tuoi limiti?
+        </p>
+        <h4 class="clear-right">🐵 Incontra King Kai e la Sua Simpatica Compagnia</h4>
+        <p class="clear-right">
+          Interagisci con King Kai e la sua fedele compagnia, composta da Bubbles e Gregory.<br>
+          Lasciati affascinare dalla loro saggezza, ma preparati: King Kai adora le barzellette, quindi assicurati di averne qualcuna pronta!
+        </p>
         
-        <div class="info-row reverse">
-          <img src="img/dragonball/Goku-Struggles-With-The-Gravity-On-King-Kais-Planet.jpg">
-          <div class="info-text">
-            <h4>🐒 Sfida Bubbles e Gregory!</h4>
-            <p>
-              Per diventare un vero allievo di King Kai, dovrai superare due prove iconiche:
-              <ul>
-                <li>Insegui e cattura Bubbles, la scimmietta più veloce del pianeta! Non lasciarti ingannare dal suo aspetto carino, con la gravità aumentata ogni salto sarà un’impresa!</li>
-                <li>Colpisci Gregory, la cavalletta volante con un riflesso fulmineo! Se ci riesci, King Kai potrebbe svelarti alcuni segreti proibiti…</li>
-              </ul>
-            </p>
-            <h4>🌠 Panorama Celestiale e Relax Spirituale</h4>
-            <p>
-              Dopo tanto allenamento, rilassati sotto un cielo stellato incredibilmente limpido, circondato da un’atmosfera di pura pace cosmica.<br>
-              Medita con King Kai e scopri i segreti dell’equilibrio tra mente e corpo.
-            </p>
-          </div>
-        </div>
+        <img class="float-right clear-left" src="img/dragonball/Goku-Struggles-With-The-Gravity-On-King-Kais-Planet.jpg">
+        <h4 class="clear-left">🐒 Sfida Bubbles e Gregory!</h4>
+        <p class="clear-left">
+          Per diventare un vero allievo di King Kai, dovrai superare due prove iconiche:
+        </p>
+        <ul class="clear-left" style="text-align: left;">
+          <li>Insegui e cattura Bubbles, la scimmietta più veloce del pianeta! Non lasciarti ingannare dal suo aspetto carino, con la gravità aumentata ogni salto sarà un’impresa!</li>
+          <li>Colpisci Gregory, la cavalletta volante con un riflesso fulmineo! Se ci riesci, King Kai potrebbe svelarti alcuni segreti proibiti…</li>
+        </ul>
+        <h4 class="clear-left">🌠 Panorama Celestiale e Relax Spirituale</h4>
+        <p class="clear-left">
+          Dopo tanto allenamento, rilassati sotto un cielo stellato incredibilmente limpido, circondato da un’atmosfera di pura pace cosmica.<br>
+          Medita con King Kai e scopri i segreti dell’equilibrio tra mente e corpo.
+        </p>
         
-        <div class="info-row">
-          <img src="img/dragonball/dragon-ball-goku-riesce-superare-velocitA-luce-scopriamolo-v3-532194-1280x720.webp">
-          <div class="info-text">
-            <h4>🌱 Rigenerazione e Benessere</h4>
-            <p>
-              Dopo tanta avventura, rilassati nelle acque rigenerative naturali del pianeta e goditi un percorso di benessere sotto la guida di un anziano namecciano.<br>
-              Qui potrai ricaricare corpo e spirito, avvolto dalla quiete e dalla magia di Namecc.
-            </p>
-          </div>
-        </div>
+        <img class="float-left clear-right" src="img/dragonball/dragon-ball-goku-riesce-superare-velocitA-luce-scopriamolo-v3-532194-1280x720.webp">
+        <h4 class="clear-right">📜 Tecniche Leggendarie</h4>
+        <p class="clear-right">
+          Se dimostrerai il tuo valore, King Kai potrebbe insegnarti tecniche leggendarie come il Kaio-ken o la Sfera Genkidama!<br>
+          Queste arti marziali divine ti permetteranno di superare i tuoi limiti e proteggere chi ami.
+        </p>
+        <h4 class="clear-right">🏎️ Un Giro in Macchina</h4>
+        <p class="clear-right">
+          Sì, hai letto bene! King Kai possiede una macchina fiammante e ama fare qualche giro sul suo piccolo pianeta.<br>
+          Unisciti a lui per un momento di svago tra una sessione di allenamento e l'altra!
+        </p>
       </div>
     </div>
   </div>

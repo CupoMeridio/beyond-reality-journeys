@@ -333,6 +333,14 @@ ul {
 
 /* Media Queries per Mobile */
 @media (max-width: 768px) {
+    .slideshow-container {
+        width: 85%;
+    }
+
+    .intermezzo {
+        width: 85%;
+    }
+
     .info_location img {
         float: none;
         display: block;

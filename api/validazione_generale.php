@@ -1,24 +1,24 @@
 <?php
 
 
-function controlloPatternPassword($pass){
+function controlloPatternPassword(string $pass){
     $pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/";
     return preg_match($pattern, $pass);
     
 }
-function controlloPatternEmail($email){
+function controlloPatternEmail(string $email){
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
-function controlloPatternNome($nome){
+function controlloPatternNome(string $nome){
     $pattern = "/^[a-zA-Z][a-zA-Z0-9]*$/";
     return preg_match($pattern,$nome);
 }
-function controlloPatternCognome($cognome){
+function controlloPatternCognome(string $cognome){
     $pattern ="/^[a-zA-Z]+$/";
     return preg_match($pattern,$cognome);
 }
 
-function controlloEmail($email,$db){    
+function controlloEmail(string $email, mysqli $db){    
         $query_no_injection = "SELECT LOWER(email) FROM utente WHERE email = LOWER(?)";
         $stmt = mysqli_prepare($db, $query_no_injection);
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -37,7 +37,7 @@ function controlloEmail($email,$db){
         }
 }
 
-function controlloPassword($email, $pass,$db){
+function controlloPassword(string $email, string $pass, mysqli $db): bool{
     if(!controlloPatternPassword($pass)){
         return false;
     }
