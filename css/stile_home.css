@@ -76,7 +76,8 @@ nav {
 /* Pulsanti di navigazione */
 .prev, .next {
     position: absolute;                                                     /* Posizione assoluta per i pulsanti di navigazione */
-    top: 43%;                                                               /* Posizione verticale centrata rispetto all'immagine */
+    top: 42.5%;                                                               /* Posizione verticale centrata rispetto all'immagine */
+    transform: translateY(-50%);                                            /* Centra perfettamente il pulsante verticalmente */
     color: rgb(255, 255, 255);                                                    /* Colore dei pulsanti */
     background-color:  rgba(32, 18, 73, 0.8);                           /* Colore di sfondo semitrasparente per i pulsanti */
     box-shadow: 0 0 5px  rgba(122, 78, 255, 0.5);
@@ -107,7 +108,7 @@ nav {
     font-size: 12px;                                                        /* Dimensione del testo per il numero della slide */
     padding: 8px 12px;                                                      /* Aggiunge padding attorno al numero */
     position: absolute;                                                     /* Posizione assoluta per posizionare il numero sopra l'immagine */
-    top: 40px;                                                              /* Posiziona il numero in alto a sinistra */
+    top: 10px;                                                              /* Posiziona il numero in alto a sinistra */
     left: 10px;
     background-color: rgba(32, 18, 73, 0.8);                            /* Cambia il colore di sfondo al passaggio del mouse */
     border-radius: 5px;                                                     /* Arrotonda leggermente i bordi */
@@ -153,9 +154,9 @@ nav {
     max-width: 1200px;                                                          /* Limita la larghezza massima per una migliore distribuzione */
 }
 
-.destinations h1{
+.destinations {
     text-align: center;
-    margin-top: 13vh;
+    margin-top: 0;
 }
 
 .destination {
@@ -195,11 +196,12 @@ nav {
 /*About*/
 .about-section h2{
     text-align: center;
+    margin-top: 0;
 }
 
 .about-section p{
     text-align: center;
-    
+
 }
 
 #presentazione {
@@ -207,7 +209,7 @@ nav {
     max-width: 90%; /* Aumentata flessibilità per schermi medi */
     width: 1200px; /* Larghezza massima effettiva */
     margin: auto;
-    padding: 20px;
+    padding: 10px;
 }
 
 #presentazione h2 {
@@ -218,7 +220,7 @@ nav {
 #presentazione h3 {
     color: #444;
     font-size: 2em;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 /* Media Queries per Mobile */
@@ -236,6 +238,7 @@ nav {
     .destination {
         max-width: 90%;
         width: 100%;
+        flex: 0 1 auto;
     }
 
     .team {
@@ -334,7 +337,7 @@ footer {
     padding: 20px;               /* Distanza interna */
     text-align: center;          /* Centra il testo */
     font-size: 14px;             /* Dimensione del testo */
-    margin-top: 50px;            /* Spazio sopra il footer */
+    margin-top: 0;            /* Spazio sopra il footer */
 }
 
 .footer-content p {
