@@ -59,6 +59,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
   
   <div class="container" id="container">
     <h2>Esplora le più belle location del mondo di Dragon Ball!</h2>
+    <p>Clicca su una delle location qui sopra per esplorare i dettagli dei mondi di Dragon Ball!</p>
     <div class="locations_selector"id="locations_selector">
       <div class="location" id="location1">
         <img src="img/dragonball/kamehouse_.jpg">

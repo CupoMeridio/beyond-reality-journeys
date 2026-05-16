@@ -27,6 +27,14 @@ nav {
     padding: 20px 20px 20px;                                                   /* Aggiunge spazio intorno ai contenuti principali */
 }
 
+.container p {
+    color: #666;
+    font-size: 1.05em;
+    margin: 10px auto 20px;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
 .locations_selector {
     display: flex;                                                              /* Usa flexbox per disporre gli elementi in riga */
     justify-content: center;                                                    /* Centra gli elementi orizzontalmente */

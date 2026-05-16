@@ -193,6 +193,15 @@ nav {
     border-radius: 30px;
 }
 
+.intermezzo + p {
+    color: #666;
+    font-size: 1.05em;
+    margin: 60px auto 20px;
+    max-width: 600px;
+    line-height: 1.5;
+    text-align: center;
+}
+
 /* Container */
 .container {
     padding: 20px 20px 20px;                                                   /* Aggiunge spazio intorno ai contenuti principali */

@@ -60,6 +60,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
   
   <div class="container" id="container">
     <h2>Esplora le più belle location del mondo di JoJo's bizarre adventure: Vento Aureo</h2>
+    <p>Clicca su una delle location qui sopra per scoprire i dettagli delle ambientazioni di JojoC'!</p>
     <div class="locations_selector"id="locations_selector">
       <div class="location" id="location1">
         <img src="img/jojos/rome.jpg">

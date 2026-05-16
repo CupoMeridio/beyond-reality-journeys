@@ -61,6 +61,7 @@ if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
 <div class="intermezzo fade">
       <img src="img/doctorwho/tardis_.gif" id="intermezzo-img">
 </div>
+<p>Naviga tra le destinazioni usando le frecce e clicca sull'immagine per saperne di più!</p>
 <div class="slideshow-container">
   <div class="mySlides fade">
     <img src="img/doctorwho/gallifrey2.jpg" id="location1"> 
