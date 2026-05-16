@@ -159,6 +159,14 @@ nav {
     margin-top: 0;
 }
 
+.destinations p {
+    color: #666;
+    font-size: 1.1em;
+    margin: 10px auto 20px;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
 .destination {
     flex: 0 1 300px;                                                            /* Corretto per non allargarsi oltre il necessario */
     max-width: 300px;                                                           /* Imposta una larghezza massima per evitare immagini troppo grandi */
@@ -311,6 +319,11 @@ nav {
     border-radius: 50%;
     margin: 0 auto;
     display: block;
+    transition: transform 0.3s;
+}
+
+.team-member img:hover {
+    transform: scale(1.1);
 }
 
 .team-member h4{

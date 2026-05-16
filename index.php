@@ -73,6 +73,7 @@ include 'api/recupera_dati_utente.php';
     
     <section class="destinations">
         <h1>Our destinations</h1>
+        <p>Clicca su una delle mete qui sotto per esplorare destinazioni uniche e scoprire cosa hanno da offrirti!</p>
         <div class="destinations_selector" id="destinations_selector">
             <div class="destination" id="destination1">
                 <a href="viaggio_jojos.php"><img src="img/index/jojos.png"></a>
@@ -117,6 +118,7 @@ include 'api/recupera_dati_utente.php';
         <p>Sei pronto a partire? <br> <strong>BeyondReality Journeys</strong> ti aspetta per il viaggio della tua vita!</p>
         
         <h3>Il nostro team</h3>
+        <p>Clicca su un membro del team per scoprire di più su di lui e sui suoi contatti!</p>
         <div class="team" id="contact-section">
             <div class="team-member">
                 <a href="https://linktr.ee/ciiprosk"><div class="profile-pic"><img src="img/common/ciiprosk_profile.jpg"></div></a>

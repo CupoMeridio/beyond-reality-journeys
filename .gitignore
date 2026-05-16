@@ -1,5 +1,6 @@
 # Configurazione locale e file sensibili
 api/config.php
+settings.local.json
 .env
 
 # Dipendenze
