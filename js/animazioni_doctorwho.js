@@ -16,6 +16,7 @@ function showSlides(n) {
     let i;
     let slides = document.getElementsByClassName("mySlides"); // Ottieni tutte le slide
     let intermezzo = document.querySelector('.intermezzo');
+    let intermezzoImg = document.getElementById('intermezzo-img');
 
     // Se n è maggiore del numero di slide, torna alla prima slide
     if (n > slides.length) {
@@ -32,7 +33,7 @@ function showSlides(n) {
         slides[i].style.display = "none";
     }
 
-    // Mostra l'immagine intermezzo per 0.5s prima della slide successiva
+    // Mostra l'immagine intermezzo e forza il restart della GIF
     intermezzo.style.display = "flex";
 
     setTimeout(() => {
@@ -40,6 +41,5 @@ function showSlides(n) {
 
         // Mostra la slide corrente
         slides[slideIndex - 1].style.display = "block";
-        //dots[slideIndex - 1].className += " active";
-    }, 5000); // millisecondi di intermezzo, sincronizzato con la durata della gif
+    }, 5800); // 5.5 secondi (durata gif)
 }
