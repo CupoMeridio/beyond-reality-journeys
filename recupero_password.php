@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/api/avvio.php';
 /**
  * Recupero password in due fasi:
  *  1. l'utente inserisce l'email -> se esiste un account, riceve un codice a 6 cifre;
@@ -9,7 +10,6 @@
  * Ogni POST termina con un redirect (pattern Post/Redirect/Get) e i messaggi passano
  * in $_SESSION['reset_msg'] / $_SESSION['reset_err'], mostrati una sola volta.
  */
-session_start();
 
 include('api/validazione_generale.php');
 

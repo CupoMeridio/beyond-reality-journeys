@@ -1,12 +1,5 @@
 <?php
-// Forza l'uso di HTTPS su InfinityFree
-if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
-    $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    header('HTTP/1.1 301 Moved Permanently');
-    header('Location: ' . $location);
-    exit;
-}
-  session_start();
+require_once __DIR__ . '/api/avvio.php';
   if(isset($_SESSION['img']))
     $img=$_SESSION['img'];
   if(isset($_SESSION['username']))

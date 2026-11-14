@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/avvio.php';
 include __DIR__ . '/connessione_db.php';
 /** @var mysqli $db */
 
@@ -31,7 +31,7 @@ if ($row) {
         }
     } catch (Exception $e) {
         $_SESSION['errore'] = "Errore nel caricamento dei dati.";
-        header("Location: logout_utente.php");
+        header("Location: api/logout_utente.php");
         exit();
     }
 }

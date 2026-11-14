@@ -1,11 +1,5 @@
 <?php
-// Forza l'uso di HTTPS su InfinityFree
-if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
-    $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    header('HTTP/1.1 301 Moved Permanently');
-    header('Location: ' . $location);
-    exit;
-}
+require_once __DIR__ . '/api/avvio.php';
 
 include 'api/recupera_dati_utente.php';
 

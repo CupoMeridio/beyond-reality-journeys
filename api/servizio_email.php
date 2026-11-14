@@ -4,7 +4,7 @@
  * BeyondReality Journeys - Servizio Email tramite Brevo API
  * Sostituisce PHPMailer (SMTP) per compatibilità con InfinityFree.
  */
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/configurazione.php';
 
 // Se non sono già definite, le inizializziamo per sicurezza
 $email = $email ?? '';

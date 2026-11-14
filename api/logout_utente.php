@@ -1,9 +1,7 @@
 <?php
 // Chiude la sessione dell'utente: svuota i dati, elimina il file di sessione sul server
 // e il relativo cookie. Gli altri cookie (es. quello anti-bot di InfinityFree) restano intatti.
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
+require_once __DIR__ . '/avvio.php';
 
 $_SESSION = [];
 

@@ -1,10 +1,10 @@
 <?php
+require_once __DIR__ . '/avvio.php';
 
 require __DIR__ . '/connessione_db.php';
 /** @var mysqli $db */
 
 require __DIR__ . '/validazione_generale.php';
-session_start();
 if (!isset($_POST["action"])) {
     exit;
 }
@@ -29,7 +29,7 @@ if ($form == "reg") {
             // Limite 1MB per InfinityFree
             if ($_FILES["fotoProfilo"]['size'] > 1024 * 1024) {
                 $_SESSION['errore'] = "L'immagine è troppo grande (max 1MB).";
-                header("Location: ../autenticazione.php");
+                header("Location: autenticazione.php");
                 exit();
             }
             $img = $_FILES["fotoProfilo"]['tmp_name'];
@@ -56,11 +56,11 @@ if ($form == "reg") {
 
             if (!$result) {
                 $_SESSION['errore'] = "Impossibile conatattare il database, riprova più tardi.";
-                header("Location: ../autenticazione.php");
+                header("Location: autenticazione.php");
                 exit();
             } else {
                 $_SESSION['auth'] = "Prima di accedere autenticati";
-                header("Location: ../autenticazione.php?login&email=$email");
+                header("Location: autenticazione.php?login&email=" . urlencode($email));
                 exit();
             }
 
@@ -75,17 +75,17 @@ if ($form == "reg") {
             // Nuovo ID di sessione al login: impedisce la session fixation
             session_regenerate_id(true);
             $_SESSION['email'] = strtolower($email);
-            header("Location: ../index.php");
+            header("Location: index.php");
             exit();
         } else {
             $_SESSION['errore'] = $_SESSION['errore'] . " Password errata. ";
-            header("Location: ../autenticazione.php?login");
+            header("Location: autenticazione.php?login");
             exit();
         }
 
     } else {
         $_SESSION['errore'] = $_SESSION['errore'] . " L'email inserita non è associata ad alcun account. ";
-        header("Location: ../autenticazione.php?login");
+        header("Location: autenticazione.php?login");
         exit();
     }
 

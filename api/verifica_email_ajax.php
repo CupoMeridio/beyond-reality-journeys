@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/avvio.php';
 require __DIR__ . '/connessione_db.php';
 /** @var mysqli $db */
 

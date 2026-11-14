@@ -1,8 +1,8 @@
 <?php 
 
-session_start();
+require_once __DIR__ . '/../avvio.php';
 
-include('../connessione_db.php');
+include __DIR__ . '/../connessione_db.php';
 /** @var mysqli $db */
 
 

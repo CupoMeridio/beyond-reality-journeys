@@ -1,7 +1,7 @@
 <?php
 // Imposta l'intestazione per JSON
 header('Content-Type: application/json');
-session_start();
+require_once __DIR__ . '/../avvio.php';
 require 'configurazione_stripe.php';
 
 $email = $_SESSION['email'] ?? "ospite@example.com";

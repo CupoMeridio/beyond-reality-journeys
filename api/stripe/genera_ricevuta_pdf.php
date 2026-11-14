@@ -1,5 +1,5 @@
 <?php  
-session_start();
+require_once __DIR__ . '/../avvio.php';
 $email= $_SESSION['email'];
 $nome= $_SESSION['nome'];
 $cognome= $_SESSION['cognome'];
