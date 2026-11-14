@@ -5,6 +5,7 @@ require __DIR__ . '/connessione_db.php';
 /** @var mysqli $db */
 
 require __DIR__ . '/validazione_generale.php';
+require_once __DIR__ . '/foto_profilo_utils.php';
 if (!isset($_POST["action"])) {
     exit;
 }
@@ -12,60 +13,54 @@ if (!isset($_POST["action"])) {
 $form = $_POST["action"];
 $_SESSION['errore'] = "";
 if ($form == "reg") {
-    if (isset($_POST["nome"]) && isset($_POST["cognome"]) && isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])) {
-        $nome = $_POST["nome"];
-        $cognome = $_POST["cognome"];
-        $email = $_POST["email"];
-        $username = $_POST["username"];
+    if (isset($_POST["nome"], $_POST["cognome"], $_POST["username"], $_POST["email"], $_POST["password"])) {
+        $nome = trim($_POST["nome"]);
+        $cognome = trim($_POST["cognome"]);
+        $email = strtolower(trim($_POST["email"]));
+        $username = trim($_POST["username"]);
         $password_pre_hash = $_POST["password"];
 
-
-
-
-        $bytea = "";
-        $type = "";
-        //di sicuro prendo le variabili da un form    
-        if (($_FILES["fotoProfilo"]['tmp_name']) != null || $_FILES["fotoProfilo"]['tmp_name'] != "") {
-            // Limite 1MB per InfinityFree
-            if ($_FILES["fotoProfilo"]['size'] > 1024 * 1024) {
-                $_SESSION['errore'] = "L'immagine è troppo grande (max 1MB).";
-                header("Location: autenticazione.php");
-                exit();
-            }
-            $img = $_FILES["fotoProfilo"]['tmp_name'];
-            $type = $_FILES["fotoProfilo"]['type'];
-            $bin = file_get_contents($img);
-            $bytea = mysqli_real_escape_string($db, $bin);
-        }
-        if (controlloPatternEmail($email) && controlloPatternPassword($password_pre_hash) && controlloPatternNome($nome) && controlloPatternCognome($cognome)) {
-            $hash = password_hash($password_pre_hash, PASSWORD_DEFAULT);
-            $query_no_injection = "INSERT INTO utente (nome, cognome, username, email, password, img, type) VALUES (?, ?, ?, LOWER(?), ?, ?, ?)";
-            $stmt = mysqli_prepare($db, $query_no_injection);
-            
-            // Definiamo una variabile per il parametro long data (blob)
-            $null = null;
-            // Ordine: nome(s), cognome(s), username(s), email(s), password(s), img(b), type(s)
-            mysqli_stmt_bind_param($stmt, "sssssbs", $nome, $cognome, $username, $email, $hash, $null, $type);
-            
-            if ($bytea != "") {
-                mysqli_stmt_send_long_data($stmt, 5, $bytea);
-            }
-            
-            $result = mysqli_stmt_execute($stmt);
-
-
-            if (!$result) {
-                $_SESSION['errore'] = "Impossibile conatattare il database, riprova più tardi.";
-                header("Location: autenticazione.php");
-                exit();
-            } else {
-                $_SESSION['auth'] = "Prima di accedere autenticati";
-                header("Location: autenticazione.php?login&email=" . urlencode($email));
-                exit();
-            }
-
+        if (!(controlloPatternEmail($email) && controlloPatternPassword($password_pre_hash) && controlloPatternNome($nome) && controlloPatternCognome($cognome) && $username !== '')) {
+            $_SESSION['errore'] = "Alcuni dati non sono validi: controlla i campi e riprova.";
+            header("Location: autenticazione.php");
+            exit();
         }
 
+        try {
+            $foto = leggiFotoProfilo($_FILES["fotoProfilo"] ?? null);
+        } catch (RuntimeException $e) {
+            $_SESSION['errore'] = $e->getMessage();
+            header("Location: autenticazione.php");
+            exit();
+        }
+
+        $hash = password_hash($password_pre_hash, PASSWORD_DEFAULT);
+        $stmt = mysqli_prepare($db, "INSERT INTO utente (nome, cognome, username, email, password, img, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+        // img è un parametro "b": il contenuto arriva con send_long_data; senza foto resta NULL
+        $img = null;
+        $tipo = $foto['tipo'] ?? null;
+        mysqli_stmt_bind_param($stmt, "sssssbs", $nome, $cognome, $username, $email, $hash, $img, $tipo);
+        if ($foto !== null) {
+            inviaBlob($stmt, 5, $foto['dati']);
+        }
+
+        try {
+            mysqli_stmt_execute($stmt);
+        } catch (mysqli_sql_exception $e) {
+            $_SESSION['errore'] = $e->getCode() === 1062
+                ? "Email o username già in uso."
+                : "Impossibile contattare il database, riprova più tardi.";
+            if ($e->getCode() !== 1062) {
+                error_log("Errore registrazione: " . $e->getMessage());
+            }
+            header("Location: autenticazione.php");
+            exit();
+        }
+
+        $_SESSION['auth'] = "Registrazione completata: ora puoi accedere.";
+        header("Location: autenticazione.php?login&email=" . urlencode($email));
+        exit();
     }
 } else if ($form == "login") {
     $email = $_POST["email"];

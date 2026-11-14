@@ -215,13 +215,24 @@ const inputFile = document.getElementById("fotoProfilo");
 const previewImage = document.getElementById("immagineAnteprima");
 const MAX_FILE_SIZE = 1 * 1024 * 1024;
 
+const TIPI_AMMESSI = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+
+function scartaFile() {
+    inputFile.value = "";
+    previewImage.src = "";
+    previewImage.style.display = "none";
+}
+
 function handleFile(file) {
-    if (!file || !file.type.startsWith("image/")) {
-        alert("Per favore, carica un'immagine valida.");
+    if (!file) return;
+    if (!TIPI_AMMESSI.includes(file.type)) {
+        alert("Per favore, carica un'immagine JPG, PNG, GIF o WEBP.");
+        scartaFile();
         return;
     }
     if (file.size > MAX_FILE_SIZE) {
-        alert('Il file supera la dimensione massima consentita di 1 MB per InfinityFree.');
+        alert('Il file supera la dimensione massima consentita di 1 MB.');
+        scartaFile();
         return;
     }
 
@@ -238,7 +249,11 @@ dropArea?.addEventListener("dragleave", () => dropArea.classList.remove("drag-ov
 dropArea?.addEventListener("drop", (e) => {
     e.preventDefault();
     dropArea.classList.remove("drag-over");
-    handleFile(e.dataTransfer.files[0]);
+    // Il file trascinato va assegnato all'input, altrimenti il form non lo invia
+    if (e.dataTransfer.files.length > 0) {
+        inputFile.files = e.dataTransfer.files;
+    }
+    handleFile(inputFile.files[0]);
 });
 dropArea?.addEventListener("click", () => inputFile.click());
 inputFile?.addEventListener("change", () => handleFile(inputFile.files[0]));

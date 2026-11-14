@@ -39,7 +39,9 @@
     });
   }
 
+  // Messaggi dall'iframe di gestione_profilo.php (accettati solo dalla stessa origine)
   window.addEventListener('message', function(event) {
+    if (event.origin !== window.location.origin) return;
     if (event.data === 'operationComplete') {
       const iframe = document.getElementById("modifica");
       iframe.style.display = "none"; 

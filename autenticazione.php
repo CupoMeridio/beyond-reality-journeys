@@ -102,7 +102,7 @@ if(isset($_POST["inviato"])){
                     <label for="fotoProfilo">Foto profilo</label>
                     <div id="dropArea" class="drop-area">                                                <!-- Area per il drag-and-drop della foto -->
                         Trascina qui la tua immagine o clicca per selezionarla.
-                        <input type="file" id="fotoProfilo" name="fotoProfilo" accept="image/*" style="display: none">
+                        <input type="file" id="fotoProfilo" name="fotoProfilo" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none">
                     </div>
                     <div id="anteprimaFoto" class="anteprima-foto">                                       <!-- Anteprima della foto caricata -->
                         <img id="immagineAnteprima" src="" alt="Anteprima foto profilo" style="display: none;">
