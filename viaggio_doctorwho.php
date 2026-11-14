@@ -6,11 +6,11 @@ require_once __DIR__ . '/api/avvio.php';
     $username=$_SESSION['username'];
   if(isset($_SESSION['email']))
     $email=$_SESSION['email'];
-  //DEVO SETTARE IL MONDO
-  $_SESSION['mondo']='doctor_who';
+  // Mondo di questa pagina: arriva al JS tramite <body data-mondo> (recensioni e prenotazioni)
+  $mondo = 'doctor_who';
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
   <meta charset="UTF-8">                                                                            <!-- Definisce la codifica dei caratteri come UTF-8, per supportare caratteri speciali -->
@@ -35,6 +35,8 @@ require_once __DIR__ . '/api/avvio.php';
   <script src="js/logica_mondi.js" type="text/javascript" defer></script>   
   <script src="js/integrazione_stripe.js" type="text/javascript" defer></script>
 </head>
+
+<body data-mondo="<?= $mondo ?>">
 
 
 <?php include("components/navbar.php"); ?>
@@ -298,7 +300,5 @@ require_once __DIR__ . '/api/avvio.php';
 
 <?php include("components/footer.html"); ?>
 </body>
-
-</html>
 
 </html>

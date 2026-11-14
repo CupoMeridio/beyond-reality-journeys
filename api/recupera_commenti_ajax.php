@@ -1,48 +1,46 @@
 <?php
+/**
+ * Recensioni di un mondo (JSON), dalla successiva a $_POST['max'] in poi.
+ * Al primo caricamento (max = 0) restituisce solo le ultime RECENSIONI_INIZIALI.
+ * L'email degli autori non viene mai inviata al browser: è un dato personale.
+ */
 require_once __DIR__ . '/avvio.php';
+require_once __DIR__ . '/mondi.php';
+session_write_close(); // la sessione non serve: si libera subito il lock (le richieste sono periodiche)
 
+const RECENSIONI_INIZIALI = 50;
+
+$mondo = $_POST['mondo'] ?? null;
+if (!mondoValido($mondo)) {
+    rispondiJson(['error' => 'Mondo non valido.'], 422);
+}
+$ultimo = filter_var($_POST['max'] ?? 0, FILTER_VALIDATE_INT, ['options' => ['default' => 0, 'min_range' => 0]]);
 
 include __DIR__ . '/connessione_db.php';
 /** @var mysqli $db */
 
-$MAX=0;
-if ( isset($_POST['max']))
-    $MAX = intval($_POST['max']);
-
-
-if(!isset($_SESSION['mondo'])){
-    $query_no_injection= "SELECT email, username, testo, id_testo, mondo, stelle FROM commento WHERE id_testo > ? ORDER BY id_testo ASC";
-    $stmt = mysqli_prepare($db, $query_no_injection);
-    mysqli_stmt_bind_param($stmt, "i", $MAX);
-}else{
-    $query_no_injection = "SELECT email, username, testo, id_testo, mondo, stelle FROM commento WHERE (id_testo > ?) AND (mondo = ?) ORDER BY id_testo ASC";
-    $stmt = mysqli_prepare($db, $query_no_injection);
-    mysqli_stmt_bind_param($stmt, "is", $MAX, $_SESSION['mondo']);
-}
-
-if ($stmt) {
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+if ($ultimo === 0) {
+    // Ultime N in ordine cronologico
+    $stmt = mysqli_prepare($db,
+        "SELECT * FROM (SELECT id_testo, username, testo, stelle FROM commento WHERE mondo = ?
+                        ORDER BY id_testo DESC LIMIT " . RECENSIONI_INIZIALI . ") ultime ORDER BY id_testo");
+    mysqli_stmt_bind_param($stmt, "s", $mondo);
 } else {
-    http_response_code(500);
-    echo json_encode(["error" => "Errore nel recupero dei commenti"]);
-    exit;
+    $stmt = mysqli_prepare($db, "SELECT id_testo, username, testo, stelle FROM commento WHERE mondo = ? AND id_testo > ? ORDER BY id_testo");
+    mysqli_stmt_bind_param($stmt, "si", $mondo, $ultimo);
 }
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-$out = [];
+$commenti = [];
 while ($row = mysqli_fetch_assoc($result)) {
-    $entry = [
-        "email" => $row['email'],
-        "username" =>$row['username'],
-        "testo" => $row['testo'], // Già sanitizzato in fase di salvataggio, ma il frontend lo sanitizza di nuovo per sicurezza
-        "id_testo" => $row['id_testo'],
-        "stelle" => intval($row['stelle']),
-        "mondo" => $row['mondo']
+    $commenti[] = [
+        'id_testo' => (int) $row['id_testo'],
+        'username' => $row['username'],
+        'testo' => $row['testo'],
+        'stelle' => max(1, min(5, (int) $row['stelle'])),
     ];
-    $out[] = $entry;
 }
-echo json_encode($out);
-
 mysqli_close($db);
 
-?>
+rispondiJson($commenti);

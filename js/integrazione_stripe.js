@@ -82,6 +82,7 @@
             data_r: fd.get('return-date') ?? '',
             nominativi: JSON.stringify(nominativi),
             commento: fd.get('comments') ?? '',
+            mondo: document.body.dataset.mondo ?? '',
         };
     }
 

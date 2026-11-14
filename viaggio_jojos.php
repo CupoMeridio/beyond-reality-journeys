@@ -6,8 +6,8 @@ require_once __DIR__ . '/api/avvio.php';
     $username=$_SESSION['username'];
   if(isset($_SESSION['email']))
     $email=$_SESSION['email'];
-  //DEVO SETTARE IL MONDO
-  $_SESSION['mondo']='jojo';
+  // Mondo di questa pagina: arriva al JS tramite <body data-mondo> (recensioni e prenotazioni)
+  $mondo = 'jojo';
 ?>
 <!DOCTYPE html>
 <html lang="it">                                                                                        <!-- Specifica il tipo di documento come HTML5 e imposta la lingua della pagina su italiano -->
@@ -35,7 +35,7 @@ require_once __DIR__ . '/api/avvio.php';
     <script src="js/integrazione_stripe.js" type="text/javascript" defer></script>
   </head>
 
-<body>                                                                                                  <!-- Corpo del documento, dove vengono definiti i contenuti visibili sulla pagina -->
+<body data-mondo="<?= $mondo ?>">                                                                                                  <!-- Corpo del documento, dove vengono definiti i contenuti visibili sulla pagina -->
    <?php include 'components/navbar.php'; ?>
   
    <?php include 'components/dashboard.html'; ?>

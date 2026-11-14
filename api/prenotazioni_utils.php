@@ -4,31 +4,7 @@
  * recupera_prenotazioni.php e genera_ricevuta_pdf.php.
  * Il server è l'unica fonte di verità: destinazioni, limiti e prezzo non arrivano dal client.
  */
-
-/** Destinazioni prenotabili per ogni mondo: valore del form => nome mostrato. */
-const DESTINAZIONI = [
-    'jojo' => [
-        'roma' => 'Roma',
-        'venezia' => 'Venezia',
-        'napoli' => 'Napoli',
-    ],
-    'doctor_who' => [
-        'Gallifrey' => 'Gallifrey',
-        'Skaro' => 'Skaro',
-        'Prigione_dei_signori_del_tempo' => 'Prigione dei signori del tempo',
-    ],
-    'dragon_ball' => [
-        'kame_house' => 'Kame House',
-        'namecc' => 'Namecc',
-        'king_kai' => 'Pianeta di King Kai',
-    ],
-];
-
-const NOMI_MONDI = [
-    'jojo' => "JoJo's Bizarre Adventure",
-    'doctor_who' => 'Doctor Who',
-    'dragon_ball' => 'Dragon Ball',
-];
+require_once __DIR__ . '/mondi.php';
 
 const BIGLIETTI_MAX = 10;
 const DURATA_MAX_GIORNI = 365;
@@ -76,7 +52,7 @@ function leggiData(string $valore): ?DateTimeImmutable
 function validaPrenotazione(array $input, string $mondo): array
 {
     if (!isset(DESTINAZIONI[$mondo])) {
-        throw new InvalidArgumentException("Mondo non valido: riapri la pagina del viaggio.");
+        throw new InvalidArgumentException("Mondo non valido: ricarica la pagina del viaggio.");
     }
 
     $destinazione = (string) ($input['location'] ?? '');
@@ -136,13 +112,4 @@ function validaPrenotazione(array $input, string $mondo): array
         'giorni' => $giorni,
         'importo' => calcolaImportoCentesimi($giorni, $biglietti),
     ];
-}
-
-/** Risposta JSON con codice HTTP, poi fine dello script. */
-function rispondiJson(array $dati, int $codice = 200): void
-{
-    http_response_code($codice);
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($dati, JSON_UNESCAPED_UNICODE);
-    exit();
 }

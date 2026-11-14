@@ -16,7 +16,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 try {
-    $prenotazione = validaPrenotazione($_POST, $_SESSION['mondo'] ?? '');
+    $prenotazione = validaPrenotazione($_POST, (string) ($_POST['mondo'] ?? ''));
 } catch (InvalidArgumentException $e) {
     rispondiJson(['error' => $e->getMessage()], 422);
 }

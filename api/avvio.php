@@ -35,3 +35,12 @@ if (session_status() === PHP_SESSION_NONE) {
     ]);
     session_start();
 }
+
+/** Risposta JSON con codice HTTP, poi fine dello script. */
+function rispondiJson(array $dati, int $codice = 200): void
+{
+    http_response_code($codice);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($dati, JSON_UNESCAPED_UNICODE);
+    exit();
+}
