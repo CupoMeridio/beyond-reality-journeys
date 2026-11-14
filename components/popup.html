@@ -1,28 +1,37 @@
-<div id="popup">
+<div id="popup" role="dialog" aria-modal="true" aria-labelledby="titolo-pagamento">
   <div id="pagamento_con_stripe" style="display: none;">
-    <h1>Pagamento con Stripe</h1>
+    <h1 id="titolo-pagamento">Pagamento con Stripe</h1>
+
+    <p class="avviso-demo">
+      <strong>Sito dimostrativo: nessun addebito reale.</strong><br>
+      Usa la carta di prova <code>4242 4242 4242 4242</code>, una data di scadenza futura e un CVC qualsiasi.
+      Le carte reali vengono rifiutate.
+    </p>
+
+    <!-- Fase 1: dati della carta -->
     <form method="post" id="payment-form">
+      <p id="riepilogo-prenotazione" class="riepilogo"></p>
       <div class="form-row">
-        <label for="fullname">
-          Nome Completo
-        </label>
-        <input type="text" id="fullname" name="fullname" value="" autocomplete="name">
-        <input type="hidden" id="importo" name="importo" value="">
+        <label for="fullname">Nome Completo</label>
+        <input type="text" id="fullname" name="fullname" value="" autocomplete="name" required>
       </div>
       <div class="form-row">
-        <span id="card-label" class="stripe-label">
-          Carta di credito o debito
-        </span>
+        <span id="card-label" class="stripe-label">Carta di credito o debito</span>
         <div id="card-element" aria-labelledby="card-label">
-          <!-- A Stripe Element will be inserted here. -->
+          <!-- Qui Stripe inserisce il campo della carta -->
         </div>
-
-        <!-- Used to display Element errors. -->
         <div id="card-errors" role="alert"></div>
       </div>
 
-      <button id="close-button">Chiudi</button>
-      <button id="submit-button">Conferma pagamento</button>
+      <button type="button" id="close-button">Chiudi</button>
+      <button type="submit" id="submit-button">Conferma pagamento</button>
     </form>
+
+    <!-- Fase 2: prenotazione confermata -->
+    <div id="pagamento-completato" style="display: none;">
+      <p class="riepilogo">Prenotazione completata! Preparati al decollo!</p>
+      <p><a id="link-ricevuta" class="link-ricevuta" href="#">Scarica la ricevuta (PDF)</a></p>
+      <button type="button" id="close-button-completato">Chiudi</button>
+    </div>
   </div>
-  </div>
+</div>

@@ -208,7 +208,7 @@ require_once __DIR__ . '/api/avvio.php';
 <div class="booking-section" style="clear: both;">
   <h2>Prenota il Tuo Viaggio Fantastico!</h2>
   <div id="form-container"> <!-- Contenitore per il form -->
-  <form id="booking-form" onsubmit="return calcolaprezzo(event)">
+  <form id="booking-form">
     <label for="tickets-count">Numero di Biglietti:</label>
     <input type="number" id="tickets-count" name="tickets-count" min="1" max="10" value="1" required autocomplete="off" tabindex="<?php echo !isset($email) ? '-1' : '0'; ?>">
     

@@ -1,174 +1,171 @@
-    let form_prenotazione = document.getElementById('booking-form');
-    let pag_stripe = document.getElementById('pagamento_con_stripe');
-    let stripe, elements, cardElement;
+/**
+ * BeyondReality Journeys - Prenotazione e pagamento con Stripe (solo modalità test).
+ *
+ * 1. Invio del form di prenotazione -> crea_pagamento.php valida i dati, calcola il prezzo
+ *    e crea il PaymentIntent; il popup mostra l'importo calcolato dal server.
+ * 2. Conferma nel popup -> Stripe addebita la carta di prova (confirmCardPayment).
+ * 3. conferma_prenotazione.php verifica il pagamento con Stripe e salva la prenotazione.
+ * 4. Il popup offre il link alla ricevuta PDF: è un clic dell'utente, quindi non viene bloccato.
+ */
+(() => {
+    const formPrenotazione = document.getElementById('booking-form');
+    const popup = document.getElementById('popup');
+    const pannelloStripe = document.getElementById('pagamento_con_stripe');
+    const formPagamento = document.getElementById('payment-form');
+    const pannelloCompletato = document.getElementById('pagamento-completato');
+    if (!formPrenotazione || !popup || !formPagamento) return;
 
-    const MAX = 101;
+    const bottonePrenota = document.getElementById('submit-form-button');
+    const bottonePaga = document.getElementById('submit-button');
+    const erroriCarta = document.getElementById('card-errors');
+    const riepilogo = document.getElementById('riepilogo-prenotazione');
+    const linkRicevuta = document.getElementById('link-ricevuta');
 
-    // Inizializza Stripe solo quando necessario
-    async function inizializzaStripe() {
-        if (stripe) return; // Già inizializzato
+    let stripe = null;
+    let elementoCarta = null;
+    let clientSecret = null;
+    let idPagamento = null;
+    let cartaAddebitata = false; // se la conferma lato server fallisce, si riprova senza riaddebitare
 
-        // Carica dinamicamente lo script di Stripe se non è presente
+    /** POST form-urlencoded che restituisce sempre il JSON, anche con codici di errore. */
+    async function postJson(url, dati) {
+        const risposta = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(dati).toString(),
+        });
+        let json;
+        try {
+            json = await risposta.json();
+        } catch {
+            throw new Error('Risposta non valida dal server.');
+        }
+        if (!risposta.ok || json.error) {
+            throw new Error(json.error || `Errore HTTP ${risposta.status}`);
+        }
+        return json;
+    }
+
+    async function caricaStripe(chiavePubblica) {
+        if (stripe) return;
+        if (!chiavePubblica.startsWith('pk_test_')) {
+            throw new Error('Pagamenti disabilitati: il sito funziona solo in modalità test.');
+        }
         if (typeof Stripe === 'undefined') {
             await new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.src = 'https://js.stripe.com/v3/';
                 script.onload = resolve;
-                script.onerror = reject;
+                script.onerror = () => reject(new Error('Impossibile caricare Stripe.'));
                 document.head.appendChild(script);
             });
         }
-
-        stripe = Stripe('pk_test_51TLVWQFXztomsFI9FjM50aWflNeIU8Swoq6T6MB9RfBFoXRCx3EKrO63n101Y9nzhynNNsBrLfXlNxW5wSSUDgHI00SafNbcvN');
-        elements = stripe.elements();
-        cardElement = elements.create('card');
-        cardElement.mount('#card-element');
-
-        const cardErrors = document.getElementById("card-errors");
-        cardElement.on('change', (event) => {
-            cardErrors.textContent = event.error ? event.error.message : '';
+        stripe = Stripe(chiavePubblica);
+        elementoCarta = stripe.elements().create('card');
+        elementoCarta.mount('#card-element');
+        elementoCarta.on('change', (e) => {
+            erroriCarta.textContent = e.error ? e.error.message : '';
         });
     }
 
-    function prendiDatiAggiuntivi() {
-        let formData = new FormData(form_prenotazione);
-        let num_biglietti = parseInt(formData.get('tickets-count'));
-        let stringa = []; 
-
-        for (let i = 0; i < num_biglietti; i++) {
-            const nameEl = document.getElementById("ticket-name-" + i);
-            if (nameEl) {
-                stringa[i] = "nominativo" + i + ":" + nameEl.value;
-            }
+    function datiPrenotazione() {
+        const fd = new FormData(formPrenotazione);
+        const biglietti = parseInt(fd.get('tickets-count'), 10) || 1;
+        const nominativi = [];
+        for (let i = 0; i < biglietti; i++) {
+            nominativi.push(document.getElementById('ticket-name-' + i)?.value ?? '');
         }
-    
-        const commentsEl = document.getElementById('comments');
-        if (commentsEl) {
-            stringa[num_biglietti] = "commento:" + commentsEl.value;
-        }
-    
-        return JSON.stringify(stringa);
+        return {
+            num_biglietti: biglietti,
+            location: fd.get('location') ?? '',
+            data_p: fd.get('departure-date') ?? '',
+            data_r: fd.get('return-date') ?? '',
+            nominativi: JSON.stringify(nominativi),
+            commento: fd.get('comments') ?? '',
+        };
     }
 
-    async function calcolaprezzo(event) {
-        event.preventDefault(); 
-        
-        // Inizializziamo Stripe solo quando l'utente clicca su Prenota
-        await inizializzaStripe();
-
-        if (pag_stripe) {
-            pag_stripe.style.display = "block";
-        }
-        document.getElementById('popup').classList.add("open");
-
-        let formData = new FormData(form_prenotazione);
-        let num_biglietti = parseInt(formData.get('tickets-count')) || 1;
-        let data_p = Date.parse(formData.get('departure-date'));
-        let data_r = Date.parse(formData.get('return-date'));
-        let bottone_stripe = document.getElementById('submit-button');
-        let importoInput = document.getElementById('importo');
-        let prenotazioneBtn = document.getElementById('submit-form-button');
-
-        if (isNaN(data_p) || isNaN(data_r)) {
-            alert("Per favore, inserisci una data di partenza e ritorno valida.");
-            return false;
-        }
-
-        const diffTime = Math.abs(data_r - data_p);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
-        let saldo_tot = (diffDays * num_biglietti * 50) + 5;
-
-        bottone_stripe.textContent = `Prenota il tuo viaggio a soli ${saldo_tot}€`;
-        importoInput.value = saldo_tot * 100; // In centesimi per Stripe
-        prenotazioneBtn.disabled = true;
-        
-        return false;
+    function apriPopup() {
+        pannelloStripe.style.display = 'block';
+        formPagamento.style.display = 'block';
+        pannelloCompletato.style.display = 'none';
+        popup.classList.add('open');
     }
 
-    // Gestione chiusura e submit
-    document.addEventListener('DOMContentLoaded', function() {
-        const closeBttn = document.getElementById('close-button');
-        const paymentForm = document.getElementById('payment-form');
-        const cardErrors = document.getElementById("card-errors");
+    function chiudiPopup() {
+        popup.classList.remove('open');
+        pannelloStripe.style.display = 'none';
+        formPagamento.reset();
+        elementoCarta?.clear();
+        erroriCarta.textContent = '';
+        bottonePaga.disabled = false;
+        bottonePrenota.disabled = false;
+        clientSecret = null;
+        idPagamento = null;
+        cartaAddebitata = false;
+    }
 
-        closeBttn?.addEventListener("click", (event) => {
-            event.preventDefault();
-            document.getElementById('popup').classList.remove("open");
-            if (pag_stripe) pag_stripe.style.display = "none";
-            document.getElementById('submit-form-button').disabled = false;
-            if (paymentForm) paymentForm.reset();
-            if (cardElement) cardElement.clear();
-            if (cardErrors) cardErrors.textContent = '';
-        });
-
-        paymentForm?.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const submitBtn = document.getElementById('submit-button');
-            submitBtn.disabled = true;
-
-            let formData = new FormData(form_prenotazione);
-            const num_biglietti = formData.get('tickets-count') || 1;
-            const data_p = formData.get('departure-date');
-            const data_r = formData.get('return-date');
-
-            try {
-                const responseData = await Utils.postData("api/stripe/crea_pagamento.php", {
-                    num_biglietti: num_biglietti,
-                    data_p: data_p,
-                    data_r: data_r,
-                    fullname: paymentForm.fullname.value
-                });
-
-                const response = JSON.parse(responseData);
-                if (response.error) throw new Error(response.error);
-
-                const clientSecret = response.clientSecret;
-
-                const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-                    payment_method: {
-                        card: cardElement,
-                        billing_details: {
-                            name: paymentForm.fullname.value,
-                        },
-                    },
-                });
-
-                if (error) {
-                    cardErrors.textContent = `Errore durante il pagamento: ${error.message}`;
-                    submitBtn.disabled = false;
-                } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-                    alert('Prenotazione completata con successo! Preparati al decollo!');
-                    document.getElementById('popup').classList.remove("open");
-                    await aggiornaPrenotazione();
-                    window.open('api/stripe/genera_ricevuta_pdf.php', '_blank');
-                    if (pag_stripe) pag_stripe.style.display = "none";
-                    document.getElementById('submit-form-button').disabled = false;
-                }
-            } catch (e) {
-                console.error('Errore nel processo di pagamento:', e);
-                cardErrors.textContent = 'Errore durante la creazione del pagamento.';
-                submitBtn.disabled = false;
-            }
-        });
+    // 1. Prenota: il server valida, calcola il prezzo e crea il pagamento
+    formPrenotazione.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        bottonePrenota.disabled = true;
+        try {
+            const risposta = await postJson('api/stripe/crea_pagamento.php', datiPrenotazione());
+            await caricaStripe(risposta.publishableKey);
+            clientSecret = risposta.clientSecret;
+            idPagamento = clientSecret.split('_secret_')[0];
+            riepilogo.textContent = `${risposta.riepilogo} · Totale ${risposta.importoFormattato}`;
+            bottonePaga.textContent = `Paga ${risposta.importoFormattato}`;
+            apriPopup();
+        } catch (errore) {
+            alert(errore.message);
+            bottonePrenota.disabled = false;
+        }
     });
 
-    async function aggiornaPrenotazione() {
-        let formData = new FormData(form_prenotazione);
-        const importoInput = document.getElementById('importo');
+    // 2-3. Pagamento con la carta di prova, poi verifica e salvataggio lato server
+    formPagamento.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!clientSecret) return;
+        bottonePaga.disabled = true;
+        erroriCarta.textContent = '';
 
-        const dati = {
-            numbiglietti: formData.get('tickets-count'),
-            location: formData.get('location'),
-            datap: formData.get('departure-date'),
-            datar: formData.get('return-date'),
-            dati: prendiDatiAggiuntivi(),
-            prezzo: importoInput.value
-        };
+        if (!cartaAddebitata) {
+            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elementoCarta,
+                    billing_details: { name: formPagamento.fullname.value },
+                },
+            });
+
+            if (error) {
+                erroriCarta.textContent = `Errore durante il pagamento: ${error.message}`;
+                bottonePaga.disabled = false;
+                return;
+            }
+            if (paymentIntent?.status !== 'succeeded') {
+                erroriCarta.textContent = 'Il pagamento non è stato completato.';
+                bottonePaga.disabled = false;
+                return;
+            }
+            cartaAddebitata = true;
+        }
 
         try {
-            const result = await Utils.postData('api/stripe/salva_prenotazione.php', dati);
-            console.log("Prenotazione salvata:", result);
-        } catch (error) {
-            console.error("Errore nel salvataggio della prenotazione:", error);
+            const risposta = await postJson('api/stripe/conferma_prenotazione.php', { payment_intent: idPagamento });
+            linkRicevuta.href = `api/stripe/genera_ricevuta_pdf.php?id=${encodeURIComponent(risposta.id_prenotazione)}`;
+            formPagamento.style.display = 'none';
+            pannelloCompletato.style.display = 'block';
+            formPrenotazione.reset();
+            // rigenera i campi dei passeggeri per il numero di biglietti predefinito
+            document.getElementById('tickets-count')?.dispatchEvent(new Event('input'));
+        } catch (errore) {
+            // La conferma è idempotente: si può riprovare senza rischio di doppie prenotazioni
+            erroriCarta.textContent = `${errore.message} Premi di nuovo per riprovare (la carta non verrà riaddebitata).`;
+            bottonePaga.disabled = false;
         }
-    }
+    });
+
+    document.getElementById('close-button').addEventListener('click', chiudiPopup);
+    document.getElementById('close-button-completato').addEventListener('click', chiudiPopup);
+})();

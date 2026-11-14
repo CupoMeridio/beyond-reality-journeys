@@ -9,6 +9,7 @@
  */
 require_once __DIR__ . '/configurazione.php';
 
+date_default_timezone_set('Europe/Rome');
 error_reporting(E_ALL);
 ini_set('display_errors', AMBIENTE_LOCALE ? '1' : '0');
 

@@ -15,6 +15,9 @@
           <th>Destinazione</th>
           <th>Data di partenza</th>
           <th>Data di ritorno</th>
+          <th>Biglietti</th>
+          <th>Totale</th>
+          <th>Ricevuta</th>
         </tr>
       </thead>
       <tbody id="tabellaPrenotazioni">
@@ -103,10 +106,13 @@
         prenotazioni.forEach(p => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${p.id_prenotazione}</td>
+            <td>${Number(p.id_prenotazione)}</td>
             <td>${Utils.sanitizeHTML(p.destinazione)}</td>
             <td>${Utils.sanitizeHTML(p.data_p)}</td>
             <td>${Utils.sanitizeHTML(p.data_r)}</td>
+            <td>${Number(p.num_biglietti)}</td>
+            <td>${Utils.sanitizeHTML(p.importo)}</td>
+            <td><a href="api/stripe/genera_ricevuta_pdf.php?id=${Number(p.id_prenotazione)}">PDF</a></td>
           `;
           tableBody.appendChild(row);
           id_ultima_prenotazione = Math.max(id_ultima_prenotazione, p.id_prenotazione);

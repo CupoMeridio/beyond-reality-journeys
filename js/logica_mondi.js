@@ -111,18 +111,3 @@ document.addEventListener('click', function(event) {
     }
     }
 });
-
-/*Login popup*/
-const openBtn = document.getElementById("submit-button");
-const closeBtn = document.getElementById("close-button");
-const popup = document.getElementById("popup");
-
-openBtn.addEventListener("click", () => {
-    popup.classList.add("open");
-});
-
-closeBtn.addEventListener("click", () => {
-    popup.classList.remove("open");
-});
-
-

@@ -14,14 +14,21 @@ CREATE TABLE IF NOT EXISTS utente (
     data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabella prenotazioni
+-- Tabella prenotazioni: una riga per prenotazione (non per biglietto)
 CREATE TABLE IF NOT EXISTS prenotazione (
     id_prenotazione INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
-    data VARCHAR(100) NOT NULL, -- Formato legacy: {data_p,data_r}
+    mondo VARCHAR(50) NOT NULL,
     destinazione VARCHAR(100) NOT NULL,
+    data_partenza DATE NOT NULL,
+    data_ritorno DATE NOT NULL,
+    num_biglietti TINYINT UNSIGNED NOT NULL,
+    nominativi TEXT NOT NULL,                       -- array JSON dei nomi dei passeggeri
+    commento TEXT,
+    importo_centesimi INT UNSIGNED NOT NULL,        -- importo verificato su Stripe
+    payment_intent_id VARCHAR(255) NOT NULL UNIQUE, -- una prenotazione per pagamento
     data_prenotazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (email) REFERENCES utente(email) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
