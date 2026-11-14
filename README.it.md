@@ -1,14 +1,18 @@
-[![it](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/CupoMeridio/Sito-di-viaggi---Tecnologie-Web---UNISA-2024-2025/blob/main/README.md)
+[![it](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/CupoMeridio/beyond-reality-journeys/blob/main/README.md)
 
-*Click on the flag above to switch between Italian and English versions.*
+*Clicca sulla bandiera per passare alla versione inglese.*
 
 # BeyondReality Journeys - Progetto di Tecnologie Web (UNISA 2024-2025)
 <img width="1213" height="454" alt="Immagine 2026-04-03 173918" src="https://github.com/user-attachments/assets/182d6dfa-36cd-41cc-8090-22a0af62a9fc" />
 
 ## Descrizione del Progetto
-Il presente repository contiene il codice sorgente per un'applicazione web dedicata alla gestione e prenotazione di viaggi fantasy. Il progetto è stato realizzato come prova d'esame per il corso di **Tecnologie Web** dell'Università degli Studi di Salerno (UNISA).
+Applicazione web per la prenotazione di viaggi in mondi di fantasia (JoJo's Bizarre Adventure, Doctor Who, Dragon Ball), realizzata come prova d'esame per il corso di **Tecnologie Web** dell'Università degli Studi di Salerno (UNISA) e poi ripresa per essere pubblicata online.
 
-L'architettura segue il modello client-server, implementando i fondamenti di **HTML5**, **CSS3** e **JavaScript** per il frontend, con una logica di backend basata su **PHP** e gestione della persistenza tramite **MySQL/MariaDB**.
+Il sito è **dimostrativo**: serve a mostrare i fondamenti delle tecnologie web (HTML5, CSS3, JavaScript, PHP, MySQL). **I viaggi non esistono e nessun pagamento è reale**: Stripe funziona esclusivamente in modalità test.
+
+🌐 Demo online: **https://beyondreality-viaggi.rf.gd/**
+
+> 💳 Per provare il pagamento usa la carta di prova `4242 4242 4242 4242`, una data di scadenza futura e un CVC qualsiasi. Le carte reali vengono rifiutate.
 
 ## 📸Galleria
 <table align="center">
@@ -45,84 +49,114 @@ L'architettura segue il modello client-server, implementando i fondamenti di **H
 </table>
 
 ---
-## Caratteristiche Tecniche e Implementazione
 
-### 1. Gestione Utenti e Autenticazione
-- **Registrazione e Login**: Implementati tramite script PHP ([elabora_autenticazione.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/elabora_autenticazione.php)) che gestiscono la validazione dei dati lato server e l'hashing delle password tramite `password_hash()`.
-- **Sessioni**: Utilizzo di `session_start()` per il mantenimento dello stato dell'utente e la gestione dei permessi di accesso alle aree riservate.
-- **Profilo Utente**: Supporto per il caricamento e la visualizzazione di immagini di profilo memorizzate come dati `BLOB` nel database MySQL.
+## Caratteristiche Tecniche
 
-### 2. Sistema di Prenotazione e Pagamento
-- **Gestione Prenotazioni**: Logica di inserimento e recupero dati ([salva_prenotazione.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/stripe/salva_prenotazione.php)) per la memorizzazione dei dettagli di viaggio associati all'account utente.
-- **Integrazione Stripe**: Implementazione dell'API di pagamento **Stripe** ([crea_pagamento.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/stripe/crea_pagamento.php)) per l'elaborazione sicura delle transazioni tramite `PaymentIntent` con calcolo del prezzo lato server.
-- **Generazione Documentazione**: Utilizzo della libreria **FPDF** ([genera_ricevuta_pdf.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/stripe/genera_ricevuta_pdf.php)) per la creazione dinamica di ricevute in formato PDF al termine dell'acquisto.
+### 1. Utenti e autenticazione
+- **Registrazione e login** ([elabora_autenticazione.php](api/elabora_autenticazione.php)): validazione lato client e lato server, password con `password_hash()`, query preparate, nuovo ID di sessione a ogni login.
+- **Sessioni** ([avvio.php](api/avvio.php)): avvio comune a tutte le pagine, cookie `HttpOnly` e `SameSite=Lax`, HTTPS forzato in produzione.
+- **Recupero password** ([recupero_password.php](recupero_password.php)): codice a 6 cifre inviato via email, valido 5 minuti, con al massimo 5 tentativi.
+- **Foto profilo** ([foto_profilo_utils.php](api/foto_profilo_utils.php)): salvata come `BLOB`, formato verificato sul contenuto (JPG, PNG, GIF, WEBP, max 1 MB) e servita da un endpoint dedicato con cache del browser.
 
-### 3. Interazioni Asincrone e Feedback
-- **AJAX**: Utilizzo di `fetch` ([gestione_commenti.js](file:///c:/xampp/htdocs/Sito_di_viaggi/js/gestione_commenti.js), [verifica_email_ajax.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/verifica_email_ajax.php)) per l'invio e il recupero di dati senza ricaricare la pagina, specificamente per:
-  - Validazione in tempo reale dell'email in fase di registrazione.
-  - Caricamento e pubblicazione di commenti e recensioni.
-- **Sistema di Recensioni**: Archiviazione e visualizzazione di feedback utente tramite endpoint AJAX dedicati.
+### 2. Prenotazioni e pagamento (Stripe in modalità test)
+- **Il server è l'unica fonte di verità** ([prenotazioni_utils.php](api/prenotazioni_utils.php)): destinazioni, date, numero di biglietti e prezzo vengono validati e calcolati lato server.
+- **Flusso di pagamento**:
+  1. [crea_pagamento.php](api/stripe/crea_pagamento.php) crea il `PaymentIntent`;
+  2. il browser conferma il pagamento con Stripe.js ([integrazione_stripe.js](js/integrazione_stripe.js));
+  3. [conferma_prenotazione.php](api/stripe/conferma_prenotazione.php) verifica con Stripe che il pagamento sia riuscito e salva la prenotazione una sola volta.
+- **Solo modalità test**: con chiavi Stripe non di test ([configurazione_stripe.php](api/stripe/configurazione_stripe.php)) i pagamenti vengono disabilitati.
+- **Ricevuta PDF** ([genera_ricevuta_pdf.php](api/stripe/genera_ricevuta_pdf.php)): generata con FPDF dai dati salvati, scaricabile anche dallo storico ordini.
 
-### 4. Comunicazioni e Notifiche
-- **PHPMailer**: Integrazione della libreria **PHPMailer** ([servizio_email.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/servizio_email.php)) per l'invio di notifiche email via protocollo SMTP (Brevo/Gmail).
+### 3. Interazioni asincrone (AJAX con `fetch`)
+- Verifica in tempo reale della disponibilità dell'email in registrazione ([verifica_email_ajax.php](api/verifica_email_ajax.php)).
+- Recensioni per ogni mondo ([gestione_commenti.js](js/gestione_commenti.js)):
+  - aggiornate periodicamente, solo quando la scheda è visibile;
+  - testo mostrato in modo sicuro (`textContent`);
+  - email degli autori mai esposte.
+- Storico ordini e modifica dell'account dalla dashboard utente, senza ricaricare la pagina.
+
+### 4. Email
+- Invio tramite l'**API HTTP di Brevo** ([servizio_email.php](api/servizio_email.php)), compatibile con InfinityFree, dove l'SMTP in uscita non è disponibile.
+- In locale si può attivare la modalità "solo log", che scrive le email nel log di PHP invece di inviarle.
 
 ---
 
 ## Tecnologie Utilizzate
-
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla).
-- **Backend**: PHP 8.x.
-- **Database**: MySQL/MariaDB (tramite estensione `mysqli`).
-- **Librerie Esterne** (gestite via Composer):
-  - [Stripe PHP SDK](https://github.com/stripe/stripe-php)
-  - [PHPMailer](https://github.com/PHPMailer/PHPMailer)
-  - [FPDF](http://www.fpdf.org/)
+- **Frontend**: HTML5, CSS3, JavaScript (vanilla).
+- **Backend**: PHP ≥ 8.1 (estensioni `mysqli`, `curl`, `mbstring`, `json`).
+- **Database**: MySQL / MariaDB.
+- **Librerie** (via Composer): [Stripe PHP SDK](https://github.com/stripe/stripe-php), [FPDF](http://www.fpdf.org/).
+- **Servizi esterni**: Stripe (modalità test), Brevo (email transazionali).
+- **Hosting**: InfinityFree.
 
 ---
 
-## Configurazione dell'Ambiente
+## Esecuzione in locale (XAMPP)
+1. Clona il repository in `C:\xampp\htdocs\Sito_di_viaggi`.
+2. Installa le dipendenze:
+   ```bash
+   composer install
+   ```
+   Senza Composer installato, scarica `composer.phar` e lancia `php composer.phar install`.
+3. Avvia **Apache** e **MySQL** dal pannello di XAMPP.
+4. Crea il database `sito_viaggi_fantasia` e importa [sql/database.sql](sql/database.sql), per esempio da phpMyAdmin.
+5. Crea la configurazione:
+   - copia `api/config.example.php` in **`api/config.php`** e inserisci le chiavi Stripe **di test** e Brevo;
+   - copia lo stesso file anche in **`api/config.local.php`**, lasciando solo le costanti del database locale (`root` senza password).
 
-### Requisiti
-- Server HTTP (Apache) con supporto PHP.
-- Istanza MySQL attiva.
-- Estensioni PHP abilitate: `mysqli`, `curl`, `openssl`.
+   Il file `config.local.php` viene letto solo su `localhost`, quindi puoi tenere nello stesso progetto i valori locali e quelli di produzione. Per provare il recupero password senza Brevo, aggiungi a `config.local.php` la costante `EMAIL_SOLO_LOG`: le email finiscono nel log di PHP.
+6. Apri **http://localhost/Sito_di_viaggi/**. In locale HTTPS non viene forzato.
 
-### Parametri di Configurazione
-Le credenziali del database e le chiavi API devono essere configurate nel file [config.php](file:///c:/xampp/htdocs/Sito_di_viaggi/api/config.php) (creato a partire da `config.example.php`). Il progetto utilizza un sistema di configurazione centralizzato per database, Stripe e servizi email.
+## Pubblicazione (InfinityFree)
+1. Esegui `composer install --no-dev` in locale: InfinityFree non ha Composer, quindi la cartella `vendor/` va caricata.
+2. Carica via FTP tutti i file del progetto, **incluso `vendor/`** e il tuo `api/config.php` di produzione, **escluso `api/config.local.php`**.
+3. Al primo avvio importa [sql/database.sql](sql/database.sql). Se il database esiste già, esegui gli script in [sql/migrazioni/](sql/migrazioni/), ognuno **una sola volta**.
 
-### Schema del Database (Logico)
-- **utente**: `(id_utente, nome, cognome, username, email, password, img, type)`
-- **prenotazione**: `(id_prenotazione, email, nome, cognome, destinazione, data)`
-- **commento**: `(id_commento, email, username, testo, mondo, stelle)`
+Il file [.htaccess](.htaccess) impedisce l'accesso via web a `vendor/`, `sql/`, ai file di configurazione e di Composer.
 
 ---
 
-## Struttura del Workspace
+## Schema del Database
+Definito in [sql/database.sql](sql/database.sql):
+- **utente**: `id, nome, cognome, username (unico), email (unica), password (hash), img (BLOB), type, data_registrazione`
+- **prenotazione**: `id_prenotazione, email, nome, cognome, mondo, destinazione, data_partenza, data_ritorno, num_biglietti, nominativi (JSON), commento, importo_centesimi, payment_intent_id (unico), data_prenotazione`
+- **commento**: `id_testo, email, username, testo, mondo, stelle (1-5), data_commento`
 
+---
+
+## Struttura del Progetto
 ```text
 .
-├── api/                        # Logica di backend e endpoint API
-│   ├── stripe/                 # Modulo pagamenti (Stripe, FPDF)
-│   │   ├── crea_pagamento.php  # Inizializzazione transazione
-│   │   ├── salva_prenotazione.php # Salvataggio dati post-acquisto
-│   │   └── genera_ricevuta_pdf.php # Creazione ricevuta PDF
-│   ├── config.php              # Configurazione centralizzata (Database, API keys)
-│   ├── connessione_db.php      # Connessione al DB MySQL
-│   ├── elabora_autenticazione.php # Logica Login/Registrazione
-│   └── servizio_email.php      # Integrazione PHPMailer
-├── components/                 # Componenti UI riutilizzabili
-│   ├── navbar.php              # Barra di navigazione dinamica
-│   ├── dashboard.html          # Interfaccia account utente
-│   └── footer.html             # Piè di pagina comune
-├── css/                        # Fogli di stile organizzati per componente
-├── img/                        # Asset grafici suddivisi per mondi
-├── js/                         # Script client-side (Stripe, AJAX, Animazioni)
-│   ├── integrazione_stripe.js  # Gestione flusso pagamento
-│   └── gestione_commenti.js    # Logica asincrona per recensioni
-├── vendor/                     # Dipendenze installate tramite Composer
-├── index.php                   # Landing Page del sito
-├── autenticazione.php          # Pagina Login e Registrazione
-├── viaggio_dragonball.php      # Pagina tematica: Mondo Dragon Ball
-├── viaggio_doctorwho.php       # Pagina tematica: Mondo Doctor Who
-└── viaggio_jojos.php           # Pagina tematica: Mondo Jojo's Bizarre Adventure
+├── api/                            # Backend: endpoint e logica condivisa
+│   ├── avvio.php                   # Avvio comune: configurazione, HTTPS, sessione, risposte JSON
+│   ├── configurazione.php          # Rileva l'ambiente e carica config.php / config.local.php
+│   ├── config.example.php          # Modello di configurazione (config.php e config.local.php sono esclusi da git)
+│   ├── connessione_db.php          # Connessione MySQL
+│   ├── mondi.php                   # Mondi e destinazioni prenotabili
+│   ├── prenotazioni_utils.php      # Validazione e prezzo delle prenotazioni
+│   ├── foto_profilo_utils.php      # Validazione e salvataggio della foto profilo
+│   ├── foto_profilo.php            # Restituisce la foto profilo dell'utente
+│   ├── servizio_email.php          # Invio email con Brevo
+│   ├── elabora_autenticazione.php  # Login e registrazione
+│   ├── recupera_*.php / salva_*.php / verifica_email_ajax.php  # Endpoint AJAX
+│   └── stripe/                     # Pagamento e ricevuta
+│       ├── configurazione_stripe.php   # Inizializzazione Stripe (solo chiavi di test)
+│       ├── crea_pagamento.php          # Crea il PaymentIntent
+│       ├── conferma_prenotazione.php   # Verifica il pagamento e salva la prenotazione
+│       └── genera_ricevuta_pdf.php     # Ricevuta PDF
+├── components/                     # Navbar, dashboard, popup di pagamento, footer, recensioni
+├── css/  js/  img/  video/         # Stili, script, immagini e video
+├── sql/
+│   ├── database.sql                # Schema completo
+│   └── migrazioni/                 # Aggiornamenti per database esistenti
+├── index.php                       # Home page
+├── autenticazione.php              # Login e registrazione
+├── recupero_password.php           # Recupero password
+├── gestione_profilo.php            # Modifica account (in iframe dalla dashboard)
+├── viaggio_jojos.php / viaggio_doctorwho.php / viaggio_dragonball.php   # Pagine dei mondi
+├── .htaccess                       # Protezione dei file non pubblici
+└── composer.json / composer.lock   # Dipendenze PHP
 ```
+
+## Licenza
+Distribuito con licenza [MIT](LICENSE).

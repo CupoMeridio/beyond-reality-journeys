@@ -1,23 +1,17 @@
-# Configurazione locale e file sensibili
+# Configurazione con credenziali (il modello è api/config.example.php)
 api/config.php
-settings.local.json
+api/config.local.php
 .env
 
-# Dipendenze
+# Dipendenze: si installano con `composer install` (composer.lock invece va versionato)
 vendor/
-node_modules/
 composer.phar
-composer.lock (opzionale, ma non caricare se vuoi che l'utente usi il proprio)
 
-# File di sistema e log
+# File di sistema, editor e log
 .DS_Store
+Thumbs.db
 *.log
 error_log
 .vscode/
 .idea/
-
-# Database (opzionale, se esporti dump)
-# *.sql
-
-# Override locali (mai sul server)
-api/config.local.php
+settings.local.json

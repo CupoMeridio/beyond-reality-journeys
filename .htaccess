@@ -1,0 +1,12 @@
+# BeyondReality Journeys - protezione dei file che non devono essere serviti dal web.
+# PHP li include dal filesystem, quindi bloccarli via HTTP non cambia il funzionamento del sito.
+
+Options -Indexes
+
+# Cartelle di sola infrastruttura: dipendenze, script SQL, repository git
+RedirectMatch 404 /(vendor|sql|\.git)(/|$)
+
+# File nascosti (.gitignore, .htaccess, ...), configurazione, Composer, documentazione e log
+<FilesMatch "^(\..*|config(\.local|\.example)?\.php|composer\.(json|lock|phar)|.*\.(md|sql|log))$">
+    Require all denied
+</FilesMatch>

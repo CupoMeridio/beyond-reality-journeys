@@ -1,11 +1,15 @@
 {
+    "name": "cupomeridio/beyondreality-journeys",
+    "description": "Sito dimostrativo di viaggi fantastici - progetto di Tecnologie Web (UNISA 2024-2025)",
+    "type": "project",
+    "license": "MIT",
     "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-mysqli": "*",
         "stripe/stripe-php": "^16.5",
         "setasign/fpdf": "^1.8"
-    },
-    "config": {
-        "allow-plugins": {
-            "phpmailer/phpmailer": true
-        }
     }
 }
