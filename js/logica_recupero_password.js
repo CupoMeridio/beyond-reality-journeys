@@ -3,17 +3,16 @@
  */
 
 // --- VIDEO BACKGROUND ---
-const videos = [
-    'video/registrazione/Video1.mp4',
-    'video/registrazione/Video2.mp4',
-    'video/registrazione/Video3.mp4',
-    'video/registrazione/Video4.mp4',
-];
+// Nomi in minuscolo: l'hosting Linux distingue maiuscole/minuscole nei percorsi
+const videos = ['video1', 'video2', 'video3', 'video4'];
 
 const videoElement = document.getElementById('background-video');
 if (videoElement) {
     const randomVideo = videos[Math.floor(Math.random() * videos.length)];
-    videoElement.innerHTML = `<source src="${randomVideo}" type="video/mp4">Errore nella riproduzione del video.`;
+    videoElement.innerHTML = `
+        <source src="video/registrazione/${randomVideo}.webm" type="video/webm">
+        <source src="video/registrazione/${randomVideo}.mp4" type="video/mp4">
+        Errore nella riproduzione del video.`;
 }
 
 // --- VALIDAZIONE EMAIL ---

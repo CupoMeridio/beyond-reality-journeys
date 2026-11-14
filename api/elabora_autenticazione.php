@@ -72,8 +72,11 @@ if ($form == "reg") {
     $password = $_POST["password"];
     if (controlloEmail($email, $db)) {
         if (controlloPassword($email, $password, $db)) {
-            $_SESSION['email'] = $email;
+            // Nuovo ID di sessione al login: impedisce la session fixation
+            session_regenerate_id(true);
+            $_SESSION['email'] = strtolower($email);
             header("Location: ../index.php");
+            exit();
         } else {
             $_SESSION['errore'] = $_SESSION['errore'] . " Password errata. ";
             header("Location: ../autenticazione.php?login");
