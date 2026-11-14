@@ -12,6 +12,7 @@ require_once __DIR__ . '/api/avvio.php';
  */
 
 include('api/validazione_generale.php');
+require_once __DIR__ . '/api/servizio_email.php';
 
 const RESET_DURATA_CODICE = 300; // secondi di validità del codice
 const RESET_MAX_TENTATIVI = 5;   // tentativi di inserimento del codice prima di invalidarlo
@@ -62,21 +63,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $codice = (string) random_int(100000, 999999);
+        $nomeCompleto = trim($row['nome'] . ' ' . $row['cognome']);
+        $html = modelloEmail('Recupero password',
+            '<p>Ciao ' . htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8') . ',</p>'
+            . '<p>ecco il codice per reimpostare la password:</p>'
+            . '<p style="font-size:28px;font-weight:bold;letter-spacing:6px;">' . $codice . '</p>'
+            . '<p>Il codice è valido per ' . (RESET_DURATA_CODICE / 60) . ' minuti.</p>');
+
+        if (!inviaEmail($email, $nomeCompleto, 'Codice per il recupero della password', $html)) {
+            fineRichiesta("Non è stato possibile inviare l'email in questo momento. Riprova più tardi.");
+        }
+
+        // Il reset diventa attivo solo se l'email è partita davvero
         $_SESSION['reset'] = [
             'email' => $email,
             'codice' => $codice,
             'scadenza' => time() + RESET_DURATA_CODICE,
             'tentativi' => 0,
         ];
-
-        // Variabili lette da servizio_email.php
-        $nome = $row['nome'];
-        $cognome = $row['cognome'];
-        $subject = 'Recupero password';
-        $body = "<p>Ecco il codice per resettare la password: <b>$codice</b></p>"
-              . "<p>Il codice è valido per " . (RESET_DURATA_CODICE / 60) . " minuti.</p>";
-        include('api/servizio_email.php');
-
         fineRichiesta(null, "Ti abbiamo inviato un'email all'indirizzo " . htmlspecialchars($email, ENT_QUOTES, 'UTF-8'));
     }
 

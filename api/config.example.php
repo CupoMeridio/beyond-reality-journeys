@@ -26,3 +26,7 @@ defined('STRIPE_PUBLISHABLE_KEY') || define('STRIPE_PUBLISHABLE_KEY', 'pk_test_.
 defined('BREVO_API_KEY') || define('BREVO_API_KEY', 'xkeysib-...');
 defined('BREVO_SENDER_EMAIL') || define('BREVO_SENDER_EMAIL', 'mittente@example.com');
 defined('BREVO_SENDER_NAME') || define('BREVO_SENDER_NAME', 'BeyondReality Journeys');
+
+// --- SOLO SVILUPPO LOCALE (in config.local.php) ---
+// Con true le email non vengono inviate ma scritte nel log di PHP (C:\xampp\php\logs\php_error_log).
+// defined('EMAIL_SOLO_LOG') || define('EMAIL_SOLO_LOG', true);
