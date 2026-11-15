@@ -10,7 +10,7 @@ A web application for booking trips to fantasy worlds (JoJo's Bizarre Adventure,
 
 The site is a **demo**: it shows the fundamentals of web technologies (HTML5, CSS3, JavaScript, PHP, MySQL). **The trips do not exist and no payment is real**: Stripe runs in test mode only.
 
-🌐 Live demo: **https://beyondreality-viaggi.rf.gd/**
+🌐 Live demo: **[https://beyondrealityjourneys.site.je](https://beyondrealityjourneys.site.je)**
 
 > 💳 To try the payment, use the test card `4242 4242 4242 4242`, any future expiry date and any CVC. Real cards are declined.
 
