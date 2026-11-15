@@ -6,10 +6,11 @@
     "require": {
         "php": ">=8.1",
         "ext-curl": "*",
+        "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-mysqli": "*",
-        "stripe/stripe-php": "^16.5",
-        "setasign/fpdf": "^1.8"
+        "stripe/stripe-php": "^23.0",
+        "setasign/fpdf": "^1.9"
     }
 }

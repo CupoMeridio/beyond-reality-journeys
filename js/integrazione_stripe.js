@@ -54,7 +54,8 @@
         if (typeof Stripe === 'undefined') {
             await new Promise((resolve, reject) => {
                 const script = document.createElement('script');
-                script.src = 'https://js.stripe.com/v3/';
+                // Versione fissa di Stripe.js, sulla stessa serie ("endive") dell'API usata da stripe-php 23
+                script.src = 'https://js.stripe.com/endive/stripe.js';
                 script.onload = resolve;
                 script.onerror = () => reject(new Error('Impossibile caricare Stripe.'));
                 document.head.appendChild(script);

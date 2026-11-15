@@ -4,7 +4,8 @@
   <li><a href="api/logout_utente.php">Esci</a></li>
 </ul>
   
-  <iframe id="modifica" src="gestione_profilo.php" style="display: none;"></iframe>
+  <!-- Il form viene caricato solo al clic su "Modifica dell'account" (vedi sotto) -->
+  <iframe id="modifica" title="Modifica dell'account" style="display: none;"></iframe>
   
   <div id="storicoOrdini">
     <h1>Storico acquisti</h1>
@@ -37,6 +38,9 @@
     link.addEventListener("click", function(event){
       event.preventDefault();
       const iframe = document.getElementById("modifica");
+      // Caricamento a richiesta: nessuna richiesta a gestione_profilo.php a ogni visita
+      // (per chi non ha fatto l'accesso rispondeva 401) e dati sempre aggiornati a ogni apertura
+      iframe.src = "gestione_profilo.php";
       iframe.style.display = "block";
       iframe.style.setProperty("z-index", "4");
     });

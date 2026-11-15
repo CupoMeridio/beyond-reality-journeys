@@ -83,7 +83,7 @@ The site is a **demo**: it shows the fundamentals of web technologies (HTML5, CS
 
 ## Technologies Used
 - **Frontend**: HTML5, CSS3, JavaScript (vanilla).
-- **Backend**: PHP ≥ 8.1 (extensions `mysqli`, `curl`, `mbstring`, `json`).
+- **Backend**: PHP ≥ 8.1 (extensions `mysqli`, `curl`, `mbstring`, `json`, `gd`).
 - **Database**: MySQL / MariaDB.
 - **Libraries** (via Composer): [Stripe PHP SDK](https://github.com/stripe/stripe-php), [FPDF](http://www.fpdf.org/).
 - **External services**: Stripe (test mode), Brevo (transactional email).

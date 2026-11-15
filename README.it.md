@@ -83,7 +83,7 @@ Il sito è **dimostrativo**: serve a mostrare i fondamenti delle tecnologie web 
 
 ## Tecnologie Utilizzate
 - **Frontend**: HTML5, CSS3, JavaScript (vanilla).
-- **Backend**: PHP ≥ 8.1 (estensioni `mysqli`, `curl`, `mbstring`, `json`).
+- **Backend**: PHP ≥ 8.1 (estensioni `mysqli`, `curl`, `mbstring`, `json`, `gd`).
 - **Database**: MySQL / MariaDB.
 - **Librerie** (via Composer): [Stripe PHP SDK](https://github.com/stripe/stripe-php), [FPDF](http://www.fpdf.org/).
 - **Servizi esterni**: Stripe (modalità test), Brevo (email transazionali).

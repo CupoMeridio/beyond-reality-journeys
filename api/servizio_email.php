@@ -51,7 +51,7 @@ function inviaEmail(string $destinatario, string $nomeDestinatario, string $ogge
     $risposta = curl_exec($ch);
     $codice = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $erroreCurl = curl_errno($ch) ? curl_error($ch) : '';
-    curl_close($ch);
+    // Niente curl_close(): da PHP 8.0 non ha effetto (l'handle si chiude da solo) ed è deprecata in PHP 8.5
 
     if ($erroreCurl !== '') {
         error_log("Invio email fallito (cURL): $erroreCurl");

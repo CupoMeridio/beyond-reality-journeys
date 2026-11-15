@@ -27,7 +27,9 @@ try {
     $paymentIntent = \Stripe\PaymentIntent::create([
         'amount' => $prenotazione['importo'],
         'currency' => 'eur',
-        'payment_method_types' => ['card'],
+        // Solo carta (Card Element). Dall'API "endive" payment_method_types non è più accettato:
+        // la restrizione si esprime con allowed_payment_method_types.
+        'allowed_payment_method_types' => ['card'],
         'description' => "BeyondReality: $nomeDestinazione, {$prenotazione['num_biglietti']} biglietti",
         'metadata' => [
             'email' => $_SESSION['email'],
