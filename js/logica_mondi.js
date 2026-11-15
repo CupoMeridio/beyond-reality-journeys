@@ -66,6 +66,17 @@ document.getElementById('location3').addEventListener('click', function () {
 
 
 
+// Date del viaggio: la partenza non può essere nel passato, il ritorno non prima della partenza
+// (il server ricontrolla comunque tutto in api/prenotazioni_utils.php)
+const dataPartenza = document.getElementById('departure-date');
+const dataRitorno = document.getElementById('return-date');
+if (dataPartenza && dataRitorno) {
+    dataPartenza.min = new Date().toLocaleDateString('en-CA'); // formato AAAA-MM-GG, nel fuso orario locale
+    dataPartenza.addEventListener('change', () => {
+        dataRitorno.min = dataPartenza.value;
+    });
+}
+
 document.getElementById('tickets-count').addEventListener('input', function() {
     const ticketsCount = parseInt(this.value) || 1;
     const container = document.getElementById('ticket-names-container');

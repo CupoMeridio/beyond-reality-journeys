@@ -1,0 +1,298 @@
+/*
+ * BeyondReality Journeys - Stile comune alle pagine dei mondi (viaggio_*.php).
+ *
+ * Va incluso PRIMA degli altri fogli di stile: i file dei singoli mondi (jojos.css,
+ * DragonBallStyle.css, doctorwho.css) vengono caricati per ultimi e contengono solo
+ * colori e personalizzazioni, quindi non serve !important per sovrascrivere.
+ */
+
+/* --- Base --- */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* niente scorrimento orizzontale su mobile */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- Introduzione e scelta della location --- */
+.container {
+    padding: 20px;
+}
+
+.container p {
+    color: #666;
+    font-size: 1.05em;
+    margin: 10px auto 20px;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+.locations_selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.location {
+    flex: 1;
+    max-width: 300px;
+    position: relative;
+}
+
+.location img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.location img:hover {
+    transform: scale(1.1);
+}
+
+.location-name {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px;
+    font-size: 16px;
+    display: none;
+}
+
+.location:hover .location-name {
+    display: block;
+}
+
+/* --- Schede delle location (mostrate una alla volta da js/logica_mondi.js) --- */
+.info_location > div {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: min(1100px, 94%); /* larghezza massima: su schermi grandi le righe restano leggibili */
+    margin: 40px auto;
+    padding: 15px 25px;
+}
+
+.info_location > div.show {
+    display: block;
+    opacity: 1;
+}
+
+.info_location h4 {
+    padding: 10px;
+    margin: 10px;
+}
+
+/*
+ * Blocco immagine + testo, affiancati e alternati: un blocco sì e uno no ha l'immagine a destra.
+ * Con la griglia immagine e testo restano sulla stessa riga qualunque sia la lunghezza del testo
+ * (con i float il testo in eccesso scivolava sotto l'immagine).
+ */
+.blocco {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 25px;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.blocco:nth-of-type(even) {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+
+.blocco:nth-of-type(even) > img {
+    order: 2; /* immagine a destra */
+}
+
+.blocco > img {
+    width: 100%;
+    /* L'immagine prende l'altezza della riga, cioè del testo, senza deformarsi;
+       contain: size evita che sia l'immagine (con la sua altezza naturale) a decidere l'altezza */
+    height: 100%;
+    contain: size;
+    min-height: 220px;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Prenotazione --- */
+.booking-section {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.booking-section form {
+    max-width: 800px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    width: 100%;
+}
+
+.booking-section label {
+    font-weight: bold;
+}
+
+.booking-section input,
+.booking-section select,
+.booking-section textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* --- Recensioni (components/recensioni.html e components/prenotazione_recensioni.php) --- */
+.reviews-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviews-display,
+.review-form {
+    width: 50%;
+}
+
+.reviews-display {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#reviews-container {
+    margin: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-form label {
+    font-weight: bold;
+}
+
+.review-form .campo-testo label {
+    display: block; /* il testo della recensione va sotto la sua etichetta */
+}
+
+.review-form select,
+.review-form textarea {
+    border-radius: 5px;
+    border-color: #c8c8c8;
+}
+
+.bottone-recensione {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.commento {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.commento:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.commento .testo {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    white-space: pre-wrap; /* mantiene gli a capo scritti dall'utente */
+}
+
+/* --- Schermi piccoli --- */
+@media (max-width: 768px) {
+    .locations_selector {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .location {
+        max-width: 90%;
+        width: 100%;
+    }
+
+    .info_location > div {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .booking-section form {
+        max-width: 95%;
+        padding: 20px;
+    }
+
+    .reviews-section {
+        flex-direction: column;
+    }
+
+    .reviews-display,
+    .review-form {
+        width: 100%;
+    }
+}
+
+/* Telefoni: due colonne non ci stanno, l'immagine va sopra il testo */
+@media (max-width: 700px) {
+    .blocco,
+    .blocco:nth-of-type(even) {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .blocco:nth-of-type(even) > img {
+        order: 0;
+    }
+
+    .blocco > img {
+        contain: none;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+    }
+}

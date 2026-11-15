@@ -108,8 +108,8 @@ function e(string $s): string
     <link rel="stylesheet" href="css/stile_navbar.css">
     <link rel="stylesheet" href="css/stile_footer.css">
     <link rel="stylesheet" href="css/stile_modifica_profilo.css">
-    <?php include("components/imposta_icona.html"); ?>
-    <script src="js/utils.js" type="text/javascript" defer></script>
+    <?php include 'components/imposta_icona.html'; ?>
+    <script src="js/utils.js" defer></script>
 </head>
 
 <body>
@@ -144,7 +144,7 @@ function e(string $s): string
                 <input type="submit" name="update" value="Aggiorna Dati">
             </div>
             <div class="wrapper">
-                <input type="button" name="close" value="Chiudi" onclick="window.parent.postMessage('closeIframe', window.location.origin)">
+                <input type="button" id="chiudi-modifica" value="Chiudi">
             </div>
         </form>
         <?php if ($errore !== '') { ?>
@@ -153,6 +153,11 @@ function e(string $s): string
     </div>
     <script>
         const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB, come il controllo lato server
+
+        // Chiude l'iframe: lo gestisce la pagina principale (components/dashboard.html)
+        document.getElementById('chiudi-modifica').addEventListener('click', () => {
+            window.parent.postMessage('closeIframe', window.location.origin);
+        });
 
         const fotoProfiloInput = document.getElementById('fotoProfilo');
         const immagineAnteprima = document.getElementById('immagineAnteprima');

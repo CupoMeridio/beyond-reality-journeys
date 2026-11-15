@@ -5,8 +5,6 @@
 // --- VALIDAZIONE REGISTRAZIONE ---
 
 function verificaModulo() {
-    console.log("Esecuzione verificaModulo");
-    
     const fields = ['nome', 'cognome', 'username', 'email', 'password', 'confirmPassword'];
     let allValid = true;
 
@@ -164,6 +162,18 @@ function getPasswordStrength(password) {
     if (password.match(Utils.patterns.password)) return 'strong';
     return 'medium';
 }
+
+// Mostra/nasconde la password: <span data-mostra-password="id del campo"> nell'HTML (niente onclick inline)
+document.querySelectorAll('[data-mostra-password]').forEach((span) => {
+    span.addEventListener('click', () => toggleClick(span.dataset.mostraPassword, span.id));
+});
+
+// La registrazione parte solo se i controlli lato client sono superati (il server li ripete comunque)
+document.getElementById('form-registrazione')?.addEventListener('submit', (event) => {
+    if (!verificaModulo()) {
+        event.preventDefault();
+    }
+});
 
 function toggleClick(pw_id, span_id) {
     const password = document.getElementById(pw_id);

@@ -149,8 +149,9 @@ Defined in [sql/database.sql](sql/database.sql):
 │       ├── crea_pagamento.php          # Creates the PaymentIntent
 │       ├── conferma_prenotazione.php   # Verifies the payment and saves the booking
 │       └── genera_ricevuta_pdf.php     # PDF receipt
-├── components/                     # Navbar, dashboard, payment popup, footer, reviews
-├── css/  js/  img/  video/         # Styles, scripts, images and videos
+├── components/                     # Navbar, dashboard, payment popup, footer, booking and reviews (prenotazione_recensioni.php)
+├── css/                            # stile_mondi.css shared by the world pages, plus one file per world with its colours
+├── js/  img/  video/               # Scripts, images (WebP) and videos
 ├── sql/
 │   └── database.sql                # Full schema
 ├── index.php                       # Home page

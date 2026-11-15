@@ -39,7 +39,7 @@ function mostraEsito(messaggio, errore = false) {
     esito.style.color = errore ? 'crimson' : '#4CAF50';
 }
 
-/** Invio di una recensione (chiamata dal pulsante "Invia Recensione"). */
+/** Invio di una recensione (pulsante "Invia Recensione", visibile solo a chi ha fatto l'accesso). */
 async function InserisciCommento() {
     const form = document.forms['commenti'];
     const testo = form['experience'].value.trim();
@@ -105,9 +105,7 @@ function mostraCommenti(commenti) {
         intestazione.append(nome, ' ', valutazione);
 
         const corpo = creaElemento('div', 'commento-body');
-        const paragrafo = creaElemento('p', 'testo', c.testo);
-        paragrafo.style.whiteSpace = 'pre-wrap';
-        corpo.appendChild(paragrafo);
+        corpo.appendChild(creaElemento('p', 'testo', c.testo)); // a capo mantenuti dal CSS (.commento .testo)
 
         const commento = creaElemento('div', 'commento');
         commento.append(intestazione, corpo);
@@ -117,7 +115,7 @@ function mostraCommenti(commenti) {
     }
 }
 
-/** Precompila la recensione con la località scelta (chiamata dal menu a tendina). */
+/** Precompila la recensione con la località scelta nel menu a tendina. */
 function updateReviewPlaceholder() {
     const locationSelect = document.getElementById('location_selection');
     const experienceTextarea = document.getElementById('experience');
@@ -140,6 +138,8 @@ function fermaAggiornamento() {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!MONDO) return;
+    document.getElementById('invia-recensione')?.addEventListener('click', InserisciCommento);
+    document.getElementById('location_selection')?.addEventListener('change', updateReviewPlaceholder);
     PrendiCommenti();
     avviaAggiornamento();
     updateReviewPlaceholder();

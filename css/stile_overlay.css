@@ -27,9 +27,9 @@
     border-radius: 10px;
 }
 
-/* Rimuovi i margini auto dai form interni perché ora è il container a gestire la centratura */
+/* I form non hanno margini propri: è il contenitore qui sopra a centrarli */
 .booking-section form, .review-form form {
-    margin: 0 !important;
+    margin: 0;
 }
 
 .overlay-message {

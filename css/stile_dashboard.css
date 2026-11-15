@@ -2,7 +2,7 @@
 #dashboard {
     z-index: 1;
     visibility: hidden;
-    list-style-type: none;                                                      /* Rimuove i pallini della lista */
+    list-style-type: none;
     margin: 0;
     padding: 0;
     width: 15%; /* Larghezza della navbar */
@@ -10,15 +10,15 @@
     position: fixed; /* Fissa la navbar sulla destra */
     margin-top: 73.5px;
     right: 0;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);                                 /* Effetto "in rilievo" con ombra */
-    border-radius: 10px 0px 0px 10px;                                           /* Arrotonda solo lo spigolo sinistro in alto e sinistro in basso */ 
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px 0px 0px 10px;
 }
 
 /* Stile per gli elementi della lista */
 #dashboard li {
     border-bottom: 1px solid #ff9900; /* Linea divisoria tra gli elementi */
     transition: background-color 0.3s ease; /* Transizione per l'effetto hover */
-    border-radius: 10px 0px 0px 10px; /* Arrotonda solo lo spigolo sinistro in alto e sinistro in basso */ 
+    border-radius: 10px 0px 0px 10px; /* Arrotonda solo lo spigolo sinistro in alto e sinistro in basso */
 }
 
 /* Rimuove il bordo inferiore dall'ultimo elemento */
@@ -37,7 +37,6 @@
 /* Effetto hover sugli elementi */
 #dashboard li:hover {
     background-color: #34495e; /* Cambia colore di sfondo al passaggio del mouse */
-
 }
 
 /* Effetto hover sui link */
@@ -70,15 +69,11 @@ right: 0;
 bottom: 0;
 transition: all 0.3s ease-in-out;
 
-
 display: flex;
 align-items: center;
 justify-content: center;
 
-width: 100%; 
-height: 100%; 
+width: 100%;
+height: 100%;
 z-index: 4;
-
 }
-
-

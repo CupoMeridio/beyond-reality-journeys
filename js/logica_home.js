@@ -64,3 +64,11 @@ navbar.addEventListener('click', function(event) {
     dashboard.classList.toggle('visible'); // Apre/chiude la dashboard
   }
 });
+
+// Frecce e pallini: data-cambia-slide="-1|1" e data-vai-slide="N" nell'HTML (niente onclick inline)
+document.querySelectorAll('[data-cambia-slide]').forEach((el) => {
+    el.addEventListener('click', () => changeSlide(Number(el.dataset.cambiaSlide)));
+});
+document.querySelectorAll('[data-vai-slide]').forEach((el) => {
+    el.addEventListener('click', () => currentSlide(Number(el.dataset.vaiSlide)));
+});

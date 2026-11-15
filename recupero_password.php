@@ -154,9 +154,9 @@ $faseCodice = isset($_SESSION['reset']);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/stile_autenticazione.css">
-    <?php include("components/imposta_icona.html"); ?>
-    <script src="js/utils.js" type="text/javascript" defer></script>
-    <script src="js/logica_recupero_password.js" type="text/javascript" defer></script>
+    <?php include 'components/imposta_icona.html'; ?>
+    <script src="js/utils.js" defer></script>
+    <script src="js/logica_recupero_password.js" defer></script>
 
     <style>
         #error, .reset-errore {

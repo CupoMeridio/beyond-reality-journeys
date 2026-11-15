@@ -1,32 +1,27 @@
 /* Imposta lo stile generale del corpo della pagina */
 body {
-    font-family: Arial, sans-serif;                                             /* Carattere del testo */
-  /*background-color: #f4f4f4;*/                                                /* Colore di sfondo della pagina*/
-  /*background-image: url('../img/registrazione/sfondo_registrazione.jpg');*/               /* Imposta l'immagine indicata dall'url come sfondo della pagina*/
-  /*background-size: cover;*/                                                   /* Adatta l'immagine a tutta la pagina*/
-  /*background-repeat: no-repeat;                                               /* Evita la ripetizione dell'immagine*/
-    background-position: center;                                                /* Centra l'immagine*/
-    display: flex;                                                              /* Uso del layout flexbox per centrare il contenuto */
-    flex-direction: column;                                                     /* Imposta la direzione del flusso in verticale */
-    justify-content: center;                                                    /* Centra orizzontalmente il contenuto */
-    align-items: center;                                                        /* Centra verticalmente il contenuto */
-   min-height: 100vh;                                                           /* Occupa almeno l'intera altezza della finestra */
-    margin: 0;                                                                  /* Rimuove il margine predefinito del body */
+    font-family: Arial, sans-serif;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   min-height: 100vh;
+    margin: 0;
 }
 
 /* Navbar */
 nav {
-    display: flex;                                                              /* Usa flexbox per allineare gli elementi */
+    display: flex;
     position: fixed;
-    justify-content: space-around;                                              /* Distribuisce uniformemente gli elementi lungo la navbar */
-    align-items: center;                                                        /* Centra verticalmente gli elementi */
-    background-color: #ff0011;                                                  /* Imposta un colore arancione per la navbar */
-    padding-top: 15px;                                                          
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ff0011;
+    padding-top: 15px;
     padding-bottom: 15px;
-    width: 100%;                                                                /* Occupa l'intera larghezza della pagina */
-    top: 0;                                                                     /* Posiziona la navbar in cima alla finestra */
+    width: 100%;
+    top: 0;
 }
-
 
 nav img{
     height: 40px;
@@ -38,174 +33,150 @@ nav img:hover{
 }
 
 .navButton {
-    text-decoration: none;                                                      /* Rimuove la sottolineatura dai link */
-    color: white;                                                               /* Imposta il colore del testo su bianco */
-    font-weight: bold;                                                          /* Rende il testo in grassetto */
-    padding: 10px 15px;                                                         /* Aggiunge spazio interno ai bottoni */
-    transition: background 0.3s;                                                /* Aggiunge una transizione fluida per il cambio di colore */
-    margin-left: 10px;                                                          /* Aggiunge un po di spazio tra un bottone e l'altro */
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s;
+    margin-left: 10px;
     margin-right: 10px;
     border-radius: 10px;
 }
 
 .navButton:hover {
-    background: #c50d00;                                                        /* Cambia il colore di sfondo al passaggio del mouse */
-    border-radius: 5px;                                                         /* Arrotonda leggermente i bordi */
+    background: #c50d00;
+    border-radius: 5px;
 }
 
-.navButton:nth-child(4) {                                                       /* Separa i primi 4 elementi e sposta il resto a destra */
+.navButton:nth-child(4) {
     margin-right: auto;
 }
 
-
-
 .regcontainer, .logincontainer{
-    width: 55%;
-    background-color: rgba(0, 0, 0, 0.8);                                      /* Sfondo nero del contenitore con trasparenza al 20%*/
-    border-radius: 5px;                                                         /* Angoli arrotondati */
-    padding: 20px;                                                              /* Spaziatura interna */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);                                    /* Ombra leggera intorno al contenitore */
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 50%;
     color: white;
-   
 }
 
 .regcontainer{
     margin-top: 80px;
 }
 
-
 #registrazione{
-   display: grid;                                                              /* Usa il layout CSS Grid */
-    grid-template-columns: 1fr 1fr;                                            /* Due colonne*/
-    gap: 20px;                                                                 /* Spaziatura tra le colonne */
+   display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
-
 
 /* Stile per l'intestazione del form */
 h2 {
-    margin-bottom: 20px;                        /* Spaziatura inferiore */
-    text-align: center;                         /* Allinea il testo al centro */
-    color: white;                               /* Imposta il testo di colore bainco*/
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
 }
-
-
 
 /* Stile per i campi del form */
 .form-fields {
-    margin-bottom: 15px;                        /* Spaziatura inferiore tra i gruppi di elementi */
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
 }
 
 /* Stile per le etichette del form */
 label {
-    display: block;                             /* Mostra l'etichetta come blocco */
-    margin-bottom: 5px;                         /* Spaziatura inferiore rispetto all'input */
+    display: block;
+    margin-bottom: 5px;
 }
 
 /* Stile per i campi di input del form */
 input {
-    width: 100%;                                /* Larghezza completa del contenitore padre */
-    padding: 8px;                               /* Spaziatura interna */
-    box-sizing: border-box;                     /* Include il padding e il bordo nella larghezza totale */
-    border: 1px solid #ccc;                     /* Bordo grigio chiaro */
-    border-radius: 4px;                         /* Angoli arrotondati */
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
-
 
 /* Stile per il pulsante di invio */
 input[type="submit"] {
-    width: 50%;                                 /* Larghezza completa del contenitore padre */
-    padding: 10px;                              /* Spaziatura interna */
-    background-color: #5cb85c;                  /* Colore verde di sfondo */
-    border: none;                               /* Rimuove il bordo */
-    color: white;                               /* Colore del testo */
-    border-radius: 4px;                         /* Angoli arrotondati */
-    cursor: pointer;                            /* Cambia il cursore in una mano quando si passa sopra */
+    width: 50%;
+    padding: 10px;
+    background-color: #5cb85c;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
 }
-/*
-input[type="submit"]:disabled{
-                                
-    background-color: #313131;    
-                          
-}
-input[type="submit"]:disabled:hover{
-    background-color: #313131; 
-                         
-    cursor: not-allowed;
-}*/
 
 .button-submit-container {
-    display: flex;                              /* Attiva Flexbox */
-    justify-content: center;                    /* Centra orizzontalmente */
-    align-items: center;                        /* Centra verticalmente (se necessario) */
-    margin-top: 20px;                           /* Aggiungi margine superiore per separare il bottone */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
-
-
 
 /* Stile per la colonna della foto profilo */
 .form-photo {
-    text-align: center;                         /* Centra i contenuti nella colonna della foto */
+    text-align: center;
 }
 
 /* Stile per il pulsante quando l'utente passa sopra */
 input[type="submit"]:hover {
-    background-color: #72a472;                  /* Cambia il colore di sfondo a un verde più scuro */
+    background-color: #72a472;
 }
 
 /* Stile per il messaggio di successo o errore */
 #message {
-    margin-top: 20px;                           /* Spaziatura superiore */
-    text-align: center;                         /* Allinea il testo al centro */
+    margin-top: 20px;
+    text-align: center;
 }
 
 /* Stile per i messaggi di errore */
 .error {
-    color: red;                                 /* Colore rosso per evidenziare l'errore */
-    font-size: 0.9em;                           /* Riduce leggermente la dimensione del testo */
+    color: red;
+    font-size: 0.9em;
 }
 /*stile per messaggio di conferma password uguali*/
 .confirm{
-    color: rgb(6, 167, 0);                                 /* Colore rosso per evidenziare l'errore */
-    font-size: 0.9em; 
+    color: rgb(6, 167, 0);
+    font-size: 0.9em;
     margin-top: 2px;
-    
 }
 /* Stile per il suggerimento sulla password */
 .password-hint {
-    font-size: 0.9em;                           /* Dimensione del testo ridotta */
-    color: #666;                                /* Colore grigio per il testo */
-    margin-top: 5px;                            /* Spaziatura superiore */
-    display: none;                              /* Nascosto di default */
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+    display: none;
 }
 .vedoPassword{
     font-size: 10px;
     color: rgb(130, 130, 130);
-    
 }
 /* Stile per la barra di forza della password */
 .password-security {
-    margin-top: 5px;                            /* Spaziatura superiore */
+    margin-top: 5px;
 }
 
 /* Stile generale per l'indicatore di sicurezza della password */
 .password-security div {
-    height: 5px;                                /* Altezza della barra */
-    border-radius: 4px;                         /* Angoli arrotondati */
+    height: 5px;
+    border-radius: 4px;
 }
 
 /* Stile per una password non sicura */
 .weak {
-    width: 33%;                                 /* Larghezza della barra debole (33% della barra totale) */
-    background-color: red;                      /* Colore rosso per indicare poca sicurezza */
+    width: 33%;
+    background-color: red;
 }
 
 /* Stile per una password mediamente sicura */
 .medium {
-    width: 66%;                                 /* Larghezza della barra media (66% della barra totale) */
-    background-color: orange;                   /* Colore arancione per indicare sicurezza media*/
+    width: 66%;
+    background-color: orange;
 }
 
 /* Stile per una password molto sicura*/
@@ -217,44 +188,40 @@ input[type="submit"]:hover {
 /* Stile per il contenitore della foto profilo */
 .anteprima-foto {
     margin-top: 5px;
-    position: relative;       /* Posizione relativa per il contenitore */
-    width: 100%;              /* Larghezza massima disponibile */
-    padding-top: 100%;        /* Altezza uguale alla larghezza (crea un quadrato) */
-    overflow: hidden;         /* Nasconde le parti in eccesso dell'immagine */
-    border: 2px solid #ccc;   /* Bordo opzionale */
-    border-radius: 10px;      /* Angoli arrotondati (facoltativo) */
-    box-sizing: border-box;   /* Include bordo e padding nella dimensione */
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 /* Stile per l'anteprima della foto profilo */
 .anteprima-foto img {
-    position: absolute;       /* Posizione assoluta all'interno del contenitore */
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;              /* L'immagine occupa tutta la larghezza del contenitore */
-    height: 100%;             /* L'immagine occupa tutta l'altezza del contenitore */
-    object-fit: cover;        /* Adatta l'immagine al contenitore ritagliando le parti in eccesso */
-
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-
 
 /* Stile per l'area di drag and drop*/
 .drop-area {
-    border: 2px dashed #ccc;        /* Bordo tratteggiato */
-    border-radius: 5px;             /* Angoli arrotondati */
-    padding: 20px;                  /* Spaziatura interna */
-    text-align: center;             /* Testo centrato */
-    color: #aaa;                    /* Colore del testo */
-    cursor: pointer;                /* Cambia il cursore a mano */
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    color: #aaa;
+    cursor: pointer;
     transition: background-color 0.3s ease; /* Effetto visivo al passaggio del mouse */
 }
 
 .drop-area.drag-over {
-    background-color: #f0f8ff;      /* Cambia colore quando un file è trascinato sopra */
-    border-color: #0099ff;          /* Cambia il colore del bordo */
+    background-color: #f0f8ff;
+    border-color: #0099ff;
 }
-
-
 
 /* Stile per il video di background*/
 video {
@@ -267,24 +234,22 @@ video {
       z-index: -1;
     }
 
-
 /* Responsive: una colonna su dispositivi stretti */
 @media (max-width: 800px) {
     #main-container{
         margin-top: 95px;
         margin-bottom: 20px;
     }
-    
+
     #registrazione{
-        grid-template-columns: 1fr;       /* Disposizione a una sola colonna */
+        grid-template-columns: 1fr;
     }
 
     .form-photo {
-        margin-top: 20px;                 /* Spaziatura tra i campi e la foto */
+        margin-top: 20px;
     }
 
     body {
-
         overflow-y: auto; /* Permette di scrollare la pagina */
     }
 }
@@ -295,8 +260,6 @@ div.messaggio-login, div.messaggio-registrazione{
     color: rgb(165, 165, 165);
     text-align: center;
     margin-top: 10px;
-    
-   
 }
 
 div.messaggio-login a, div.messaggio-registrazione a{

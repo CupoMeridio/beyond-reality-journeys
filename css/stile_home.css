@@ -1,159 +1,148 @@
-/* Imposta lo stile generale del corpo della pagina */
+/*
+ * Home page (index.php).
+ * Caricato dopo gli stili dei componenti (navbar, dashboard, footer), quindi li personalizza senza !important.
+ */
+
+/* --- Base --- */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    overflow-x: hidden; /* Impedisce lo scroll orizzontale e lo spazio bianco a destra */
+    overflow-x: hidden; /* niente scorrimento orizzontale su mobile */
+}
+
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
 body {
-    display: flex;                                                        /* Uso del layout flexbox per allineare il contenuto */
-    flex-direction: column;                                               /* Disposizione verticale degli elementi */
-    font-family: Arial, Helvetica, sans-serif; 
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
+/* --- Colori della home sui componenti comuni --- */
 nav {
-    background-color: blueviolet !important;                                     /* Imposta un colore violetto per la navbar */
-    font-family: Arial, sans-serif;
+    background-color: blueviolet;
 }
-
-
-
-
 
 .navButton:hover {
-    background: rgb(60, 26, 156) !important;
+    background: rgb(60, 26, 156);
 }
 
-
-
-/* Stile per gli elementi della lista */
 #dashboard li {
-    border-bottom: 1px solid blueviolet !important ; ;                          /* Linea divisoria tra gli elementi */
-
+    border-bottom-color: blueviolet;
 }
 
+/* I link "About" e "Contact" portano alle sezioni senza finire sotto la navbar fissa */
+#about-section,
+#contact-section {
+    scroll-margin-top: 80px;
+}
 
-
-/*slideshow*/
+/* --- Slideshow --- */
 .slideshow-container {
-    margin-top: 70px;                                                      /* Sposta lo slideshow esattamente sotto la navbar (Desktop) */
-    position: relative;                                                    /* Posizione relativa per il contenitore dello slideshow */
-    width: 100%;                                                           /* Imposta la larghezza al 100% della finestra */
-    overflow: hidden;                                                      /* Nasconde qualsiasi parte dell'immagine che esce dai bordi */
+    margin-top: 70px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
-/* Immagini dello slideshow */
 .slideshow-container img {
-    width: 100%;                                                           /* Imposta la larghezza dell'immagine al 100% del contenitore */
-    height: 50vh;                                                          /* Imposta l'altezza dell'immagine al 100% del contenitore */
-    object-fit: cover;                                                     /* Rende l'immagine di copertura, mantenendo il suo rapporto di aspetto */
-    display: block;                                                        /* Rimuove lo spazio sotto l'immagine */
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+    display: block;
 }
 
-/* Animazione per l'effetto di fade */
 .fade {
-    animation: fading 0.7s ease-in-out;                                      /* Effetto di transizione con l'animazione fading */
+    animation: fading 0.7s ease-in-out;
 }
 
 @keyframes fading {
     from {
-        opacity: 0.5;                                                       /* Inizia con opacità ridotta */
+        opacity: 0.5;
     }
 
     to {
-        opacity: 1;                                                         /* Arriva a piena opacità */
+        opacity: 1;
     }
 }
 
-
-/* Pulsanti di navigazione */
-.prev, .next {
-    position: absolute;                                                     /* Posizione assoluta per i pulsanti di navigazione */
-    top: 42.5%;                                                               /* Posizione verticale centrata rispetto all'immagine */
-    transform: translateY(-50%);                                            /* Centra perfettamente il pulsante verticalmente */
-    color: rgb(255, 255, 255);                                                    /* Colore dei pulsanti */
-    background-color:  rgba(32, 18, 73, 0.8);                           /* Colore di sfondo semitrasparente per i pulsanti */
-    box-shadow: 0 0 5px  rgba(122, 78, 255, 0.5);
-    cursor: pointer;                                                        /* Cambia il cursore a mano quando il mouse è sopra il pulsante */
-    padding: 10px;                                                          /* Aggiunge spazio interno al pulsante */
-    border-radius: 50%;                                                     /* Rende i pulsanti rotondi */
-    font-weight: bold;                                                      /* Imposta il peso del font dei pulsanti */
-    font-size: 18px;                                                        /* Imposta la dimensione del font */
-    transition: 0.6s ease;                                                  /* Aggiunge transizione al passaggio sopra */
-    user-select: none;                                                      /* Disabilita la selezione del testo */
+/* Frecce (pulsanti, gestiti da js/logica_home.js) */
+.prev,
+.next {
+    position: absolute;
+    top: 42.5%;
+    transform: translateY(-50%);
+    color: white;
+    background-color: rgba(32, 18, 73, 0.8);
+    box-shadow: 0 0 5px rgba(122, 78, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 50%;
+    font: bold 18px Arial, sans-serif;
+    transition: 0.6s ease;
+    user-select: none;
 }
 
 .prev {
-    left: 10px;                                                             /* Posiziona il pulsante "prev" a sinistra */
+    left: 10px;
 }
 
 .next {
-    right: 10px;                                                            /* Posiziona il pulsante "next" a destra */
+    right: 10px;
 }
 
-.prev:hover, .next:hover {
-    background-color: rgba(51, 30, 114, 0.7);                                  /* Cambia il colore di sfondo al passaggio sopra */
+.prev:hover,
+.next:hover {
+    background-color: rgba(51, 30, 114, 0.7);
 }
 
-/* Numero di slide */
 .numberText {
-    color: #f2f2f2;                                                       /* Colore del testo per il numero della slide */
-    font-size: 12px;                                                        /* Dimensione del testo per il numero della slide */
-    padding: 8px 12px;                                                      /* Aggiunge padding attorno al numero */
-    position: absolute;                                                     /* Posizione assoluta per posizionare il numero sopra l'immagine */
-    top: 10px;                                                              /* Posiziona il numero in alto a sinistra */
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 10px;
     left: 10px;
-    background-color: rgba(32, 18, 73, 0.8);                            /* Cambia il colore di sfondo al passaggio del mouse */
-    border-radius: 5px;                                                     /* Arrotonda leggermente i bordi */
+    background-color: rgba(32, 18, 73, 0.8);
+    border-radius: 5px;
     z-index: 1;
 }
 
-
-/* Descrizione della slide */
 .captionText {
-    color: #f2f2f2;                                                       /* Colore del testo per la didascalia */
-    font-size: 21px;                                                        /* Dimensione del testo per la didascalia */
-    position: relative;                                                     
-    bottom: 24px;                                                           /* Posiziona la didascalia in basso */
-    width: 100%;                                                            /* La didascalia occupa tutta la larghezza dell'immagine */
+    color: #f2f2f2;
+    font-size: 21px;
+    position: relative;
+    bottom: 24px;
+    width: 100%;
     text-align: center;
-    background-color:  rgba(32, 18, 73, 0.8);;                            /* Cambia il colore di sfondo al passaggio del mouse */
+    background-color: rgba(32, 18, 73, 0.8);
 }
 
-/* Pallini per la navigazione */
+.pallini {
+    text-align: center;
+}
+
 .dot {
-    cursor: pointer;                                                        /* Cambia il cursore a mano sopra i pallini */
-    height: 10px;                                                            /* Imposta l'altezza del pallino */
-    width: 10px;                                                             /* Imposta la larghezza del pallino */
-    margin: 0 2px;                                                           /* Aggiunge margine tra i pallini */
-    background-color: #bbb;                                                  /* Colore di sfondo del pallino */
-    border-radius: 50%;                                                      /* Forma rotonda per i pallini */
-    display: inline-block;                                                   /* Mostra i pallini su una riga */
-    transition: background-color 0.6s ease;                                  /* Transizione al cambiamento di colore */
+    cursor: pointer;
+    height: 10px;
+    width: 10px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
 }
 
-.active, .dot:hover {
-    background-color: #717171;                                              /* Cambia il colore al passaggio sopra o quando il pallino è attivo */
+.active,
+.dot:hover {
+    background-color: #717171;
 }
 
-/*destinations*/
-
-.destinations_selector {
-    display: flex;                                                              /* Usa flexbox per disporre gli elementi in riga */
-    justify-content: center;                                                    /* Centra gli elementi orizzontalmente */
-    flex-wrap: wrap;                                                            /* Permette agli elementi di andare a capo se necessario */
-    gap: 30px;                                                                  /* Aggiunge uno spazio tra gli elementi */
-    margin: 20px auto;                                                          /* Centra il contenitore e aggiunge spazio sopra */
-    max-width: 1200px;                                                          /* Limita la larghezza massima per una migliore distribuzione */
-}
-
+/* --- Destinazioni --- */
 .destinations {
     text-align: center;
     margin-top: 0;
@@ -167,20 +156,32 @@ nav {
     line-height: 1.5;
 }
 
+.destinations_selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
 .destination {
-    flex: 0 1 300px;                                                            /* Corretto per non allargarsi oltre il necessario */
-    max-width: 300px;                                                           /* Imposta una larghezza massima per evitare immagini troppo grandi */
+    flex: 0 1 300px;
+    max-width: 300px;
     position: relative;
-    display: block;                                                             /* Cambiato da inline-block per evitare spazi bianchi spuri */
 }
 
 .destination img {
-    width: 100%;                                                                /* L'immagine occupa tutta la larghezza della colonna */
-    height: 200px;                                                              /* Imposta un'altezza fissa per uniformare le immagini */
-    object-fit: cover;                                                          /* Adatta l'immagine mantenendo le proporzioni e riempiendo il riquadro */
-    border-radius: 10px;                                                        /* Arrotonda leggermente gli angoli delle immagini */
-    transition: transform 0.3s;                                                 /* Aggiunge una transizione fluida per l'effetto zoom */
-    display: block;                                                             /* Rimuove lo spazio extra sotto l'immagine */
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    display: block;
+}
+
+.destination img:hover {
+    transform: scale(1.1);
 }
 
 .destination-name {
@@ -189,33 +190,25 @@ nav {
     text-align: center;
 }
 
-
-
-.destination img:hover {
-    transform: scale(1.1);                                                      /* Ingrandisce leggermente l'immagine al passaggio del mouse */
-}
 .destination:hover .destination-name {
-    transform: translateY(7px) scale(1.1);                                      /* Ingrandisce leggermente l'immagine al passaggio del mouse */
+    transform: translateY(7px) scale(1.1);
     transition: transform 0.3s;
 }
 
-
-
-/*About*/
-.about-section h2{
+/* --- Chi siamo --- */
+.about-section h2 {
     text-align: center;
     margin-top: 0;
 }
 
-.about-section p{
+.about-section p {
     text-align: center;
-
 }
 
 #presentazione {
     text-align: center;
-    max-width: 90%; /* Aumentata flessibilità per schermi medi */
-    width: 1200px; /* Larghezza massima effettiva */
+    max-width: 90%;
+    width: 1200px;
     margin: auto;
     padding: 10px;
 }
@@ -231,8 +224,60 @@ nav {
     margin-top: 15px;
 }
 
-/* Media Queries per Mobile */
+#presentazione p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* --- Team --- */
+.team {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.team-member {
+    text-align: center;
+    flex: 0 1 180px;
+}
+
+.team-member img {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.team-member img:hover {
+    transform: scale(1.1);
+}
+
+.team-member h4 {
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* --- Schermi medi: team su due colonne --- */
+@media (max-width: 890px) {
+    .team {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+    }
+}
+
+/* --- Schermi piccoli --- */
 @media (max-width: 768px) {
+    .slideshow-container {
+        margin-top: 41px; /* altezza della navbar su mobile */
+    }
+
     .slideshow-container img {
         height: 30vh;
     }
@@ -252,21 +297,19 @@ nav {
     .team {
         gap: 20px;
         padding: 0 10px;
-        flex-direction: column; /* Forza una sola colonna su mobile per dare spazio alle email */
+        flex-direction: column; /* una sola colonna: le email hanno spazio */
         align-items: center;
     }
 
     .team-member {
         width: 100%;
-        max-width: 280px; /* Limita la larghezza per non farle sembrare giganti */
+        max-width: 280px;
         margin-bottom: 20px;
     }
 
     .team-member p {
-        font-size: 14px; /* Ripristinato font leggibile */
-        overflow-wrap: break-word; /* Rompe l'email solo se necessario */
-        word-wrap: break-word;
-        word-break: break-word;
+        font-size: 14px;
+        overflow-wrap: break-word; /* va a capo nell'email solo se serve */
         hyphens: auto;
         margin: 5px 0;
     }
@@ -276,136 +319,11 @@ nav {
         width: 140px;
     }
 
-    #presentazione {
-        max-width: 90%;
-    }
-
     #presentazione h2 {
         font-size: 1.8em;
     }
 
     #presentazione h3 {
         font-size: 1.5em;
-    }
-
-    .slideshow-container {
-        margin-top: 41px; /* Altezza navbar mobile */
-    }
-}
-
-#presentazione p{
-    color: #666;
-    line-height: 1.6;
-}
-
-
-.team {
-    display: flex;                                                              /* Usa flexbox per disporre gli elementi in riga */
-    justify-content: center;                                                    /* Centra gli elementi orizzontalmente */
-    flex-wrap: wrap;                                                            /* Permette agli elementi di andare a capo */
-    gap: 20px;                                                                  /* Ridotto gap per farli stare su una riga più a lungo */
-    margin-top: 20px;                                                           /* Aggiunge spazio sopra la sezione */
-}
-
-.team-member {
-    text-align: center;
-    flex: 0 1 180px; /* Ridotto leggermente per guadagnare spazio */
-}
-
-.team-member img {
-    height: 150px;                                                              /* Ridotta leggermente per simmetria */
-    width: 150px;
-    object-fit: cover;                                                          /* Adatta l'immagine mantenendo le proporzioni e riempiendo il riquadro */
-    border-radius: 50%;
-    margin: 0 auto;
-    display: block;
-    transition: transform 0.3s;
-}
-
-.team-member img:hover {
-    transform: scale(1.1);
-}
-
-.team-member h4{
-    padding: 5px;
-    font-size: 16px;
-    text-align: center;
-}
-
-
-
-
-/* Footer */
-footer {
-    flex: 0 1 auto;                                                          /* Impedisce la crescita e la compressione del footer */
-    text-align: center;                                                      /* Allinea il testo del footer al centro */
-    padding: 20px;                                                           /* Spaziatura interna */
-    background-color: #f1f1f1;                                               /* Colore di sfondo del footer */
-}
-
-footer {
-    clear: both;
-    background-color: #333;      /* Colore di sfondo scuro */
-    color: white;                /* Colore del testo chiaro */
-    padding: 20px;               /* Distanza interna */
-    text-align: center;          /* Centra il testo */
-    font-size: 14px;             /* Dimensione del testo */
-    margin-top: 0;            /* Spazio sopra il footer */
-}
-
-.footer-content p {
-    margin: 10px 0;              /* Distanza tra i paragrafi */
-}
-
-.footer-content .disclaimer {
-    font-style: italic;          /* Testo in corsivo per il disclaimer */
-    font-size: 12px;             /* Testo più piccolo per il disclaimer */
-    color: #ccc;                 /* Colore del testo del disclaimer */
-}
-
-
-@media (max-width:890px) {
-    .team {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Crea 2 colonne di uguale larghezza */
-        justify-content: center; /* Centra gli elementi orizzontalmente */
-    }
-    
-    .team-member {
-        text-align: center; /* Centra il contenuto di ogni membro del team */
-    }
-
-.destination img {
-    /* Rimosso margine che causava decentramento */
-}
-
-
-}
-
-@media (max-width: 650px){
-        header h1{
-    position: absolute;
-    color: white;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);                                           /* Sposta l'ancoraggio dell'immgaine al suo centro*/
-    text-align: center;
-
-}
-
-    header h2{
-    position: absolute;
-    color: white;
-    top: 72.5%;
-    left: 50%;
-    transform: translate(-50%, -50%);                                           /* Sposta l'ancoraggio dell'immgaine al suo centro*/
-    text-align: center;
-    }
-
-    .navbar div span{
-        font-size: 13px ;
-    }
-    .destination img {
-        /* Rimosso margine che causava decentramento */
     }
 }

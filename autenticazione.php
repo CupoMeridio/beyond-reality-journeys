@@ -1,183 +1,163 @@
 <?php
+/**
+ * Registrazione e login nella stessa pagina: ?login mostra il login, altrimenti la registrazione.
+ * L'invio dei form viene elaborato da api/elabora_autenticazione.php (stessa pagina, metodo POST).
+ */
 require_once __DIR__ . '/api/avvio.php';
 
-include 'api/recupera_dati_utente.php';
-$nome="";
-$cognome="";
-$email="";
-$username="";
-$password_pre_hash="";
-$img="";
-$type="";
-
-$showRegister = true;
-if (isset($_GET['login'])) {
-    $showRegister = false;
-} 
-//switch log-in/registra
-$bodyClass = $showRegister ? "register-mode" : "login-mode"; // per cambiare css
-
-if(isset($_POST["inviato"])){
+if (isset($_POST["inviato"])) {
     include 'api/elabora_autenticazione.php';
-    
-}else{
-    
+    exit();
+}
+
+$mostraRegistrazione = !isset($_GET['login']);
+
+// Messaggi lasciati in sessione dall'ultima richiesta (mostrati una sola volta)
+$messaggioErrore = $_SESSION['errore'] ?? '';
+$messaggioAuth = $_SESSION['auth'] ?? '';
+unset($_SESSION['errore'], $_SESSION['auth']);
+
+function e(string $s): string
+{
+    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
-<html lang="it">                                                                                        <!-- Specifica il tipo di documento come HTML5 e imposta la lingua della pagina su italiano -->
+<html lang="it">
 
 <head>
-    <meta charset="UTF-8">                                                                              <!-- Definisce la codifica dei caratteri come UTF-8, per supportare caratteri speciali -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">                              <!-- Rende la pagina responsiva, adattandola alla larghezza dello schermo del dispositivo -->
-    <title>Form di registrazione</title>                                                                <!-- Imposta il titolo della pagina che apparirà nella scheda del browser -->
-    <link rel="stylesheet" href="css/stile_autenticazione.css">                                               <!-- Collega il file CSS esterno per definire gli stili visivi della pagina -->
-    <?php include("components/imposta_icona.html"); ?>
-    <script src="js/utils.js" type="text/javascript" defer></script>
-    <script src="js/logica_autenticazione.js" type="text/javascript" defer="true"></script>             <!-- Collegamento al file JavaScript esterno per la logica di validazione o interattività -->
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accedi o registrati</title>
+    <link rel="stylesheet" href="css/stile_autenticazione.css">
+    <?php include 'components/imposta_icona.html'; ?>
+    <script src="js/utils.js" defer></script>
+    <script src="js/logica_autenticazione.js" defer></script>
 </head>
 
-<body>                                                                                                  <!-- Corpo del documento, dove vengono definiti i contenuti visibili sulla pagina -->
-
+<body>
     <nav>
-        <a href="index.php"><img src="img/common/logo.png"></a>
+        <a href="index.php"><img src="img/common/logo.png" alt="BeyondReality Journeys - Home"></a>
         <a class="navButton" id="homeButton" href="index.php">Home</a>
-        <a class="navButton" id="aboutButton"href="index.php#about">About</a>
+        <a class="navButton" id="aboutButton" href="index.php#about-section">About</a>
         <a class="navButton" id="contactButton" href="index.php#contact-section">Contact</a>
     </nav>
 
-<video id="background-video" autoplay muted loop playsinline></video>                                               <!-- Video di background -->
-    <div id="main-container" class="regcontainer" style="display: <?php echo $showRegister ? 'block' : 'none'; ?>;">     <!-- Contenitore principale per il modulo di registrazione -->
-        <div id="registrazione_page" class="page">                                                                                                                                                                    <!-- Titolo della sezione del modulo -->
-        <form id="form-registrazione" action="autenticazione.php" method="post" enctype="multipart/form-data" onsubmit="return verificaModulo()">  <!-- onsubmit che serve alla verifica della pw -->
-            <input type="hidden" name="action" value="reg">
+    <video id="background-video" autoplay muted loop playsinline></video>
+
+    <!-- Registrazione -->
+    <div id="main-container" class="regcontainer" style="display: <?= $mostraRegistrazione ? 'block' : 'none' ?>;">
+        <div id="registrazione_page" class="page">
+            <form id="form-registrazione" action="autenticazione.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="reg">
+                <?= campoCsrf() ?>
+                <div id="registrazione">
+                    <div class="form-group">
+                        <div class="form-fields">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" autocomplete="given-name" required>
+                            <div id="nameError" class="error"></div>
+                        </div>
+
+                        <div class="form-fields">
+                            <label for="cognome">Cognome</label>
+                            <input type="text" id="cognome" name="cognome" autocomplete="family-name" required>
+                            <div id="cognomeError" class="error"></div>
+                        </div>
+
+                        <div class="form-fields">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" autocomplete="username" maxlength="100" required>
+                        </div>
+
+                        <div class="form-fields">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
+                            <div id="emailError" class="error"></div>
+                        </div>
+
+                        <div class="form-fields">
+                            <label for="password">Password <span id="pwReg" class="vedoPassword" data-mostra-password="password"></span></label>
+                            <input type="password" id="password" name="password" autocomplete="new-password" required>
+                            <div class="password-hint" id="passwordHint">
+                                La password deve contenere almeno 8 caratteri e includere almeno una
+                                lettera maiuscola, una lettera minuscola, un numero e un carattere speciale.
+                            </div>
+                            <span id="passwordError" class="error"></span>
+                            <div class="password-security" id="passwordSecurity"></div>
+                        </div>
+
+                        <div class="form-fields">
+                            <label for="confirmPassword">Conferma password <span id="confirmReg" class="vedoPassword" data-mostra-password="confirmPassword"></span></label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                            <div id="passwordOK" class="confirm"></div>
+                            <div id="confirmPasswordError" class="error"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-photo">
+                        <div class="form-group">
+                            <label for="fotoProfilo">Foto profilo</label>
+                            <div id="dropArea" class="drop-area">
+                                Trascina qui la tua immagine o clicca per selezionarla.
+                                <input type="file" id="fotoProfilo" name="fotoProfilo" accept="image/jpeg,image/png,image/gif,image/webp" hidden>
+                            </div>
+                            <div id="anteprimaFoto" class="anteprima-foto">
+                                <img id="immagineAnteprima" src="" alt="Anteprima foto profilo" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-submit-container">
+                    <input type="submit" value="Registrati" name="inviato" id="submitButton">
+                </div>
+                <div class="messaggio-login">Sei già registrato? <a href="?login">Login</a></div>
+                <p id="message"></p>
+            </form>
+
+            <?php if ($messaggioErrore !== '') { ?>
+                <p id="messageErrorReg" class="messageError"><?= e($messaggioErrore) ?></p>
+            <?php } ?>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div id="login_page" class="logincontainer" style="display: <?= $mostraRegistrazione ? 'none' : 'block' ?>;">
+        <?php if ($messaggioAuth !== '') { ?>
+            <p id="messageAuth" class="messageAuth"><?= e($messaggioAuth) ?></p>
+        <?php } ?>
+
+        <form id="form-login" action="autenticazione.php" method="post">
+            <input type="hidden" name="action" value="login">
             <?= campoCsrf() ?>
-            <div id="registrazione">                                                                    <!-- Inizio del modulo per la registrazione -->
-
-            <div class="form-group">
-
-                <div class="form-fields">                                                               <!-- Contenitore per il campo Nome -->
-                    <label for="nome">Nome</label>                                                      <!-- Etichetta per il campo di input associato, con l'attributo "for" legato all'id -->
-                    <input type="text" id="nome" name="nome" value="<?php echo $nome ?>" autocomplete="given-name" required>                                  <!-- Campo di input per il nome, obbligatorio grazie all'attributo "required" -->
-                    <div id="nameError" class="error"></div>
-                </div>
-
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Cognome -->
-                    <label for="cognome">Cognome</label>
-                    <input type="text" id="cognome" name="cognome" value="<?php echo $cognome ?>" autocomplete="family-name" required>
-                    <div id="cognomeError" class="error"></div>
-                </div>
-
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Username -->
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="<?php echo $username ?>" autocomplete="username" required>
-                </div>
-
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Email -->
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="<?php echo $email ?>" autocomplete="email" required>   
-                    <div id="emailError" class="error"></div>                             <!-- Il tipo "email" garantisce una validazione di base del formato email -->
-                </div>
-
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Password -->
-                    <label for="password">Password <span id="pwReg" class="vedoPassword" onclick="toggleClick('password', 'pwReg')"></span></label>
-                    <input type="password" id="password" name="password" value="" autocomplete="new-password" required>                       <!-- Il tipo "password" oscura il testo inserito per motivi di sicurezza -->
-                    <div class="password-hint" id="passwordHint">                                        <!-- Testo di suggerimento per indicare i requisiti della password -->
-                        La password deve contenere almeno 8 caratteri e includere almeno una
-                        lettera maiuscola, una lettera minuscola, un numero e un carattere speciale.
-                    </div>
-                    <span id="passwordError" class="error"></span>                                       <!-- Messaggio di errore per il campo password (se necessario) -->
-                    <div class="password-security" id="passwordSecurity"></div>                          <!-- Indicatore visivo della sicurezza della password -->
-                </div>
-
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Conferma password -->
-                    <label for="confirmPassword">Conferma password <span id="confirmReg" class="vedoPassword" onclick="toggleClick('confirmPassword', 'confirmReg')"></span></label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>         <!-- Campo per confermare la password inserita -->
-                    <div id="passwordOK" class="confirm"></div> 
-                    <div id="confirmPasswordError" class="error"></div>                                  <!-- Messaggio09% di errore per il campo di conferma password (se necessario) -->
-                </div>
-            </div>
-
-            <div class="form-photo">                                                                     <!-- Contenitore per l'upload della foto profilo -->
+            <div id="login">
                 <div class="form-group">
-                    <label for="fotoProfilo">Foto profilo</label>
-                    <div id="dropArea" class="drop-area">                                                <!-- Area per il drag-and-drop della foto -->
-                        Trascina qui la tua immagine o clicca per selezionarla.
-                        <input type="file" id="fotoProfilo" name="fotoProfilo" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none">
+                    <div class="form-fields">
+                        <label for="email-login">Email</label>
+                        <input type="email" id="email-login" name="email" value="<?= e((string) ($_GET['email'] ?? '')) ?>" autocomplete="email" required>
+                        <div id="emailErrorLogin" class="error"></div>
                     </div>
-                    <div id="anteprimaFoto" class="anteprima-foto">                                       <!-- Anteprima della foto caricata -->
-                        <img id="immagineAnteprima" src="" alt="Anteprima foto profilo" style="display: none;">
+
+                    <div class="form-fields">
+                        <label for="password-login">Password <span id="pwLogin" class="vedoPassword" data-mostra-password="password-login"></span></label>
+                        <input type="password" id="password-login" name="password" autocomplete="current-password" required>
+                        <div id="passwordErrorLogin" class="error"></div>
                     </div>
                 </div>
+
+                <div class="button-submit-container">
+                    <input type="submit" value="Login" name="inviato">
+                </div>
+                <div class="messaggio-registrazione">Non sei registrato? <a href="?register">Registrati</a></div>
+                <div class="messaggio-registrazione">Password dimenticata? <a href="recupero_password.php">Resetta</a></div>
+
+                <?php if ($messaggioErrore !== '') { ?>
+                    <p id="messageErrorLog" class="messageError"><?= e($messaggioErrore) ?></p>
+                <?php } ?>
             </div>
-            </div>
-            <div class="button-submit-container">
-                <input type="submit" value="Registrati" name="inviato" id="submitButton">                                              <!-- Pulsante per inviare il modulo -->
-            </div>
-            <div class="messaggio-login">Sei già registrato? <a href="?login">Login</a></div>
-            <p id="message"></p> 
         </form>
-        
-        <?php
-         if(isset($_SESSION['errore'])) { ?>
-                <p id="messageErrorReg" class=messageError><?php echo htmlspecialchars($_SESSION['errore'], ENT_QUOTES, 'UTF-8'); ?></p> 
-        <?php
-        }?>
-         </div>
-        </div></div>                                                                                    <!-- Paragrafo8$ vuoto per visualizzare messaggi dinamici (es. conferma registrazione) -->
-    
-    <div id="login_page" class="logincontainer" style="display: <?php echo !$showRegister ? 'block' : 'none'; ?>;">
-        <?php
-         if(isset($_SESSION['auth']) ) { ?>
-                <p id="messageAuth" class=messageAuth><?php echo htmlspecialchars($_SESSION['auth'], ENT_QUOTES, 'UTF-8'); ?></p> 
-        <?php
-        }?>
-        <form id="form-login"action="autenticazione.php" method="post">
-        <input type="hidden" name="action" value="login">
-        <?= campoCsrf() ?>                                                  
-            <div id="login">                                                                             <!-- Inizio del modulo per il login" -->
-            <div class="form-group">
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Email -->
-                    <label for="email-login">Email</label>
-                    <input type="email" id="email-login" name="email" value="<?php echo isset($_GET['email']) ? htmlspecialchars($_GET['email']) : ''; ?>" autocomplete="email" required>    <!-- Il tipo "email" garantisce una validazione di base del formato email -->
-                   
-
-                    <div id = "emailErrorLogin" class=error></div>
-                </div>
-
-                <div class="form-fields">                                                                <!-- Contenitore per il campo Password -->
-                    <label for="password-login">Password  <span id="pwLogin" class="vedoPassword" onclick="toggleClick( 'password-login', 'pwLogin')"></span></label>
-                    <input type="password" id="password-login" name="password" value="" autocomplete="current-password" required>                       <!-- Il tipo "password" oscura il testo inserito per motivi di sicurezza -->
-                    
-                    <div id = "passwordErrorLogin" class=error></div>
-                    
-                </div>
-
-            </div>
-            <div class="button-submit-container">
-                <input type="submit" value="Login" name="inviato">
-            </div> 
-            <div class="messaggio-registrazione">Non sei registrato? <a href="?register">Registrati</a></div>
-            <div class="messaggio-registrazione">Password dimenticata? <a href="recupero_password.php">Resetta</a></div>
-
-        
-        <?php
-         if(isset($_SESSION['errore']) ) { ?>
-                <p id="messageErrorLog" class=messageError><?php echo htmlspecialchars($_SESSION['errore'], ENT_QUOTES, 'UTF-8'); ?></p> 
-        <?php
-        }?>
-         </div>
-        </form> 
-        
-    </div> 
-    
+    </div>
 </body>
 
 </html>
-
-<?php
-
-} 
-unset($_SESSION['auth']);
-unset($_SESSION['errore']); 
-?>

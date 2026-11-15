@@ -1,4 +1,4 @@
-slideIndex = 1; // Inizia dalla prima slide
+let slideIndex = 1; // Inizia dalla prima slide
 showSlides(slideIndex); // Mostra la prima slide all'avvio
 
 // Funzione per cambiare slide manualmente (Next/Previous)
@@ -43,3 +43,11 @@ function showSlides(n) {
         slides[slideIndex - 1].style.display = "block";
     }, 5800); // 5.5 secondi (durata gif)
 }
+
+// Frecce e pallini: data-cambia-slide="-1|1" e data-vai-slide="N" nell'HTML (niente onclick inline)
+document.querySelectorAll('[data-cambia-slide]').forEach((el) => {
+    el.addEventListener('click', () => changeSlide(Number(el.dataset.cambiaSlide)));
+});
+document.querySelectorAll('[data-vai-slide]').forEach((el) => {
+    el.addEventListener('click', () => currentSlide(Number(el.dataset.vaiSlide)));
+});

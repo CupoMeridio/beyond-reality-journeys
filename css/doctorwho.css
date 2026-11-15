@@ -1,175 +1,123 @@
-/* Stile generale */
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-}
+/*
+ * Doctor Who: colori del mondo e slideshow delle destinazioni con l'intermezzo del TARDIS.
+ * Caricato per ultimo (dopo stile_mondi.css e gli stili dei componenti), quindi sovrascrive senza !important.
+ */
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
-body {
-    font-family: Arial, sans-serif;                                             /* Imposta il font generale della pagina */
-    background-color: #f4f4f4;                                                  /* Imposta un colore di sfondo chiaro */
-    text-align: center;                                                         /* Centra il testo nella pagina */
-}
-
-/* Navbar */
+/* --- Colori --- */
 nav {
-    background-color: #142c71 !important;                                       /* Imposta un colore arancione per la navbar */
+    background-color: #142c71;
 }
 
 .navButton:hover {
-    background: #136a9c !important;                                                        /* Cambia il colore di sfondo al passaggio del mouse */
+    background: #136a9c;
 }
 
-
-/* Stile per gli elementi della lista */
 #dashboard li {
-    border-bottom: 1px solid #142c71 !important ; ;                          /* Linea divisoria tra gli elementi */
+    border-bottom-color: #142c71;
 }
 
-/* Rimuove il bordo inferiore dall'ultimo elemento */
-#dashboard li:last-child {
-    border-bottom: none !important;
+.overlay-message {
+    background-color: #252470;
 }
 
-#worldTitle{
+#pagamento_con_stripe {
+    box-shadow: 0 0 15px #142c71;
+}
+
+#pagamento_con_stripe input {
+    border-color: #142c71;
+}
+
+#worldTitle {
     height: 80%;
 }
 
-/* Stile di base per la dashboard verticale */
-#dashboard {
-    z-index: 1;
-    visibility: hidden;
-    list-style-type: none;                                                      /* Rimuove i pallini della lista */
-    margin: 0;
-    padding: 0;
-    width: 15%; /* Larghezza della navbar */
-    background-color: #333333; /* Colore di sfondo */
-    position: fixed; /* Fissa la navbar sulla destra */
-    margin-top: 73.5px;
-    right: 0;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);                                 /* Effetto "in rilievo" con ombra */
-    border-radius: 10px 0px 0px 10px;                                           /* Arrotonda solo lo spigolo sinistro in alto e sinistro in basso */ 
+/* Frase sotto l'header */
+header + p {
+    color: #666;
+    font-size: 1.05em;
+    margin: 60px auto 20px;
+    max-width: 600px;
+    line-height: 1.5;
 }
 
-/* Stile per gli elementi della lista */
-#dashboard li {
-
-    border-bottom: 1px solid #0c224a; /* Linea divisoria tra gli elementi */
-    transition: background-color 0.3s ease; /* Transizione per l'effetto hover */
-}
-
-/* Rimuove il bordo inferiore dall'ultimo elemento */
-#dashboard li:last-child {
-    border-bottom: none;
-}
-
-/* Stile per i link */
-#dashboard li a {
-    padding: 15px;
-    color: #ecf0f1; /* Colore del testo */
-    text-decoration: none; /* Rimuove la sottolineatura */
-    display: block; /* Rende il link un blocco per occupare tutto lo spazio */
-}
-
-/* Effetto hover sugli elementi */
-#dashboard li:hover {
-    background-color: #34495e; /* Cambia colore di sfondo al passaggio del mouse */
-
-}
-
-/* Effetto hover sui link */
-#dashboard li:hover a {
-    color: #fff301; /* Cambia colore del testo al passaggio del mouse */
-}
-
-#dashboard.visible {
-    visibility: initial;
-}
-
-/*slideshow*/
+/* --- Slideshow delle destinazioni --- */
 .slideshow-container {
     position: relative;
     width: 30%;
     height: 30vh;
     overflow: hidden;
     margin: 50px auto 0;
-    margin-bottom: 0;
 }
 
-/* Immagini dello slideshow */
 .slideshow-container img {
-    width: 100%;                                                           /* Imposta la larghezza dell'immagine al 100% del contenitore */
-    height: 30vh;                                                          /* Imposta l'altezza dell'immagine al 100% del contenitore */
-    object-fit: cover;                                                     /* Rende l'immagine di copertura, mantenendo il suo rapporto di aspetto */
-    display: block;                                                        /* Rimuove lo spazio sotto l'immagine */
+    width: 100%;
+    height: 30vh;
+    object-fit: cover;
+    display: block;
     border-radius: 30px;
     cursor: pointer;
 }
 
-/* Animazione per l'effetto di fade */
 .fade {
-    animation: fading 0.7s ease-in-out;                                      /* Effetto di transizione con l'animazione fading */
+    animation: fading 0.7s ease-in-out;
 }
 
 @keyframes fading {
     from {
-        opacity: 0;                                                       /* Inizia con opacità ridotta */
+        opacity: 0;
     }
 
     to {
-        opacity: 1;                                                         /* Arriva a piena opacità */
+        opacity: 1;
     }
 }
 
-
-/* Pulsanti di navigazione */
-.prev, .next {
-    position: absolute;                                                     /* Posizione assoluta per i pulsanti di navigazione */
-    top: 40%;                                                               /* Posizione verticale centrata rispetto all'immagine */
-    color: rgb(255, 255, 255);                                                    /* Colore dei pulsanti */
-    background-color:  rgba(32, 18, 73, 0.8);                           /* Colore di sfondo semitrasparente per i pulsanti */
-    box-shadow: 0 0 5px  rgba(122, 78, 255, 0.5);
-    cursor: pointer;                                                        /* Cambia il cursore a mano quando il mouse è sopra il pulsante */
-    padding: 10px;                                                          /* Aggiunge spazio interno al pulsante */
-    border-radius: 50%;                                                     /* Rende i pulsanti rotondi */
-    font-weight: bold;                                                      /* Imposta il peso del font dei pulsanti */
-    font-size: 18px;                                                        /* Imposta la dimensione del font */
-    transition: 0.6s ease;                                                  /* Aggiunge transizione al passaggio sopra */
-    user-select: none;                                                      /* Disabilita la selezione del testo */
+/* Frecce (pulsanti, gestiti da js/animazioni_doctorwho.js) */
+.prev,
+.next {
+    position: absolute;
+    top: 40%;
+    color: white;
+    background-color: rgba(32, 18, 73, 0.8);
+    box-shadow: 0 0 5px rgba(122, 78, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 50%;
+    font: bold 18px Arial, sans-serif;
+    transition: 0.6s ease;
+    user-select: none;
 }
 
 .prev {
-    left: 10px;                                                             /* Posiziona il pulsante "prev" a sinistra */
+    left: 10px;
 }
 
 .next {
-    right: 10px;                                                            /* Posiziona il pulsante "next" a destra */
+    right: 10px;
 }
 
-.prev:hover, .next:hover {
-    background-color: rgba(51, 30, 114, 0.7);                                  /* Cambia il colore di sfondo al passaggio sopra */
+.prev:hover,
+.next:hover {
+    background-color: rgba(51, 30, 114, 0.7);
 }
 
-/* Descrizione della slide */
+.pallini {
+    text-align: center;
+}
+
 .captionText {
     color: #f2f2f2;
     font-size: 16px;
     position: absolute;
     bottom: 10px;
     left: 30px;
-    width: auto;
-    text-align: center;
     background-color: rgba(32, 18, 73, 0.8);
     padding: 3px;
 }
 
-/*TARDIS*/
+/* Intermezzo: la GIF del TARDIS tra una slide e l'altra */
 .intermezzo {
     position: absolute;
     top: 0;
@@ -180,369 +128,16 @@ nav {
     z-index: 2;
 }
 
-.intermezzo img{
+.intermezzo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 30px;
 }
 
-header + p {
-    color: #666;
-    font-size: 1.05em;
-    margin: 60px auto 20px;
-    max-width: 600px;
-    line-height: 1.5;
-    text-align: center;
-}
-
-/* Container */
-.container {
-    padding: 20px 20px 20px;                                                   /* Aggiunge spazio intorno ai contenuti principali */
-}
-
-.locations_selector {
-    display: flex;                                                              /* Usa flexbox per disporre gli elementi in riga */
-    justify-content: center;                                                    /* Centra gli elementi orizzontalmente */
-    flex-wrap: wrap;                                                            /* Permette agli elementi di andare a capo */
-    gap: 20px;                                                                  /* Aggiunge uno spazio tra gli elementi */
-    margin: 20px auto;                                                          /* Centra il contenitore */
-    max-width: 1200px;
-}
-
-.location {
-    flex: 1;                                                                    /* Permette alle colonne di adattarsi allo spazio disponibile */
-    max-width: 300px;                                                           /* Imposta una larghezza massima per evitare immagini troppo grandi */
-    position: relative;
-    display: inline-block;
-}
-
-.location img {
-    width: 100%;                                                                /* L'immagine occupa tutta la larghezza della colonna */
-    height: 200px;                                                              /* Imposta un'altezza fissa per uniformare le immagini */
-    object-fit: cover;                                                          /* Adatta l'immagine mantenendo le proporzioni e riempiendo il riquadro */
-    border-radius: 10px;                                                        /* Arrotonda leggermente gli angoli delle immagini */
-    transition: transform 0.3s;                                                 /* Aggiunge una transizione fluida per l'effetto zoom */
-    cursor: pointer;
-}
-
-.location-name {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 5px;
-    font-size: 16px;
-    display: none;
-}
-
-
-
-.location img:hover {
-    transform: scale(1.1);                                                              /* Ingrandisce leggermente l'immagine al passaggio del mouse */
-}
-.location:hover .location-name {
-    display: block;                                                                     /* Mostra il nome quando si passa sopra */
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#info_location1, #info_location2, #info_location3 {
-    opacity: 0;                                                                         /* Inizialmente invisibile */
-    display: none;                                                                      /* Inizialmente l'elemento è nascosto */
-    transition: opacity 0.5s ease-out;                                                  /* Transizione di dissolvenza */
-}
-
-/* Quando viene cliccato e la classe 'show' viene aggiunta */
-#info_location1.show, #info_location2.show, #info_location3.show {
-    display: block;                                                                     /* Imposta display su block per mostrare l'elemento */
-    opacity: 1;                                                                         /* Aumenta l'opacità per il fade-in */
-}
-
-
-#info_location1, #info_location2, #info_location3 {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 70%;
-    margin: 40px auto;
-    text-align: center;
-    padding:15px;
-}
-
-#info_location1 h4, #info_location2 h4, #info_location3 h4{
-    padding: 10px;
-    margin: 10px;
-}
-
-.info_location img.float-left {
-    margin-right: 15px;
-    float: left;
-
-    
-}
-
-.info_location img.float-right {
-    margin-left: 15px;
-    float: right;
-}
-
-.info_location h4.clear-right, .info_location p.clear-right, .info_location img.clear-right{
-    clear: right;
-}
-
-.info_location h4.clear-left, .info_location p.clear-left, .info_location img.clear-left {
-    clear: left;
-}
-
-
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.info_location img {
-    height: 250px;
-    border-radius: 10px;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
-    margin: 15px;
-    max-width: 40%;
-    object-fit: cover;
-}
-
-.float-left {
-    float: left;
-    margin-right: 20px !important;
-}
-
-.float-right {
-    float: right;
-    margin-left: 20px !important;
-}
-
-.clear-left {
-    clear: left;
-}
-
-.clear-right {
-    clear: right;
-}
-
-/* Media Queries per Mobile */
 @media (max-width: 768px) {
-    .slideshow-container {
-        width: 85%;
-    }
-
+    .slideshow-container,
     .intermezzo {
         width: 85%;
     }
-
-    .info_location img {
-        float: none;
-        display: block;
-        margin: 15px auto;
-        max-width: 100%;
-        height: auto;
-    }
-
-    .float-left, .float-right {
-        float: none !important;
-        margin: 15px auto !important;
-    }
-    .locations_selector {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .location {
-        max-width: 90%;
-        width: 100%;
-    }
-
-    #info_location1, #info_location2, #info_location3 {
-        max-width: 95%;
-        padding: 10px;
-    }
-
-    .info_location img.float-left, .info_location img.float-right {
-        float: none;
-        display: block;
-        margin: 15px auto;
-        max-width: 100%;
-    }
-
-    .booking-section form {
-        max-width: 95%; /* Quasi tutta la larghezza su mobile */
-        padding: 20px;
-    }
-
-    .reviews-section {
-        flex-direction: column;
-    }
-
-    .reviews-display, .review-form {
-        width: 100% !important;
-    }
-}
-
-
-footer {
-    clear: both;
-    background-color: #333;                                                             /* Colore di sfondo scuro */
-    color: white;                                                                       /* Colore del testo chiaro */
-    padding: 20px;                                                                      /* Distanza interna */
-    text-align: center;                                                                 /* Centra il testo */
-    font-size: 14px;                                                                    /* Dimensione del testo (più piccola rispetto alla dimensione di default) */
-    margin-top: 0px;                                                                   /* Spazio sopra il footer */
-}
-
-.footer-content p {
-    margin: 10px 0;                                                                     /* Distanza tra i paragrafi */
-}
-
-.footer-content .disclaimer {
-    font-style: italic;                                                                 /* Testo in corsivo per il disclaimer */
-    font-size: 12px;                                                                    /* Testo più piccolo per il disclaimer */
-    color: #ccc;                                                                        /* Colore del testo del disclaimer */
-}
-
-.booking-section {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-
-  }
-  
-  .booking-section h2 {
-    text-align: center;
-  }
-.booking-section form {
-    max-width: 800px;                                                           /* Aumentata larghezza massima per PC */
-    margin: 20px auto;                                                          /* Aggiunto margine per staccare dal titolo */
-    background-color: #fff;                                                     /* Colore di sfondo del modulo */
-    padding: 30px;                                                              /* Aumentato padding interno */
-    border-radius: 10px;                                                        /* Arrotonda gli angoli del modulo */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);                                /* Ombra più definita */
-    text-align: left;                                                           /* Allinea il testo a sinistra per leggibilità */
-    width: 100%;
-}
-
-.booking-section label {
-    font-weight: bold;
-}
-
-.booking-section input, .booking-section select, .booking-section textarea {
-    width: 100%;                                                                /* Gli input occupano tutta la larghezza del form */
-    padding: 12px;
-    margin-top: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* Include padding e border nella larghezza */
-}
-  .booking-section button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .booking-section button:hover {
-    background-color: #0056b3;
-  }
-  
-  
-  
-  /* Stile generale per la sezione commenti */
-.comments-section {
-    width: 80%;
-    margin: 10px auto;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-  
-.review-form label {
-    font-weight: bold;
-  }
-
-.review-form select, .review-form textarea  {
-    border-radius: 5px;
-    border-color: #c8c8c8;
-}
-
-
-
-/* Contenitore principale dei commenti */
-#reviews-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Stile per ogni singolo commento */
-.commento {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* Stile per l'email */
-.commento .email {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-/* Stile per l'ID del commento */
-.commento .id-testo {
-    font-size: 12px;
-    color: #777;
-    margin-bottom: 10px;
-}
-
-/* Stile per il testo del commento */
-.commento .testo {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.6;
-}
-
-/* Effetto hover per i commenti */
-.commento:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.overlay-message {
-  background-color: #252470 !important;
-
-}
-
-#popup.open {
-    opacity: 1;
-    z-index: 3;
-}
-
-#pagamento_con_stripe {
-    box-shadow: 0 0 15px #142c71 !important; 
-}
-
-#pagamento_con_stripe input {
-    border-color: #142c71 !important;
 }

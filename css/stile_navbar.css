@@ -1,15 +1,15 @@
 /* Navbar */
 nav {
-    display: flex;                                                              /* Usa flexbox per allineare gli elementi */
-    justify-content: space-around;                                              /* Distribuisce uniformemente gli elementi lungo la navbar */
-    align-items: center;                                                        /* Centra verticalmente gli elementi */
-    padding-top: 15px;                                                          
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 15px;
     padding-bottom: 15px;
-    position: fixed;                                                            /* Mantiene la navbar fissa in alto */
-    width: 100%;                                                                /* Occupa l'intera larghezza della pagina */
-    top: 0;                                                                     /* Posiziona la navbar in cima alla finestra */
-    z-index: 2;                                                                 /* Assicura che la navbar stia sopra gli altri elementi */
-    color: white;                                                               /* Imposta il colore del testo su bianco */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    color: white;
     font-weight: bold;
 }
 
@@ -19,28 +19,27 @@ nav img{
     cursor: pointer;
 }
 
-
 .navButton {
-    text-decoration: none;                                                      /* Rimuove la sottolineatura dai link */
-    color: white;                                                               /* Imposta il colore del testo su bianco */
-    font-weight: bold;                                                          /* Rende il testo in grassetto */
-    padding: 10px 15px;                                                         /* Aggiunge spazio interno ai bottoni */
-    transition: background 0.3s;                                                /* Aggiunge una transizione fluida per il cambio di colore */
-    margin-left: 10px;                                                          /* Aggiunge un po di spazio tra un bottone e l'altro */
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s;
+    margin-left: 10px;
     margin-right: 10px;
     border-radius: 10px;
 }
 
 .navButton:hover {
-    background: #ff6600;                                                        /* Cambia il colore di sfondo al passaggio del mouse */
-    border-radius: 5px;                                                         /* Arrotonda leggermente i bordi */
+    background: #ff6600;
+    border-radius: 5px;
 }
 
-#navAuth {                                                                  /* Contenitore pulsanti autenticazione */
+#navAuth {
     display: flex;
     align-items: center;
-    margin-left: auto;                                                          /* Spinge il blocco auth tutto a destra */
-    gap: 0;                                                                     /* Lo spacing è gestito dal margin dei singoli navButton */
+    margin-left: auto;
+    gap: 0;
 }
 
 nav div img {
@@ -48,13 +47,13 @@ nav div img {
     height: 40px;
     border-radius: 50%;
     margin-right: 15px;
-    object-fit: cover;                                                          /* Mantiene le proporzioni dell'immagine */
-    overflow: hidden;                                                           /* Nasconde l'overflow */
+    object-fit: cover;
+    overflow: hidden;
 }
 
 nav div{
     display: flex;
-    align-items: center;                                                        /* Allinea verticalmente al centro */
+    align-items: center;
 }
 
 /* Media Queries per Mobile */

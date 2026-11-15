@@ -45,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conferma registrazione</title>
     <link rel="stylesheet" href="css/stile_autenticazione.css">
-    <?php include("components/imposta_icona.html"); ?>
+    <?php include 'components/imposta_icona.html'; ?>
     <!-- Stesso video di sfondo della pagina di recupero password -->
-    <script src="js/logica_recupero_password.js" type="text/javascript" defer></script>
+    <script src="js/logica_recupero_password.js" defer></script>
     <style>
         .conferma-testo { margin: 3px 3px 12px; font-size: 15px; }
         .conferma-errore { color: crimson; margin: 3px 3px 12px; font-size: 15px; }
