@@ -54,6 +54,10 @@ The site is a **demo**: it shows the fundamentals of web technologies (HTML5, CS
 
 ### 1. Users and authentication
 - **Registration and login** ([elabora_autenticazione.php](api/elabora_autenticazione.php)): client-side and server-side validation, `password_hash()`, prepared statements, a new session ID on every login.
+- **Email confirmation** ([conferma_registrazione.php](conferma_registrazione.php)): a new account is activated only through the link sent by email (valid for 24 hours); unconfirmed registrations expire on their own.
+- **No account enumeration**: the site never reveals whether an email is registered. Registration always answers "we sent you an email" (the owner of an existing account is notified instead), login has a single "wrong email or password" message with the same response time, and password recovery answers the same way for every address.
+- **Login attempt limit** ([limite_accessi.php](api/limite_accessi.php)): after 5 failures for the same email (or 20 from the same IP) in 15 minutes, login is temporarily blocked.
+- **CSRF protection** ([avvio.php](api/avvio.php)): every form and AJAX request that changes data carries a per-session token; logout is a POST request too.
 - **Sessions** ([avvio.php](api/avvio.php)): a shared bootstrap for every page, `HttpOnly` and `SameSite=Lax` cookies, HTTPS enforced in production.
 - **Password recovery** ([recupero_password.php](recupero_password.php)): a 6-digit code sent by email, valid for 5 minutes, with at most 5 attempts.
 - **Profile picture** ([foto_profilo_utils.php](api/foto_profilo_utils.php)): stored as a `BLOB`, format checked from the file content (JPG, PNG, GIF, WEBP, max 1 MB), served by a dedicated endpoint with browser caching.
@@ -68,7 +72,6 @@ The site is a **demo**: it shows the fundamentals of web technologies (HTML5, CS
 - **PDF receipt** ([genera_ricevuta_pdf.php](api/stripe/genera_ricevuta_pdf.php)): generated with FPDF from the stored booking, and downloadable again from the order history.
 
 ### 3. Asynchronous interactions (AJAX with `fetch`)
-- Real-time email availability check during registration ([verifica_email_ajax.php](api/verifica_email_ajax.php)).
 - Reviews for each world ([gestione_commenti.js](js/gestione_commenti.js)):
   - refreshed periodically, only while the tab is visible;
   - text displayed safely (`textContent`);
@@ -104,13 +107,13 @@ The site is a **demo**: it shows the fundamentals of web technologies (HTML5, CS
    - copy `api/config.example.php` to **`api/config.php`** and fill in the **test** Stripe keys and the Brevo key;
    - copy the same file to **`api/config.local.php`** too, keeping only the local database constants (`root` with no password).
 
-   `config.local.php` is read only on `localhost`, so the local and production values can live in the same project. To try password recovery without Brevo, add the `EMAIL_SOLO_LOG` constant to `config.local.php`: emails go to the PHP log.
+   `config.local.php` is read only on `localhost`, so the local and production values can live in the same project. Registration requires confirming the email address, so without a Brevo key add `define('EMAIL_SOLO_LOG', true);` to `config.local.php`: emails (confirmation links and recovery codes) are written to the PHP log instead of being sent (with XAMPP: `apache/logs/error.log`).
 6. Open **http://localhost/Sito_di_viaggi/**. HTTPS is not enforced locally.
 
 ## Deployment (InfinityFree)
 1. Run `composer install --no-dev` locally: InfinityFree has no Composer, so the `vendor/` folder must be uploaded.
 2. Upload all project files via FTP, **including `vendor/`** and your production `api/config.php`, **but not `api/config.local.php`**.
-3. On the first deployment import [sql/database.sql](sql/database.sql). If the database already exists, run the scripts in [sql/migrazioni/](sql/migrazioni/), each **only once**.
+3. Import [sql/database.sql](sql/database.sql) into the database (from phpMyAdmin: select the database, then the *Import* tab).
 
 The [.htaccess](.htaccess) file blocks web access to `vendor/`, `sql/`, and the configuration and Composer files.
 
@@ -118,9 +121,10 @@ The [.htaccess](.htaccess) file blocks web access to `vendor/`, `sql/`, and the 
 
 ## Database Schema
 Defined in [sql/database.sql](sql/database.sql):
-- **utente** (user): `id, nome, cognome, username (unique), email (unique), password (hash), img (BLOB), type, data_registrazione`
+- **utente** (user): `id, nome, cognome, username (unique), email (unique), password (hash), img (BLOB), type, data_registrazione, verificato, token_conferma (SHA-256 hash), scadenza_conferma`
 - **prenotazione** (booking): `id_prenotazione, email, nome, cognome, mondo, destinazione, data_partenza, data_ritorno, num_biglietti, nominativi (JSON), commento, importo_centesimi, payment_intent_id (unique), data_prenotazione`
 - **commento** (review): `id_testo, email, username, testo, mondo, stelle (1-5), data_commento`
+- **tentativo_accesso** (failed login attempt): `id, email, ip, data_tentativo` (rows older than one day are deleted automatically)
 
 ---
 
@@ -138,7 +142,8 @@ Defined in [sql/database.sql](sql/database.sql):
 │   ├── foto_profilo.php            # Serves the user's profile picture
 │   ├── servizio_email.php          # Email sending through Brevo
 │   ├── elabora_autenticazione.php  # Login and registration
-│   ├── recupera_*.php / salva_*.php / verifica_email_ajax.php  # AJAX endpoints
+│   ├── limite_accessi.php          # Failed login attempt limit
+│   ├── recupera_*.php / salva_*.php  # AJAX endpoints
 │   └── stripe/                     # Payment and receipt
 │       ├── configurazione_stripe.php   # Stripe setup (test keys only)
 │       ├── crea_pagamento.php          # Creates the PaymentIntent
@@ -147,10 +152,10 @@ Defined in [sql/database.sql](sql/database.sql):
 ├── components/                     # Navbar, dashboard, payment popup, footer, reviews
 ├── css/  js/  img/  video/         # Styles, scripts, images and videos
 ├── sql/
-│   ├── database.sql                # Full schema
-│   └── migrazioni/                 # Updates for existing databases
+│   └── database.sql                # Full schema
 ├── index.php                       # Home page
 ├── autenticazione.php              # Login and registration
+├── conferma_registrazione.php      # Email confirmation after registration
 ├── recupero_password.php           # Password recovery
 ├── gestione_profilo.php            # Account editing (iframe opened from the dashboard)
 ├── viaggio_jojos.php / viaggio_doctorwho.php / viaggio_dragonball.php   # World pages

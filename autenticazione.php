@@ -49,8 +49,9 @@ if(isset($_POST["inviato"])){
 <video id="background-video" autoplay muted loop playsinline></video>                                               <!-- Video di background -->
     <div id="main-container" class="regcontainer" style="display: <?php echo $showRegister ? 'block' : 'none'; ?>;">     <!-- Contenitore principale per il modulo di registrazione -->
         <div id="registrazione_page" class="page">                                                                                                                                                                    <!-- Titolo della sezione del modulo -->
-        <form id="form-registrazione" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" onsubmit="return verificaModulo()">  <!-- onsubmit che serve alla verifica della pw -->
+        <form id="form-registrazione" action="autenticazione.php" method="post" enctype="multipart/form-data" onsubmit="return verificaModulo()">  <!-- onsubmit che serve alla verifica della pw -->
             <input type="hidden" name="action" value="reg">
+            <?= campoCsrf() ?>
             <div id="registrazione">                                                                    <!-- Inizio del modulo per la registrazione -->
 
             <div class="form-group">
@@ -119,7 +120,7 @@ if(isset($_POST["inviato"])){
         
         <?php
          if(isset($_SESSION['errore'])) { ?>
-                <p id="messageErrorReg" class=messageError><?php echo $_SESSION['errore']; ?></p> 
+                <p id="messageErrorReg" class=messageError><?php echo htmlspecialchars($_SESSION['errore'], ENT_QUOTES, 'UTF-8'); ?></p> 
         <?php
         }?>
          </div>
@@ -128,11 +129,12 @@ if(isset($_POST["inviato"])){
     <div id="login_page" class="logincontainer" style="display: <?php echo !$showRegister ? 'block' : 'none'; ?>;">
         <?php
          if(isset($_SESSION['auth']) ) { ?>
-                <p id="messageAuth" class=messageAuth><?php echo $_SESSION['auth']; ?></p> 
+                <p id="messageAuth" class=messageAuth><?php echo htmlspecialchars($_SESSION['auth'], ENT_QUOTES, 'UTF-8'); ?></p> 
         <?php
         }?>
-        <form id="form-login"action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-        <input type="hidden" name="action" value="login">                                                  
+        <form id="form-login"action="autenticazione.php" method="post">
+        <input type="hidden" name="action" value="login">
+        <?= campoCsrf() ?>                                                  
             <div id="login">                                                                             <!-- Inizio del modulo per il login" -->
             <div class="form-group">
                 <div class="form-fields">                                                                <!-- Contenitore per il campo Email -->
@@ -161,7 +163,7 @@ if(isset($_POST["inviato"])){
         
         <?php
          if(isset($_SESSION['errore']) ) { ?>
-                <p id="messageErrorLog" class=messageError><?php echo $_SESSION['errore']; ?></p> 
+                <p id="messageErrorLog" class=messageError><?php echo htmlspecialchars($_SESSION['errore'], ENT_QUOTES, 'UTF-8'); ?></p> 
         <?php
         }?>
          </div>

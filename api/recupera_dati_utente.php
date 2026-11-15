@@ -19,8 +19,9 @@ if (isset($_SESSION['email'])) {
     mysqli_close($db);
 
     if (!$row) {
-        // L'account non esiste più: si chiude la sessione
-        header("Location: api/logout_utente.php");
+        // L'account non esiste più: si chiude la sessione (direttamente, il logout ora richiede POST)
+        chiudiSessione();
+        header("Location: index.php");
         exit();
     }
 

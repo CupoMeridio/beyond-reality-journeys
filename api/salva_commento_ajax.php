@@ -18,6 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_SESSION['email'])) {
     rispondiJson(['error' => 'Devi accedere per lasciare una recensione.'], 401);
 }
+if (!csrfValido()) {
+    rispondiJson(['error' => MESSAGGIO_CSRF], 403);
+}
 
 $mondo = $_POST['mondo'] ?? null;
 $testo = trim((string) ($_POST['experience'] ?? ''));

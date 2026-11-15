@@ -35,7 +35,7 @@ require_once __DIR__ . '/api/avvio.php';
     <script src="js/integrazione_stripe.js" type="text/javascript" defer></script>
   </head>
 
-<body data-mondo="<?= $mondo ?>">                                                                                                  <!-- Corpo del documento, dove vengono definiti i contenuti visibili sulla pagina -->
+<body data-mondo="<?= $mondo ?>" data-csrf="<?= tokenCsrf() ?>">                                                                                                  <!-- Corpo del documento, dove vengono definiti i contenuti visibili sulla pagina -->
    <?php include 'components/navbar.php'; ?>
   
    <?php include 'components/dashboard.html'; ?>

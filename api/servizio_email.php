@@ -17,8 +17,10 @@ require_once __DIR__ . '/configurazione.php';
  */
 function inviaEmail(string $destinatario, string $nomeDestinatario, string $oggetto, string $html): bool
 {
-    // Alternativa in testo semplice: a capo al posto di <br>/</p>, niente rientri né righe vuote multiple
-    $testo = html_entity_decode(strip_tags(preg_replace('~<(br|/p|/h\d)\s*/?>~i', "\n", $html)), ENT_QUOTES, 'UTF-8');
+    // Alternativa in testo semplice: i link diventano "testo (indirizzo)" (altrimenti strip_tags li
+    // cancellerebbe), a capo al posto di <br>/</p>, niente rientri né righe vuote multiple
+    $testo = preg_replace('~<a\s[^>]*href="([^"]*)"[^>]*>(.*?)</a>~is', '$2 ($1)', $html);
+    $testo = html_entity_decode(strip_tags(preg_replace('~<(br|/p|/h\d)\s*/?>~i', "\n", $testo)), ENT_QUOTES, 'UTF-8');
     $testo = trim(preg_replace(["~^[ \t]+~m", "~\n{3,}~"], ['', "\n\n"], $testo));
 
     if (AMBIENTE_LOCALE && defined('EMAIL_SOLO_LOG') && EMAIL_SOLO_LOG) {

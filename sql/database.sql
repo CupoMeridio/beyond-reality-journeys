@@ -11,7 +11,10 @@ CREATE TABLE IF NOT EXISTS utente (
     password VARCHAR(255) NOT NULL,
     img LONGBLOB,
     type VARCHAR(50),
-    data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    verificato TINYINT(1) NOT NULL DEFAULT 0,      -- 1 dopo il clic sul link di conferma dell'email
+    token_conferma CHAR(64) NULL UNIQUE,           -- hash SHA-256 del token del link di conferma
+    scadenza_conferma DATETIME NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabella prenotazioni: una riga per prenotazione (non per biglietto)
@@ -43,6 +46,17 @@ CREATE TABLE IF NOT EXISTS commento (
     stelle INT DEFAULT 0,
     data_commento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (email) REFERENCES utente(email) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tentativi di login falliti (limite anti forza bruta, vedi api/limite_accessi.php)
+CREATE TABLE IF NOT EXISTS tentativo_accesso (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    ip VARCHAR(45) NOT NULL,
+    data_tentativo TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_tentativo_email (email, data_tentativo),
+    INDEX idx_tentativo_ip (ip, data_tentativo),
+    INDEX idx_tentativo_data (data_tentativo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Indici per migliorare le performance

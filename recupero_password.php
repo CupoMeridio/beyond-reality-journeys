@@ -2,7 +2,9 @@
 require_once __DIR__ . '/api/avvio.php';
 /**
  * Recupero password in due fasi:
- *  1. l'utente inserisce l'email -> se esiste un account, riceve un codice a 6 cifre;
+ *  1. l'utente inserisce l'email -> se esiste un account confermato, riceve un codice a 6 cifre;
+ *     la risposta è sempre la stessa ("se l'email è registrata..."): la pagina non rivela
+ *     quali email hanno un account;
  *  2. l'utente inserisce codice + nuova password -> la password viene aggiornata.
  *
  * Lo stato del reset vive in $_SESSION['reset'] e NON tocca mai $_SESSION['email'],
@@ -42,6 +44,10 @@ if (isset($_SESSION['reset']) && time() > $_SESSION['reset']['scadenza']) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrfValido()) {
+        fineRichiesta(MESSAGGIO_CSRF);
+    }
+
     include('api/connessione_db.php');
     /** @var mysqli $db */
 
@@ -53,16 +59,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             fineRichiesta("Errore nella forma della email.");
         }
 
-        $stmt = mysqli_prepare($db, "SELECT nome, cognome FROM utente WHERE email = ?");
+        $stmt = mysqli_prepare($db, "SELECT nome, cognome FROM utente WHERE email = ? AND verificato = 1");
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         $row = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
+        $codice = (string) random_int(100000, 999999);
+        $messaggioInviato = "Se l'indirizzo " . htmlspecialchars($email, ENT_QUOTES, 'UTF-8')
+            . " è associato a un account, ti abbiamo inviato un codice di 6 cifre (controlla anche lo spam).";
+
         if (!$row) {
-            fineRichiesta("Non esiste un account con questa email. <a href='autenticazione.php'>Registrati</a>");
+            // Nessun account: nessuna email, ma la pagina si comporta come se fosse partita.
+            // L'attesa imita il tempo di invio tramite Brevo; il codice resta null e nessun
+            // valore inserito potrà mai essere accettato.
+            usleep(random_int(300000, 700000));
+            $_SESSION['reset'] = ['email' => $email, 'codice' => null, 'scadenza' => time() + RESET_DURATA_CODICE, 'tentativi' => 0];
+            fineRichiesta(null, $messaggioInviato);
         }
 
-        $codice = (string) random_int(100000, 999999);
         $nomeCompleto = trim($row['nome'] . ' ' . $row['cognome']);
         $html = modelloEmail('Recupero password',
             '<p>Ciao ' . htmlspecialchars($row['nome'], ENT_QUOTES, 'UTF-8') . ',</p>'
@@ -81,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'scadenza' => time() + RESET_DURATA_CODICE,
             'tentativi' => 0,
         ];
-        fineRichiesta(null, "Ti abbiamo inviato un'email all'indirizzo " . htmlspecialchars($email, ENT_QUOTES, 'UTF-8'));
+        fineRichiesta(null, $messaggioInviato);
     }
 
     // --- FASE 2: verifica del codice e cambio password ---
@@ -97,7 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             fineRichiesta("La password non rispetta i requisiti richiesti.");
         }
 
-        if (!hash_equals($_SESSION['reset']['codice'], $codiceInserito)) {
+        $codiceAtteso = $_SESSION['reset']['codice'];
+        if ($codiceAtteso === null || !hash_equals($codiceAtteso, $codiceInserito)) {
             $_SESSION['reset']['tentativi']++;
             if ($_SESSION['reset']['tentativi'] >= RESET_MAX_TENTATIVI) {
                 unset($_SESSION['reset']);
@@ -109,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $emailReset = $_SESSION['reset']['email'];
-        $stmt = mysqli_prepare($db, "UPDATE utente SET password = ? WHERE email = ?");
+        $stmt = mysqli_prepare($db, "UPDATE utente SET password = ? WHERE email = ? AND verificato = 1");
         mysqli_stmt_bind_param($stmt, "ss", $hash, $emailReset);
 
         if (!mysqli_stmt_execute($stmt)) {
@@ -177,12 +192,14 @@ $faseCodice = isset($_SESSION['reset']);
 
         <?php if (!$faseCodice) { ?>
             <form action="recupero_password.php" method="post">
+                <?= campoCsrf() ?>
                 <label for="email">Inserisci la tua e-mail:</label>
                 <input type="email" id="email" name="email" autocomplete="email" required>
                 <input type="submit" value="Invio" style="width: 100%; margin-top:10px;">
             </form>
         <?php } else { ?>
             <form action="recupero_password.php" method="post">
+                <?= campoCsrf() ?>
                 <div class="container">
                     <label for="Cambia_password">Scrivi la nuova password:</label>
                     <input type="password" id="Cambia_password" name="Cambia_password" autocomplete="new-password" required>

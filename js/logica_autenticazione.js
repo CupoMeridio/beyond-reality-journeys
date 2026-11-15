@@ -80,8 +80,8 @@ document.getElementById('cognome').addEventListener('input', function() {
     }
 });
 
-// Email Registrazione (con controllo disponibilità asincrono)
-document.getElementById('email').addEventListener('input', async function() {
+// Email Registrazione (solo formato)
+document.getElementById('email').addEventListener('input', function() {
     const val = this.value;
     if (val === '') {
         Utils.clearError('emailError');
@@ -95,19 +95,10 @@ document.getElementById('email').addEventListener('input', async function() {
         return;
     }
 
-    // Controllo disponibilità via Fetch
-    try {
-        const result = await Utils.postData("api/verifica_email_ajax.php", { email: val });
-        if (result === "disponibile") {
-            Utils.clearError('emailError');
-            this.style.outline = "solid #287b3f 2px";
-        } else {
-            Utils.showError('emailError', "Questa email è già associata ad un account.");
-            this.style.outline = "solid red 2px";
-        }
-    } catch (e) {
-        console.error("Errore controllo email:", e);
-    }
+    // Solo controllo del formato: il sito non dice mai se un'email è già registrata
+    // (se lo è, il proprietario riceve un'email che lo avvisa)
+    Utils.clearError('emailError');
+    this.style.outline = "solid #287b3f 2px";
 });
 
 // Password Corrente
@@ -163,29 +154,6 @@ document.getElementById('confirmPassword').addEventListener('input', function() 
     } else {
         Utils.showError('confirmPasswordError', 'Le password non corrispondono!');
         this.style.outline = "solid red 2px";
-    }
-});
-
-// --- EMAIL LOGIN (Asincrono) ---
-document.getElementById('email-login')?.addEventListener('input', async function() {
-    const val = this.value.trim();
-    if (val === '') {
-        Utils.clearError('emailErrorLogin');
-        this.style.outline = "";
-        return;
-    }
-
-    try {
-        const result = await Utils.postData("api/verifica_email_ajax.php", { email: val });
-        if (result === "esiste") {
-            Utils.clearError('emailErrorLogin');
-            this.style.outline = "";
-        } else {
-            Utils.showError('emailErrorLogin', "Non esiste alcun account associato a questa email.");
-            this.style.outline = "solid red 2px";
-        }
-    } catch (e) {
-        console.error("Errore controllo login email:", e);
     }
 });
 

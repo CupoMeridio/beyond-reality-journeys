@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_SESSION['email'])) {
     rispondiJson(['error' => 'Devi accedere per prenotare.'], 401);
 }
+if (!csrfValido()) {
+    rispondiJson(['error' => MESSAGGIO_CSRF], 403);
+}
 
 try {
     $prenotazione = validaPrenotazione($_POST, (string) ($_POST['mondo'] ?? ''));

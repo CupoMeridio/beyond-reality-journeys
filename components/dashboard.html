@@ -1,8 +1,10 @@
 <ul id="dashboard">
   <li><a id="storicoOrdini_link">Storico ordini</a></li>
   <li><a id="modifica-link">Modifica dell'account</a></li>
-  <li><a href="api/logout_utente.php">Esci</a></li>
+  <li><a href="#" id="logout-link">Esci</a></li>
 </ul>
+  <!-- Il logout è un POST con token CSRF (file incluso da PHP, quindi il codice qui sotto viene eseguito) -->
+  <form id="form-logout" action="api/logout_utente.php" method="post" hidden><?= campoCsrf() ?></form>
   
   <!-- Il form viene caricato solo al clic su "Modifica dell'account" (vedi sotto) -->
   <iframe id="modifica" title="Modifica dell'account" style="display: none;"></iframe>
@@ -45,6 +47,11 @@
       iframe.style.setProperty("z-index", "4");
     });
   }
+
+  document.getElementById("logout-link")?.addEventListener("click", function(event) {
+    event.preventDefault();
+    document.getElementById("form-logout").submit();
+  });
 
   // Messaggi dall'iframe di gestione_profilo.php (accettati solo dalla stessa origine)
   window.addEventListener('message', function(event) {

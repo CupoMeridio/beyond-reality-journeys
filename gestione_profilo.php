@@ -23,6 +23,9 @@ function tornaAlForm(string $errore): void
 }
 
 if (isset($_POST['update'])) {
+    if (!csrfValido()) {
+        tornaAlForm(MESSAGGIO_CSRF);
+    }
     $nome = trim($_POST['nome'] ?? '');
     $cognome = trim($_POST['cognome'] ?? '');
     $username = trim($_POST['username'] ?? '');
@@ -112,6 +115,7 @@ function e(string $s): string
 <body>
     <div id="modifica">
         <form action="gestione_profilo.php" method="post" enctype="multipart/form-data">
+            <?= campoCsrf() ?>
             <h2>Modifica Dati</h2>
             <h3>Attenzione, modificare i dati ricaricherà la pagina.</h3>
             <div class="wrapper">

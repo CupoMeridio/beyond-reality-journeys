@@ -54,6 +54,10 @@ Il sito è **dimostrativo**: serve a mostrare i fondamenti delle tecnologie web 
 
 ### 1. Utenti e autenticazione
 - **Registrazione e login** ([elabora_autenticazione.php](api/elabora_autenticazione.php)): validazione lato client e lato server, password con `password_hash()`, query preparate, nuovo ID di sessione a ogni login.
+- **Conferma dell'email** ([conferma_registrazione.php](conferma_registrazione.php)): un nuovo account si attiva solo con il link inviato via email (valido 24 ore); le registrazioni non confermate scadono da sole.
+- **Nessuna enumerazione degli account**: il sito non rivela mai se un'email è registrata. La registrazione risponde sempre "ti abbiamo inviato un'email" (se l'account esiste già, viene avvisato il proprietario), il login ha un unico messaggio "email o password non corretti" con lo stesso tempo di risposta e il recupero password risponde allo stesso modo per ogni indirizzo.
+- **Limite ai tentativi di login** ([limite_accessi.php](api/limite_accessi.php)): dopo 5 errori sulla stessa email (o 20 dallo stesso IP) in 15 minuti il login viene bloccato temporaneamente.
+- **Protezione CSRF** ([avvio.php](api/avvio.php)): ogni form e richiesta AJAX che modifica dati invia un token legato alla sessione; anche il logout è una richiesta POST.
 - **Sessioni** ([avvio.php](api/avvio.php)): avvio comune a tutte le pagine, cookie `HttpOnly` e `SameSite=Lax`, HTTPS forzato in produzione.
 - **Recupero password** ([recupero_password.php](recupero_password.php)): codice a 6 cifre inviato via email, valido 5 minuti, con al massimo 5 tentativi.
 - **Foto profilo** ([foto_profilo_utils.php](api/foto_profilo_utils.php)): salvata come `BLOB`, formato verificato sul contenuto (JPG, PNG, GIF, WEBP, max 1 MB) e servita da un endpoint dedicato con cache del browser.
@@ -68,7 +72,6 @@ Il sito è **dimostrativo**: serve a mostrare i fondamenti delle tecnologie web 
 - **Ricevuta PDF** ([genera_ricevuta_pdf.php](api/stripe/genera_ricevuta_pdf.php)): generata con FPDF dai dati salvati, scaricabile anche dallo storico ordini.
 
 ### 3. Interazioni asincrone (AJAX con `fetch`)
-- Verifica in tempo reale della disponibilità dell'email in registrazione ([verifica_email_ajax.php](api/verifica_email_ajax.php)).
 - Recensioni per ogni mondo ([gestione_commenti.js](js/gestione_commenti.js)):
   - aggiornate periodicamente, solo quando la scheda è visibile;
   - testo mostrato in modo sicuro (`textContent`);
@@ -104,13 +107,13 @@ Il sito è **dimostrativo**: serve a mostrare i fondamenti delle tecnologie web 
    - copia `api/config.example.php` in **`api/config.php`** e inserisci le chiavi Stripe **di test** e Brevo;
    - copia lo stesso file anche in **`api/config.local.php`**, lasciando solo le costanti del database locale (`root` senza password).
 
-   Il file `config.local.php` viene letto solo su `localhost`, quindi puoi tenere nello stesso progetto i valori locali e quelli di produzione. Per provare il recupero password senza Brevo, aggiungi a `config.local.php` la costante `EMAIL_SOLO_LOG`: le email finiscono nel log di PHP.
+   Il file `config.local.php` viene letto solo su `localhost`, quindi puoi tenere nello stesso progetto i valori locali e quelli di produzione. La registrazione richiede la conferma dell'email, quindi senza una chiave Brevo aggiungi a `config.local.php` la riga `define('EMAIL_SOLO_LOG', true);`: le email (link di conferma e codici di recupero) vengono scritte nel log di PHP invece di essere inviate (con XAMPP: `apache/logs/error.log`).
 6. Apri **http://localhost/Sito_di_viaggi/**. In locale HTTPS non viene forzato.
 
 ## Pubblicazione (InfinityFree)
 1. Esegui `composer install --no-dev` in locale: InfinityFree non ha Composer, quindi la cartella `vendor/` va caricata.
 2. Carica via FTP tutti i file del progetto, **incluso `vendor/`** e il tuo `api/config.php` di produzione, **escluso `api/config.local.php`**.
-3. Al primo avvio importa [sql/database.sql](sql/database.sql). Se il database esiste già, esegui gli script in [sql/migrazioni/](sql/migrazioni/), ognuno **una sola volta**.
+3. Importa [sql/database.sql](sql/database.sql) nel database (da phpMyAdmin: seleziona il database, poi la scheda *Importa*).
 
 Il file [.htaccess](.htaccess) impedisce l'accesso via web a `vendor/`, `sql/`, ai file di configurazione e di Composer.
 
@@ -118,9 +121,10 @@ Il file [.htaccess](.htaccess) impedisce l'accesso via web a `vendor/`, `sql/`, 
 
 ## Schema del Database
 Definito in [sql/database.sql](sql/database.sql):
-- **utente**: `id, nome, cognome, username (unico), email (unica), password (hash), img (BLOB), type, data_registrazione`
+- **utente**: `id, nome, cognome, username (unico), email (unica), password (hash), img (BLOB), type, data_registrazione, verificato, token_conferma (hash SHA-256), scadenza_conferma`
 - **prenotazione**: `id_prenotazione, email, nome, cognome, mondo, destinazione, data_partenza, data_ritorno, num_biglietti, nominativi (JSON), commento, importo_centesimi, payment_intent_id (unico), data_prenotazione`
 - **commento**: `id_testo, email, username, testo, mondo, stelle (1-5), data_commento`
+- **tentativo_accesso**: `id, email, ip, data_tentativo` (le righe più vecchie di un giorno vengono eliminate automaticamente)
 
 ---
 
@@ -138,7 +142,8 @@ Definito in [sql/database.sql](sql/database.sql):
 │   ├── foto_profilo.php            # Restituisce la foto profilo dell'utente
 │   ├── servizio_email.php          # Invio email con Brevo
 │   ├── elabora_autenticazione.php  # Login e registrazione
-│   ├── recupera_*.php / salva_*.php / verifica_email_ajax.php  # Endpoint AJAX
+│   ├── limite_accessi.php          # Limite ai tentativi di login falliti
+│   ├── recupera_*.php / salva_*.php  # Endpoint AJAX
 │   └── stripe/                     # Pagamento e ricevuta
 │       ├── configurazione_stripe.php   # Inizializzazione Stripe (solo chiavi di test)
 │       ├── crea_pagamento.php          # Crea il PaymentIntent
@@ -147,10 +152,10 @@ Definito in [sql/database.sql](sql/database.sql):
 ├── components/                     # Navbar, dashboard, popup di pagamento, footer, recensioni
 ├── css/  js/  img/  video/         # Stili, script, immagini e video
 ├── sql/
-│   ├── database.sql                # Schema completo
-│   └── migrazioni/                 # Aggiornamenti per database esistenti
+│   └── database.sql                # Schema completo
 ├── index.php                       # Home page
 ├── autenticazione.php              # Login e registrazione
+├── conferma_registrazione.php      # Conferma dell'email dopo la registrazione
 ├── recupero_password.php           # Recupero password
 ├── gestione_profilo.php            # Modifica account (in iframe dalla dashboard)
 ├── viaggio_jojos.php / viaggio_doctorwho.php / viaggio_dragonball.php   # Pagine dei mondi

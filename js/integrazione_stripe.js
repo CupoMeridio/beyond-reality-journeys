@@ -32,7 +32,7 @@
         const risposta = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(dati).toString(),
+            body: new URLSearchParams({ ...dati, csrf_token: document.body.dataset.csrf ?? '' }).toString(),
         });
         let json;
         try {

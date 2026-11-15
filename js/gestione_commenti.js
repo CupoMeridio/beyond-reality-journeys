@@ -14,7 +14,8 @@ async function postJson(url, dati) {
     const risposta = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(dati).toString(),
+        // csrf_token: richiesto da salva_commento_ajax.php, ignorato dalle letture
+        body: new URLSearchParams({ ...dati, csrf_token: document.body.dataset.csrf ?? '' }).toString(),
     });
     const json = await risposta.json().catch(() => ({ error: 'Risposta non valida dal server.' }));
     if (!risposta.ok || json.error) {

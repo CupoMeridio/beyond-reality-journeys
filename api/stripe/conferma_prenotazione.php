@@ -15,6 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_SESSION['email'])) {
     rispondiJson(['error' => 'Devi accedere per prenotare.'], 401);
 }
+if (!csrfValido()) {
+    rispondiJson(['error' => MESSAGGIO_CSRF], 403);
+}
 
 $idPagamento = (string) ($_POST['payment_intent'] ?? '');
 $bozza = $_SESSION['bozza_pagamento'] ?? null;
