@@ -10,7 +10,7 @@ Applicazione web per la prenotazione di viaggi in mondi di fantasia (JoJo's Biza
 
 Il sito è **dimostrativo**: serve a mostrare i fondamenti delle tecnologie web (HTML5, CSS3, JavaScript, PHP, MySQL). **I viaggi non esistono e nessun pagamento è reale**: Stripe funziona esclusivamente in modalità test.
 
-🌐 Demo online: **https://beyondreality-viaggi.rf.gd/**
+🌐 Demo online: **[https://beyondrealityjourneys.site.je](https://beyondrealityjourneys.site.je)**
 
 > 💳 Per provare il pagamento usa la carta di prova `4242 4242 4242 4242`, una data di scadenza futura e un CVC qualsiasi. Le carte reali vengono rifiutate.
 
